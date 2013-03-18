@@ -1,0 +1,536 @@
+\input bash_style.ctex
+\starttext
+\startcolumns[n=2]
+	
+\title{Bourne-Again SHell a Linux CLI}
+
+\mycopyright
+
+\startparagraph	
+Nastavení interpretru: \type{#!/bin/bash} \qquad Komentáře: \type{# toto je komentář}
+\stopparagraph
+
+\section{Interaktivní ovládání}
+
+{\tfx
+\bTABLE[offset=\dimexpr0mm+0.5pt]
+\setupTABLE[c][2][width=1.75cm]
+\setupTABLE[c][3][width=3.5cm]
+\setupTABLE[c][1][width=4cm]
+\setupTABLE[c][2,3][align={center,lohi}]
+\setupTABLE[r][1][background=color,backgroundcolor=gray, align=middle]
+\bTABLEhead
+\bTR
+\bTH Akce \eTH \bTH {\tt set -o vi} \eTH \bTH {\tt set -o emacs} \eTH
+\eTR
+\eTABLEhead
+
+\bTABLEbody
+\bTR
+	\bTD vi-command režim ({\ss C}) \eTD
+	\bTD ~\C{\ES} \eTD
+	\bTD --- \eTD
+\eTR
+
+\bTR
+	\bTD Předchozí/následující příkaz v hist. \eTD
+	\bTD ~\CC{j}~/~\CC{k}\eTD
+	\bTD ~\C{\CT+p} / \C{\CT+n}\crlf \C{\PU} / \C{\PD}\eTD
+\eTR
+\bTR
+	\bTD Doplnění názvu souboru \eTD
+	\bTD ~\C{\ES}\CC{\ES} \eTD
+	\bTD ~\C{\TT} \eTD
+\eTR
+
+\bTR
+	\bTD Výpis všech shod \eTD
+	\bTD ~\C{\ES}\C{=} \eTD
+	\bTD ~\C{Tab}\C{Tab}\eTD
+\eTR
+
+\bTR
+	\bTD Horizontální pohyb po řádce\eTD
+	\bTD ~\CC{h} / \CC{l}\eTD
+	\bTD ~\C{\CT+b} / \C{\CT+f}, \C{$\leftarrow$} / \C{$\rightarrow$}\eTD
+\eTR
+
+\bTR
+	\bTD Skoč na začátek/konec řádky\eTD
+	\bTD ~\CC{\type{^}} / \CC{\symdollar{}}\eTD
+	\bTD ~\C{\CT+a} / \C{\CT+e}\eTD
+\eTR
+
+\bTR
+	\bTD Zpětné/dopředné hledání v historii \eTD
+	\bTD ~\CC{/} / \CC{?}  \eTD
+	\bTD ~\C{\CT+r} / \C{\CT+s}\eTD
+\eTR
+
+\bTR
+	\bTD Vymaže slovo do konce/začátku\eTD
+	\bTD ~\CC{dw} / \CC{db}\eTD
+	\bTD ~\C{\ES~d} / \C{\ES~h} \eTD
+\eTR
+
+\bTR
+	\bTD Vymaž text od kurzoru do konce/začátku řádky\eTD
+	\bTD ~\CC{d\type{$}} / \CC{d\type{^}} \eTD
+	\bTD ~\C{\CT+k} / \C{\CT+u}\eTD
+\eTR
+
+%bTR
+%	\bTD \eTD
+%	\bTD \eTD
+%	\bTD \eTD
+%eTR
+
+\eTABLEbody
+\eTABLE
+}
+
+%3. \C{{\it n}}\C{G} jde na příkaz číslo {\it n}
+
+\subsection{Historie příkazů}
+
+\startitemize
+\item {\tt history}, {\tt fc -l} -- zobrazí číslovanou historii příkazů shellu
+\item {\tt !{\sl n}} -- spustí příkaz číslo {\sl n}
+\item {\tt !{\sl p}} -- spustí poslední příkaz začínající na {\sl p}
+\item {\tt !!} -- provede poslední zadaný příkaz
+\item {\tt !!:{\sl n}} -- expanduje na {\sl n}-tý parametr předchozího příkazu
+\item {\tt !\symdollar} -- expanduje na poslední parametr předchozího příkazu
+\item {\tt fc} -- spustí zadaný {\tt \symdollar{}EDIOR} s posledním příkazem
+\item {\tt fc -e vim {\sl z k}} -- otevře editor {\tt vim} s příkazy od $z$ do $k$
+\item \type{^old^new} -- nahrazení {\sl old} za {\sl new} v posledním příkazu
+\item {\stt příkaz} {\tt `!!`} -- použije výstup z předchozího příkazu jako vstup
+\stopitemize
+
+\subsection{Nápověda}
+
+\startitemize
+\item {\tt type -a {\sl příkaz}} -- informace o příkazu
+\item {\tt help {\sl příkaz}} -- stručná nápověda k příkazu
+\item {\tt man {\sl příkaz}}, {\tt info {\sl příkaz}} -- podrobná nápověda
+\item {\tt man -k {\sl klíč}}, {\tt apropos {\sl klíč}}, {\tt whatis {\sl příkaz}} -- hledá příkaz
+\stopitemize
+
+\section{Ladění}
+
+\startparagraph
+Spustit skript: {\tt bash {\sl volba skript jeho parametry}}
+\stopparagraph
+
+\startitemize
+\item{\tt bash -x} -- příkazy před provedením vypíše
+\item{\tt bash -u} -- použití nedefinované proměnné vrátí chybu
+\item{\tt bash -v} -- vypisuje načtené řádky skriptu před provedením
+\item{\tt bash -n} -- zabrání vykonání příkazů
+\stopitemize
+
+\section{Proměnné a pole}
+
+\startitemize
+\item {\tt {\sl jméno}=10} -- přiřazení hodnoty proměnné {\tt \symdollar{}PROM}, {\tt \symdollar{}\symlb{}PROM\symrb}
+\item \type{export PROM=10, typedef -x} -- nastaví jako proměnou prostředí
+\item {\tt D=\symdollar(date); D=\type{`}date\type{`}} -- proměnná obsahuje výstup příkazu {\tt date}
+\item {\tt env, printenv} -- vypíše proměnné prostředí
+\item {\tt set} -- vypíše prom. prostředí, umožňuje nastavení příznaků {\tt shopt}
+\item {\tt unset {\sl název}} -- odstraní proměnnou nebo funkci
+\item {\tt typeset, declare} -- nastavení typu proměnné.
+\item {\tt readonly {\sl proměnná}} -- nastaví pouze pro čtení
+\item {\tt local {\sl proměnná}} -- nastaví lokální proměnou uvnitř funkce
+\item {\tt \symdollar\symlb{\sl parametr-slovo}\symrb} -- jestliže {\sl parametr} má hodnotu, pak se použije jeho hodnota, jinak se použije hodnota {\sl slovo}.
+\item {\tt \symdollar{}\symlb{\sl parametr=slovo}\symrb} -- jestliže {\sl parametr} nemá přiřazenou hodnotu přiřadí se mu {\sl slovo}. Nefunguje na {\tt \symdollar{}1}, {\tt \symdollar{}2}, atd.
+\item {\tt \symdollar{}\symlb{\sl parametr:-slovo}\symrb} -- funguje na {\tt \symdollar{}1}, {\tt \symdollar{}2}, atd. 
+\item {\tt \symdollar{}\symlb{\sl parametr?slovo}\symrb} --jestliže {\sl parametr} má hodnotu, použije se ta; v opačném případě se zobrazí {\sl slovo} a shell se ukončí.
+\item {\tt \symdollar{}\symlb{\sl parametr+slovo}\symrb} -- jestliže {\sl parametr} má hodnotu, použije se {\sl slovo}, jinak prázdný řetězec.
+\item {\tt pole=(a b c); echo \symdollar{}\symlb{}pole[1]\symrb} -- vypíše \quote{b}
+\item \type{pole+=(d e f)} -- přidá nové prvky/pole na konec 
+\item {\tt \symdollar{}\symlb\type{pole[*]}\symrb}, {\tt \symdollar{}\symlb\type{pole[@]}\symrb} -- všechny prvky pole 
+\item {\tt \symdollar{}\symlb\type{#pole[*]}\symrb}, {\tt \symdollar{}\symlb\type{#pole[@]}\symrb} -- počet prvků pole
+\item \type{declare -A hash} -- vytvoří asociativní pole (od verze 4.0)
+\item \type{hash=([klíč1]=hodnota ["jiný klíč2"]="jiná hodnota")}
+\item {\tt \symdollar{}\symlb\type{hash["jiný klíč2"]}\symrb}, {\tt \symdollar{}\symlb\type{hash[jiný klíč2]}\symrb} -- přístup
+\item {\tt \symdollar{}\symlb\type{hash[@]}\symrb},  {\tt \symdollar{}\symlb\type{hash[*]}\symrb} -- všechny prvky 
+\item {\tt \symdollar{}\symlb\type{!hash[@]}\symrb}, {\tt \symdollar{}\symlb\type{!hash[*]}\symrb} -- všechny klíče
+\stopitemize
+
+\subsection{Řetězce}
+
+\startitemize
+\item {\tt STRING="Ahoj"} -- indexování: A\low{0} h\low{1} o\low{2} j\low{3}
+\item {\tt STRING+=" světe!"} -- přidá řetězec 
+\item {\tt \symdollar{}\symlb\type{#řetězec}\symrb}, {\tt expr length \symdollar{}řetězec} -- délka řetězce
+\item {\tt \symdollar{}\symlb\type{řetěz:pozice}\symrb} -- extrahuje podřetězec od pozice
+\item {\tt \symdollar{}\symlb\type{řetěz:pozice:délka}\symrb} -- extrahuje podřetěz délky od pozice
+\item {\tt \symdollar{}\symlb\type{řetěz/podřetěz/náhrada}\symrb} -- nahradí první výskyt podřetězce
+\item {\tt \symdollar{}\symlb\type{řetěz//podřetěz/náhrada}\symrb} -- nahradí všechny výskyty 
+\item {\tt \symdollar{}\symlb\type{řetěz/%podřetěz/náhrada}\symrb} -- nahradí první výskyt od konce
+\item {\tt \symdollar{}\symlb\type{řetěz#podřetěz}\symrb} -- vymaže nejkratší  podřetězec 
+\item {\tt \symdollar{}\symlb\type{řetěz##podřetěz}\symrb} -- vymaže nejdelší  podřetězec 
+\stopitemize
+
+\subsection{Standardní proměnné}
+
+\startitemize
+\item {\tt \symtilda}, {\tt \symdollar{}HOME} -- domovský adresář uživatele
+\item {\tt \symdollar{}PS1}, {\tt \symdollar{}PS2} -- primární, sekundární prompt 
+\item {\tt \symdollar{}PWD}, {\tt \symtilda{}+} / {\tt \symdollar{}OLDPWD}, {\tt \symtilda-} -- aktuální / předchozí adresář
+\item {\tt \symdollar{}RANDOM} -- gen. náhodných čísle od 0 do 32\,767
+\item {\tt \symdollar{}?} -- návratová hodnota předchozího programu
+\item {\tt \symdollar{}\symdollar} -- id. číslo právě běžícího procesu
+\item {\tt \symdollar{}!} -- id. číslo posledního příkazu spuštěného na pozadí
+\item {\tt \symdollar{}PPID} -- id. číslo rodičovského procesu
+\item {\tt \symdollar{}-} -- zobrazí nastavené příznaky 
+\item {\tt \symdollar{}LINENO} -- aktuální číslo řádku v prováděném skriptu
+\item {\tt \symdollar{}PATH} -- seznam cest se spustitelnými příkazy
+%\item {\tt \symdollar{}SHELL} -- cesta k interpretu aktuálního shellu
+\item {\tt \symdollar{}IFS} -- Vnitřní oddělovač polí. Znaky sloužící k oddělování slov, když shell čte vstup, obvykle mezera, tabulátor {\tt \symdollar{}'\backslash{}t'} a nový řádek {\tt \symdollar{}'\backslash{}n'}.
+\stopitemize
+
+\section{Parametry programu}
+
+\startitemize
+\item {\tt \symdollar{}0}, {\tt \symdollar{}\symlb0\symrb} -- název skriptu
+\item {\tt \symdollar{}1} až {\tt \symdollar{}}9, {\tt \symdollar{}\symlb1\symrb} až {\tt \symdollar{}\symlb255\symrb} -- poziční parametry zadané na příkazové řádce
+\item {\tt \symdollar{}}\type{#} -- počet parametrů na příkaz. řádce (argc)
+\item {\tt \symdollar{}*} -- rozvine všechny parametry, \type{"$*"} = {\tt "\symdollar{}1 \symdollar{}2 \symdollar{}3\ldots"}
+\item {\tt \symdollar{}}\type{@} -- rozvine všechny parametry, {\tt "\symdollar{}}\type{@"} = {\tt "\symdollar{}1" "\symdollar{}2" "\symdollar{}3"\ldots}
+%% \item {\tt \symdollar{}@} -- všechny parametry, nepoužívá IFS
+\item {\tt \symdollar{}_} -- poslední parametr předchozího programu
+\item {\tt shift} -- přejmenování parametrů,  {\tt \symdollar{}2} na  {\tt \symdollar{}1}, {\tt \symdollar{}3} na  {\tt \symdollar{}2}, atd.; sníží čítač {\tt \symdollar{}}\type{#}
+\item {\tt xargs {\sl prog}} -- načítá vstup a dává ho jako parametry {\sl prog}
+\stopitemize
+
+\subsection{Čtení parametrů z příkazové řádky}
+
+{\tfx
+\startlines
+{\tt while getopts "a:b" opt; do case \symdollar{}opt in
+\qquad	a) echo a = \symdollar{}OPTARG ;;
+\qquad	b) echo b ;;
+\qquad	\backslash{}?) echo "Neznámý parametr" ;;
+esac; done
+shift \symdollar{}((\symdollar{}OPTIND - 1)); echo "Poslední: \symdollar{}1" }
+\stoplines}
+
+\section{Řídící výrazy}
+
+\startitemize
+	\item {\tt ({\sl příkazy})}, {\tt \symdollar{}({\sl příkazy})}, \type{`}{\stt příkazy}\type{`}, {\tt \symlb{\sl příkazy;}\symrb} -- spustí v subshellu
+	\item {\tt \symdollar{}({\sl program})}, \type{`}{\stt program}\type{`} -- výstup programu nahradí příkaz
+	\item \type{test}, \type{[ ]} -- vyhodnocování podmínek:
+		\startitemize
+				\item porovnání čísel: {\tt {\sl a} -eq {\sl b}}~\dots $a=b$, {\tt  {\sl a} -ge {\sl b}}~\dots $a\ge{}b$, {\tt  {\sl a} -gt {\sl b}}~\dots $a>b$, {\tt  {\sl a} -le {\sl b}}~\dots $a\le{}b$, {\tt  {\sl a} -lt {\sl b}}~\dots $a<b$
+			\item souborové: {\tt -d {\sl soubor}} je adresář, {\tt	-f {\sl soubor}} existuje a není to adresář, {\tt	-r {\sl soubor}} existuje a lze ho číst, {\tt	-w {\sl soubor}} existuje a lze do něj psát, {\tt	-s {\sl soubor}} má nenulovou velikost, {\tt	-a {\sl soubor}} existuje
+			\item logické: {\tt -a} and, {\tt -o} or, {\tt !} negace 		
+		\stopitemize	
+	\item \type{[[ ]]} -- slouží k porovnání řetězců, shoda {\tt =}, neshoda {\tt !=}, {\tt -z \sl řetězec},nulová délka, {\tt -n \sl řetězec} nenulová délka, \type{<}, \type{>} lexikální porovnání
+	\item \type{[} {\stt podmínka} \type{] && [} {\stt podmínka} \type{]} 
+	\item {\tt true} -- vrací návratovou hodnotu 0
+	\item {\tt false} -- vrací návratovou hodnotu 1
+	\item {\tt break} -- ukončí prováděný cyklus
+	\item {\tt continue} -- začne novou iteraci cyklu
+	\item {\tt eval {\sl parametry}} -- spustí parametry jako příkaz
+	\item {\tt exit {\sl hodnota}} -- ukončení skriptu s návratem
+	\item {\tt . {\sl skript}}, {\tt source {\sl skript}} -- načtení a interpretace jiného skriptu
+	\item {\tt : {\sl argument}} -- nedělá nic, jen rozvine argument nebo provede přesměrování
+	\item {\tt alias {\sl jméno='příkazy'}} -- chápe {\sl jméno} jako příkaz
+	\item {\tt unalias {\sl jméno}} -- zruší alias 
+	\item {\tt if [ {\sl podmínka} ]; then {\sl příkazy}; \crlf elif [ {\sl podmínka} ]; then {\sl příkazy}; \crlf else {\sl příkazy}; fi}
+%\stoplines
+\item {\tt for {\sl proměnná} in {\sl argumenty}; do {\sl příkazy; } done }
+\startitemize
+	\item \type{{a..z}} -- rozvine se na {\tt a b c \dots z}
+	\item {\tt \symlb\sl{i..n..s}\symrb} -- sekvence od {\sl i} do  {\sl n} s krokem {\sl s} 
+	\item {\tt \type{\"}\symlb{}a,b,c\symrb{}\type{\"}} -- expanduje na {\tt "a" "b" "c"}
+	\item {\tt \symlb{}1,2\symrb{}\symlb{}a,b\symrb{}} -- expanduje na {\tt 1a 1b 2a 2b}
+	\item {\tt seq {\sl od krok do}} -- číselná sekvence
+\stopitemize
+
+\item {\tt for((i=1; i<10; i++)); do  {\sl příkazy; } done}
+\item {\tt while {\sl vrací pravda}; do {\sl příkazy;} done}
+\item {\tt until [ {\sl test vrací pravda} ]; do {\sl příkaz;} done}
+\item {\tt case {\tt \symdollar{}prom} in hodnota$_1$) příkazy	;; \crlf hodnota$_2$) příkazy	;; *) implicit. příkazy ;; \crlf esac}
+\item Definice funkce: {\tt function {\sl název ()} \symlb {\sl příkazy}; \symrb}
+\item {\tt return {\sl hodnota}} -- návratová hodnota funkce
+\item {\tt declare -f {\sl funkce}} -- vypíše deklaraci funkce
+\stopitemize
+
+\section{Přesměrování}
+
+\startitemize
+	\item {\tt 0} stdin/vstup, {\tt 1} stdout/výstup, {\tt 2} stderr/chybový výstup
+	\item \type{>} {\stt soubor}  -- přesměrování, vytvoří nebo přepíše soubor
+	\item \type{>>} {\stt soubor} -- připojí na konec souboru
+	\item {\stt příkaz\low{1}}\type{<<<}{\stt příkaz\low{2}} -- výstup z 2. na std. vstup 1.
+	\item {\stt příkaz } \type{<} {\stt soubor} -- vstup příkazu ze souboru
+	\item \type{tee} {\stt soubor} -- čte stdin, zapisuje do souboru a do stdout
+	\item {\stt příkaz} \type{2>} {\stt soubor} -- přesměruje chybové hlášení do souboru
+%	\item \type{2>} -- přesměruje pouze chybová hlášení
+	\item {\tt exec 1> >(tee -a log.txt)} -- přesměruje stdout navíc do souboru 
+	\item \type{2>&1} -- přesměruje chybová hlášení do std. výstupu
+	\item \type{exec 3<>/dev/tcp/}{\stt addr/port} -- deskriptor pro čtení a zápis po síti
+	\item \type{exec 3>&-} -- uzavře deskriptor
+	\item {\stt příkaz} \type{> /dev/null 2>&1} -- potlačí všechny výpisy
+	\item \type{n> n>}\type{> n>&m} -- operace přesměrování pro deskriptory {\sl n, m}
+	\item {\tt mkfifo {\sl název}} --  vytvoří pojmenovanou rouru, soubor do kterého jeden proces zapisuje, další čte.
+	\item {\stt příkaz}\low{1} \type{|} {\stt příkaz}\low{2} -- roura, propojování příkazů
+	\item {\tt read {\sl parametry}} -- čte řádek vstupu a rozloží ho na parametry
+\stopitemize
+
+\subsection{Vstup pro interaktivní programy (here documents)}
+
+{\tfx
+\starttyping
+./program <<  EOF      ./program <<-'EOF' # potlačí tabulátory
+Vstup1                      Vstup1
+Vstup2                      Vstup2
+EOF                         EOF
+\stoptyping
+}
+
+\subsection{Zpracování vstupu po řádcích}
+
+\type{cat soubor.txt | (while read L; do echo "$L"; done)}
+
+\section{Vyhodnocování matematických výrazů}
+
+\startitemize
+	\item {\tt let {\sl výraz}}, {\tt expr {\sl výraz}}, {\tt \symdollar((}{\em výraz}{\tt ))}, {\tt \symdollar((}{\em výraz1, výraz2}{\tt ))}, {\tt \symdollar[}{\em výraz}{\tt ]}
+
+	\item Číselné soustavy: {\em základ}\type{#}{\em číslo}; šestnáctkově {\tt 0xABC}, osmičkově {\tt 0253}, dvojkově \type{2#10101011}
+
+	\item Operátory: {\tfx {\tt i++}, {\tt ++i}, {\tt i--}, {\tt --i}, {\tt +}, {\tt -}; {\tt **} umocňování, {\tt *}, {\tt /}, \type{%} zbytek po dělení; logické: \type{!} neg., \type{&&} and, \type{||} or; binární: {\tt \symtilda}, \type{&}, \type{|}; \type{<<}, \type{>>} posuvy; přiřazení: \type{= *= /= }\type{%}\type{= += -= <>= &= ^= |=} {\tt >>= <<=}; porovnávání: \type{< <= > >=} }
+	
+	\item {\tt factor {\sl n}} -- rozloží $n$ na prvočísla 
+
+	\item V plovoucí řadové čárce:  {\tt echo "scale=10; 22/7" \type{|} bc}
+\stopitemize
+
+\section{Výstup na obrazovku}
+
+\startitemize
+\item {\tt echo "text"} -- vypíše text, {\tt echo *} vypíše soubory v daném adresáři 
+\item {\tt echo -e "text"} -- interpretuje escape-sekvence (\type{\t} tab., {\tt\backslash{}a} píp., \type{\f} nová stránka, \type{\n} nový řádek), {\tt -n, \type{\c}} potlačí  \type{\n}, \type{\x}{\stt HH} hexa byte, {\tt\backslash{\stt nnn}} oct. byte, {\tt\backslash{}u03B1} „\symalpha“ (U+03B1) v UTF-8
+\item {\tt stty} -- mění a vypisuje nastavení terminálové linky
+\item {\tt tty} -- vypíše jméno terminálu připojeného na std. výstup
+\item {\tt printf {\sl formát hodnoty}} -- formátovaný výpis
+\item {\tt printf -v {\sl proměnná form. hod.}} -- form. výpis do proměnné
+{\tfx
+\startitemize 
+\item \% [příznaky][šířka][.přesnost][modifikátor]formát
+\item Formát: \type{%u},\,\type{%d},\,\type{%i} desítkově; \type{%E},\,\type{%f} float, \type{%x},\,\type{%X} hexa; \type{%o} osmičkově, \type{%s} řetězec, \type{%%} znak \%
+\item Šířka: $n$  tiskne alespoň $n$ znaků, mezery zprava, $0n$ tiskne alespoň $n$ znaků, nuly zleva, \type{*}  počet znaků udává předchozí argument
+\item Přesnost: min. počet cifer,  počet cifer za des. tečkou počet tištěných znaků, {\tt *} počet  znaků udává předchozí argument 
+\item Příznak: {\tt -} zarovná doleva, zprava mezery, {\tt +} tiskne č. se znaménkem {\tt +/-}
+\stopitemize
+}
+\item \type{printf "%d" \'A} -- zobrazí ASCII hodnotu znaku „A“ (65)
+\item \type{printf \\$(printf '%03o' 65)} -- zobrazí znak daného ASCII kódu
+\item {\tt tput {\sl akce}} -- provedení akce závislé na typu terminálu
+\item {\tt reset}, {\tt tput sgr0}, {\tt tset} -- resetuje terminál, zruší atributy
+\item {\tt clear}, {\tt tput clear} -- vymaže obsah obrazovky
+\stopitemize
+
+\section{Správa procesů}
+
+\startitemize
+\item {\sl příkaz} \type{&} -- spustí {\sl příkaz} na pozadí
+\item {\tt prog\low{1} \type{&&} prog\low{2}} -- spustí prog\low{2}, pokud prog\low{1} skončí úspěšně
+\item {\tt prog\low{1} \type{||} prog\low{2}} -- spustí prog\low{2} i pokud prog\low{1} skončí chybně
+\item \C{\CT+z} -- zastaví proces (SIGSTOP)
+\item {\tt bg}\,/\,{\tt fg} -- spustí zastavený proces na pozadí/popředí 
+\item {\tt jobs } -- vypíše procesy běžící na pozadí
+\item {\tt exec {\sl příkaz}} -- nahradí běžící proces za {\sl příkaz}
+\item {\tt wait} -- shell čeká na skončení příkazů puštěných na pozadí
+\item {\tt top} -- sledování procesů na CPU
+\item {\tt ps -xau} -- všechny procesy a uživatele, {\tt ps -xaf, pstree} hierarchicky
+\item {\tt pgrep {\sl proces}}, {\tt pidof {\sl proces}} -- vypíše PID podle jména
+\item {\tt nice -n {\sl p} {\sl příkaz}} -- priorita $p$ od $-$20 (max.) do  19 (min.)
+\item {\tt renice -n {\sl p} -p {\sl pid}}  -- změní prioritu běžícího procesum
+\item {\tt kill -s {\sl k n}} -- pošle signál $k$ procesu id. $n$, {\tfx 0, 1 SIGHUP; 2 SIGINT \C{\CT+c}; 3 SIGQUIT; 9 SIGKILL; 15 SIGTERM; 24 SIGSTOP}
+\item {\tt trap '{\sl příkaz}' signály} -- spustí při zachycení signálu 
+\item {\tt killall {\sl jméno}} -- pošle signál procesům podle jména
+\item {\tt nohup {\sl příkaz}} \type{&} -- příkaz bude pokračovat po odhlášení uživatele
+\item {\tt time {\sl příkaz}} -- vypíše čas běhu
+\item {\tt times} -- info o spotřebě uživ. a sys. času v daném shellu
+\item {\tt watch -n {\sl s příkaz}} -- každých {\sl s} sekund pustí příkaz
+\stopitemize
+
+\section{Čas a plánování procesů}
+
+\startitemize
+\item {\tt date} -- vypíše datum, {\tt date --date=@\sl unix\_čas}
+\item \type{date +"%Y%m%d} \type{%H:%M:%S} \type{%Z"} -- formát data {\tt 20090923 13:39:02 CEST} %POZOR
+\item {\tt cal} -- zobrazí kalendář
+\item {\tt crontab -e} -- editace crontabu, {\tt -l} vylistování, údaje {\stt min hour date month day command}, {\tt * * * * * příkaz} každou minutu, {\tt 1 * * * * příkaz} 1. min. hodiny
+\item {\tt  at,  batch,  atq,  atrm} --  umisťuje do fronty, zobrazuje či maže úlohy určené pro pozdější provedení
+\stopitemize
+
+\section{Souborové operace}
+
+\startparagraph
+Nahrazení v jménech souborů: \type{?} znak; \type{*} žádný nebo více znaků;
+\type{[}{\stt množina}\type{]} jeden nebo více daných znaků, rozsah
+\type{[0-9]} \type{[a-z]}, \type{[A-Z]}; \type{[!}{\stt množina}\type{]},
+\type{[^}{\stt množina}\type{] }žádný ze znaků.
+\stopparagraph
+
+\startitemize
+\item {\tt ls} -- vylistuje adresář, {\tt ls -la}, {\tt vdir} všechny soubory a info
+\item {\tt tree} -- zobrazí stromovou strukturu adresářů 
+\item {\tt file {\sl soubor}} -- identifikuje soubor podle jeho magického čísla
+\item {\tt lsattr, chattr} -- vypsání a nastavení atributů ext2,3
+\item {\tt umask} -- definuje masku příst. práv u nového soubnoru
+%\item md5sum, sha1sum -- spočítá kontrolní součet
+\item {\tt pwd (-P)} -- logická (fyzická) cesta do aktuálního adresáře 
+\item {\tt cd adresář} -- změní adresář, {\tt cd}  skočí do {\tt \symdollar{}HOME}, {\tt cd -} do {\tt \symdollar{}OLDPWD}
+\item {\tt dirs} -- zobrazí zásobník adresářů
+\item {\tt pushd {\sl adresář}} -- uloží {\sl adresář} do zásobníku
+\item {\tt popd} -- změní aktuální adresář za ten na vrcholu zásobníku
+\item {\tt cp {\sl zdroj cíl}} -- kopíruje soubor
+\item {\tt ln -s {\sl cíl linka}} -- vytvoří symbolický link
+\item {\tt mkdir}, {\tt rmdir} -- vytvoří, smaže adresář
+\item {\tt rm {\sl soubor}}, {\tt rm -r -f {\sl adresář}}, {\tt unlink} -- mazání
+\item {\tt touch {\sl soubor}} -- vytvoří soubor, existujícímu nastaví akt. čas
+\item {\tt du -h} -- zobrazí velikost podadresářů
+\item {\tt stat {\sl soubor}} -- info o souboru, \type{stat --format=%s} velikost
+\item {\tt basename {\sl jméno přípona}} -- vypíše bez cesty nebo přípony
+\item {\tt dirname {\sl /cesta/soubor}} -- vypíše pouze cestu
+\item {\tt repquota} -- vypíše souhrnné informace o zaplnění kvót
+\item {\tt mktemp} -- vytvoří soubor s jedinečným názvem v {\tt tmp} 
+\stopitemize
+
+\section{Práce s obsahem souboru}
+
+\startitemize
+\item {\tt cat} -- slučuje soubory a vypisuje je na standardní výstup
+\item {\tt cat > soubor} -- vytvoří soubor, ukončení pomocí \C{\CT+d}
+\item {\tt tac} -- jako {\tt cat}, ale řádkově pozpátku
+\item {\tt more}, {\tt less} -- výpis po stránkách, skrolovatelně
+\item {\tt od}, {\tt hexdump -C}, {\tt xxd} -- výpis souboru oktalově, výpis hexdumpu
+\item {\tt wc} -- zjistí počet řádků {\tt -l}, písmen {\tt -n}, bytů {\tt -c}, slov {\tt -w}
+\item {\tt head}/{\tt tail} -- vypíše začátek/konec, {\tt tailf, tail -f} čeká na nové
+\item {\tt split}, {\tt csplit} -- rozdělí na části podle velikosti, obsahu
+\item {\tt sort} -- řazení, {\tt -n} -- číselné, {\tt -r} reverzní, {\tt -f} ignoruje velikost písmen
+\item {\tt uniq} -- opakující se řádky vypíše pouze jednou, {\tt -d} pouze duplicity
+\item {\tt sed -e 'skript'} -- provede řádkovou editaci, skript {\tt y/ABC/abc/} nahradí znaky A, B, C za a, b, c; {\tt s/regexp/náhrada/}
+\item {\tt tr {\sl a b}}  -- náhrada znaku {\sl a} za {\sl b}
+\item {\tt tr '[a-z]' '[A-Z]' < soubor.txt} -- změní malá na velká
+\item {\tt awk '/výraz/ \symlb akce \symrb' {\sl soubor}} -- zpracuje řádky obsahující výraz
+\item {\tt cut -d {\sl oddělovač} -f {\sl pole}} -- vypíše daný sloupec
+\item {\tt cmp {\sl soubor1} {\sl soubor2}} -- porovná soubory a vypíše první rozdíl
+\item {\tt diff, diff3, sdiff, vimdiff} -- porovnání souborů 
+\item {\tt dd if={\sl vst.} of={\sl výst.} bs={\sl k}} count={\sl n} -- přečte $n$ bloků velikosti $k$
+\item {\tt strings} -- vypisuje tisknutelné řetězce souboru
+\item {\tt paste {\sl soubor\low{1} soubor\low{2}}} -- sloučí soubory po řádcích
+\item {\tt rev} -- otočí každý řádek souboru
+\stopitemize
+
+\section{Vyhledávání}
+
+\startitemize
+\item {\tt whereis, which} -- hledá systémové soubory 
+\item {\tt grep} -- {\tt -i}  ignoruje velikost písmen, {\tt -n} vypíše číslo řádku s nálezem, {\tt -v} vypisuje všechno mimo vzoru, {\tt -E} rozšířený regexp
+\item {\tt locate {\sl jméno}} -- hledá soubor podle jména
+\item {\tt find {\sl cesta} -name 'soubor*'} -- hledá všechny {\sl soubor*}
+\item {\tt find {\sl cesta} -exec grep {\sl text} -H \symlb\symrb \backslash;} -- hledá soubor s {\sl textem}
+\stopitemize
+
+\section{Uživatelé a práva}
+
+\startitemize
+\item {\tt whoami, who am i} -- zjistí, kdo jsem
+\item {\tt w, who, users, finger} -- vypíše připojené uživatele
+\item {\tt last / lastb} -- historie úspěšných / neúspěšných přihlášení
+\item {\tt logout}, \C{\CT+d} -- odhlášení z shellu
+\item {\tt su jméno} -- změní uživatele
+\item {\tt sudo} -- spustí soubor pod daným uživatelem
+\item {\tt id {\sl jméno}}, {\tt groups {\sl jméno}} --  vypíše identitu, skupiny uživatele
+\item {\tt useradd, userdel, usermod} -- vytvoří, smaže, úpraví uživatele
+\item {\tt groupadd, groupdel, groupmod} --  vytvoří, smaže, úpraví skupinu
+\item {\tt passwd} -- změň heslo
+\item {\tt pwck} -- kontrola integrity {\tt /etc/passwd}
+\item {\tt chowm {\sl vlastník:skupina soubor}} -- změna vlastníka, {\tt -R} rekurze
+\item {\tt chgrp {\sl skupina soubor}} -- změní skupinu souboru
+\item {\tt chmod {\sl práva soubor}} -- změna práv, oktalově vlastník, skupina, ostatní; {\tt 444=-r--r--r--}, {\tt 700=-rwx------}, {\tt 550=-r-xr-x---}
+\item {\tt runuser {\sl login} -c {\sl "příkaz"} } -- spustí příkaz jako uživatel
+\stopitemize
+
+\section{Systémové nástroje}
+
+\startitemize
+\item {\tt uname -a} -- název a verze operačního systému
+\item {\tt uptime} -- uplynulý čas od spuštění systému
+\item {\tt fuser} -- zjistí běžící procesy které se souborem  právě pracují
+\item {\tt lsof} --	vypisuje seznam otevřených souborů
+\item {\tt sync} -- vyprázdní buffery souborového systému
+\item {\tt chroot {\sl adresář příkaz}} -- příkaz bere adr. jako kořen
+\item {\tt strace,ltrace {\sl program}} -- zobrazí použitá systémová/knihovní volání
+\item {\tt ldd {\sl binárka}} -- vypíše knihovní závislosti
+\stopitemize
+
+\subsection{Diskové oddíly}
+
+\startitemize
+\item {\tt df} -- ukáže volné místo na připojených oddílech
+\item {\tt mount} -- ukáže připojené oddíly
+\item {\tt mount -o remount -r -n /} -- změna připojení / pouze pro čtení
+\item {\tt mount -o remount -w -n /} --  změna připojení / pouze pro zápis
+\item {\tt mount -t iso9660 cdrom.iso /mnt/dir -o loop} -- připoj image 
+\item \type{mount -t cifs \\\\server\\ftp /mnt/adr -o user=a,passwd=b}
+\item {\tt umount {\sl oddíl}} -- odpojí oddíl
+\item {\tt fdisk -l} -- vypíše disky a oddíly na nich
+\item {\tt blkid} -- vypíše  atributy blokových zařízení
+\item {\tt tune2fs} -- změna parametrů souborových systémů ext2/3/4
+\item {\tt mkfs.ext2}, {\tt mkfs.ext3} -- vytvoř souborový systém
+\item {\tt hdparm} -- nastavuje/čte paramatry SATA/IDE zařízení
+\stopitemize
+
+\subsection{Systémové prostředky}
+
+\startitemize
+\item {\tt ulimit -l} -- vypíše omezení sys. prostředků
+\item {\tt free}, {\tt vmstat} -- zobrazí využití fyzické, virt. paměti
+\item {\tt lspci}, {\tt lsusb} -- výpis PCI, USB zařízení
+\item {\tt dmesg} -- výpis hlášek jádra
+\item {\tt sysctl} -- nastavení parametrů jádra Linuxu za běhu
+\item {\tt dmidecode} -- vypsání informací o BIOSu
+\item {\tt init}, {\tt telinit} -- povel pro {\tt init} ke změně runlevelu
+\item {\tt runlevel}, {\tt who -r} -- vypíše aktuální runlevel
+\stopitemize
+
+\section{Síť}
+
+\startitemize
+\item {\tt hostname} -- vypíše jméno počítače
+\item {\tt ping {\sl host}} -- pošle ICMP ECHO\_REQUEST 
+\item {\tt dhclient eth0} -- nastaví dynamickou konfiguraci {\tt eth0}
+\item {\tt host, nslookup {\sl host/adr}} -- dotaz na záznam v DNS
+\item {\tt dig} -- zjišťování informací z DNS
+\item {\tt whois {\sl doména}} -- zjistí vlastníka domény
+\item {\tt ethtool eth0} -- mění HW parametry síťové karty {\tt eth0}
+\item {\tt ifconfig} -- vypíše síťová zařízení, nastaví adresry, masky
+\item {\tt ifconfig eth0 add 10.0.0.1 netmask 255.255.255.0} 
+\item {\tt ifconfig eth0 hw ether 01:02:03:04:05:06} -- změní MAC adresu 
+\item {\tt route add default gw 10.0.0.138} -- nastavení brány
+\item {\tt route -n}, {\tt netstat -rn} -- výpis routovací tabulky
+\item {\tt netstat -tlnp} -- ukáže programy poslouchající na portech
+\item {\tt arp } --  zobrazení ARP tabulky
+\item {\tt iptables -L} -- zobrazí pravidla firewallu
+\item {\tt tcpdump -i eth0 'tcp port 80'} -- zobrazí komunikaci s HTTP
+\item {\tt tcpdump -i eth0 'not port ssh'} -- všechna komunikace mimo SSH
+\item {\tt ssh user@hostname {\sl příkaz}} -- spustí vzdáleně příkaz
+\item {\tt mail -s subject adresa} -- pošle email na adresu
+\item {\tt wget -e robots=off -r -L http://{\sl adresa}} -- stáhne danou stránku
+\stopitemize
+\stopcolumns
+
+% Zvýraznění
+%sed s/$STRING/${tput smso} $STRING ${tput rmso}/g
+
+\stoptext
+
+
