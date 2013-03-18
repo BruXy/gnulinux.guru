@@ -1,0 +1,394 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                               %
+%  Quick reference for some commands of ViM editor.             %
+%                                         http://vim.org        %
+%                                                               %
+%  Martin Bruchanov -- bruxy at regnet dot cz                   %
+%                                                               %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input vim_tahak_style.ctex
+
+\starttext
+\startcolumns[n=2]
+
+\title{Vi IMproved}
+
+\mycopyright
+
+\section{Basic control and conventions}
+
+\startitemize
+\item {\bf Key combination}~-- several keys pressed together, e.g. \CE{\CT+A} means \CE{\CT+\SH+a}.
+\item {\bf Key sequence}~-- several keys or combinations pressed gradually, e.g.. \CE{\CT+ww} means a press of combination \C{\CT+w} and than a key \C{w}.
+\item {\bf Working mode}~-- it is displayed bottom right:
+	\startitemize
+\item 		\color[command]{\blacksquare}~{\ss C}~-- basic command mode, \CE{\ES},
+\item 		\color[edit]{\blacksquare}~{\ss E}~-- insert mode \CC{\IN}, \CC{i}, 
+\item 		\color[visual]{\blacksquare}~{\ss V}~-- visual, used for highlighting of text blocks \CC{v}/\CC{V}, 
+\item 		\color[exkey]{\blacksquare}~{\ss ex}~-- command line {\em ex}-mode \CC{:}.
+	\stopitemize
+\item Repeat command with typing number $n\times$ of repetitions before command, e.g. \CC{5x} deletes 5 chars from cursor position. Option \CS{set \U{s}how\U{c}md} shows command sequence in bottom right.
+%\item Vynutit si příkaz je možné pomocí {\tt !}, např. \CS{w!} si vynutí uložení souboru, \CS{q!} ukončení ViMu.
+\item Help: \CS{help {\em topic}}, use \CSK{Tab} for command completion.
+\item Similar commands uses same keys, e.g. \CC{f}\,/\,\CC{F}, \CC{t}\,/\,\CC{T} (see below). The difference is direction or range of operation.
+\item Repeat last:\DF command \CC{.}, macro \CC{\type{@@}}
+\item {\bf Undo:}\DF \CC{u} \a \CS{\U{u}ndo}, redo \CC{\CT+r}\,/\,\CS{\U{red}o} 
+\item Set or unset options with \CS{set {\em option}} a \CS{set no{\em option}}. Alone \CS{set} displays current options.
+\item Shortening of options:\DF \CS{\U{se}t \U{i}gnore\U{c}ase} \a\CS{se ic}
+\item {\bf Line addressing} of {\em ex}-commands:
+	\startitemize
+	\item \CS{$x$command}\DF  execute on line $x$	
+	\item \CS{$x$,$y$command}\DF from  $x$ to line $y$
+	\item \CS{.,\symdollar{}command}\DF from actual position to the end
+    \item \CS{\%command} \a \CS{1,\$command}\DF for whole file	
+	\item \CS{.,+$x$comm} \a $x$\CS{comm}\DF from cursor to next $x$ lines
+	\item \CS{.,\symdollar--$x$}\DF from current position to $x$. line from the end
+	\item \CS{/{\em pattern\low{1}}/,/{\em pattern\low{2}}/}\DF from the first occurrence of line with {\em pattern\low{1}} to the first {\em pattern\low{2}}
+	\stopitemize
+\item More {\em ex}-commands together:\DF \CS{command\low{1} \| command\low{2}}
+\item Comparison of two files:\DF {\tt vimdiff {\em file\low{1}} {\em file\low{2}}}
+\stopitemize
+
+\section{Edit and save}
+
+\startitemize
+\item Edit:\DF \CS{\U{e}dit {\em file}}
+\item Open new empty file:\DF \CS{\U{ene}w}
+\item Insert file to current position:\DF \CS{\U{r}ead {\em file}}
+\item Insert output of system {\em command}:\DF \CS{\U{r}ead !{\em command}}
+\item Save/append file:\DF \CS{\U{w}rite {\em file}}\,/\,\CS{w >> {\em file}}
+\item Save/append lines $n$ to $m$:\DF \CS{$n$,$m$w {\em file}}\,/\,\CS{$n$,$m$w>> {\em file}}
+\item Save and quit:\DF \CS{wq}, enforced \CS{wq!}
+\item Quit without save:\DF \CS{q!} \a\CC{ZQ}
+\item Quit and save when file was changed:\DF \CS{x} \a \CC{ZZ}
+\item Go to file under the cursos:\DF \CC{gf}
+\item Change name of current file:\DF \CS{f {\em jméno}}
+\item Insert before/after:\DF char \CC{i}\,/\,\CC{a}, line\DF \CC{I}\,/\,\CC{A}
+\item Insert new line above/below cursor:\DF \CC{O}\,/\,\CC{o}
+\item Rewrite:\Df char \CC{r}, word \CC{cw}, line \CC{cc}, text \CC{R} \a \CC{\IN\IN}
+\item Delete char/line and continue edit:\DF\CC{s}\,/\,\CC{S}
+\stopitemize
+
+\subsection{Moving throught file}
+
+\startitemize
+\item Open {\em file} on 23\high{rd} line:\DF {\tt vim {\em file} +23}
+\item Cursor:\DF \CC{$\rightarrow$} \a \CC{l}, \CC{$\leftarrow$} \a \CC{h}, \CC{$\uparrow$} \a \CC{k}, \CC{$\downarrow$} \a \CC{j}
+%\item Délkový registr umístění: \CS{set \U{s}cr\U{o}lloff={\em řádků}}. 
+\item Paging:\DF \CC{\CT+f} \a\CE{\PU}\,/\,\CC{\CT+b} \a\CE{\PD}
+\item Half-paging up/down:\DF \CC{\CT+u}\,/\,\CC{\CT+d}
+\item Jump to $n$\high{th} line:\DF \CS{$n$} \a \CC{$n$G} , the last \CS{\symdollar} \a \CC{G}
+\item Jump to percentual line position:\DF \CC{{\em n}\%}
+\item Display current line number:\DF \CC{\CT+g}, \CS{set \U{nu}mber} %number
+\item Display number of lines:\DF \CS{=}
+\item Jump to byte position:\DF \CS{\U{go}to $n$}
+\item Jump in line before char {\em a} forward/backward:\DF \CC{t\em{a}}\,/\,\CC{T\em{a}}
+\item Jump in line to char {\em a} forward/backward:\DF \CC{f\em{a}}\,/\,\CC{F\em{a}}
+\item Repeat last line search forward/backward:\DF \CC{;}\,/\,\CC{,} 
+\item Go to beggining of  next/previous word:\DF \CC{w}\,/\,\CC{b}
+\item Go to end of a word:\DF \CC{e},\DF with interpunction \CC{E}
+\item Go to declaration:\DF \CC{gd}
+\item Go to begin/end of paragraph:\DF \CC{\symlb}\,/\,\CC{\symrb}, block: \CC{[\symlb}\,/\,\CC{]\symrb}
+\item Go to begin/end of line:\DF \CC{\HM} \a\CC{\type{^}}\,/\,\CC{\EN} \a\CC{\symdollar}
+\item Go to next/previous sentence:\DF \CC{)}\,/\,\CC{(}
+\item Go to next/previous line:\DF \CC{\EN} \a\CC{+}\,/\,\CC{-}
+\item Go to column:\DF first \CC{0} \a\CC{\type{|}}; {\em n}\high{th}  \CC{{\em n}\type{|}}
+\item Jump to pair bracket:\DF \CC{\%}
+\item Print position, number of lines and chars, etc.:\DF \CC{g\CT+g}
+\stopitemize 
+
+\subsubsection{Marking of position}
+
+\startitemize
+\item Insert invisible mark {\em a}:\DF \CC{ma}
+\item Jump to mark {\em a}:\DF \CC{'a}
+\item Print marks:\DF \CS{marks}
+\item Erase mark {\em a}:\DF \CS{\U{delm}arks {\em a}} % delmarks
+\item Process text from mark {\em a} to {\em b}:\DF \CS{'a,'b {\em příkaz}}, e.g. \CS{'a,'b !sort} will use external command for sort 
+\stopitemize
+
+\subsection{Deleting, moving and copying of text}
+
+\startitemize
+\item Deletion automaticly stores text in register (for moving)
+\item Delete:\Df char  \CC{x} \a \CC{\DEL}; previous char \CC{X} \a \CC{d$\leftarrow$} \a \CC{dh}, \CE{\CT+h} \a \CE{\BS}; word \CC{dw} \a\CE{\CT+w}; line \CC{dd}  
+\item Delete up to pair bracket:\DF \CC{d\%}
+\item Delete to end/beginning of sentence:\DF \CC{d)}\,/\,\CC{d(}
+\item Delete the rest of line/file:\DF \CC{D} \a \CC{d\symdollar} \,/\,\CC{dG}
+\item Delete from cursor position to beginning:\DF \CC{d0} \a\CC{d^}
+\item Join lines: \DF \CC{J} add space,\DF \CC{gJ} without space
+%\item Spoj s následujícím řádkem, bez mezery:\DF \CC{gJ}
+\item Copy to register:\DF line \CC{Y} \a \CC{yy}, word \CC{yw}
+\item Copy to the beginning/end of line:\DF \CC{y0}\,/\,\CC{y\symdollar}
+\item More registers: press \CC{"{\em k}\ldots} before command will save text to register {\em k}. E.g. \CC{"kyy} copies line into \type{k}
+\item Paste content of last used register or last deleted text: after \CC{p}, before \CC{P} cursor, \CC{"kpp} pastes register \type{k}
+\item Special register: \type{"%} -- current file name, \type{"/} -- last search,\ldots
+\item Show content of registers:\DF \CS{\U{reg}ister {\em a}} %register
+\item Swaps the next two chars/lines:\DF \CC{xp}\,/\,\CC{ddp}
+\item {\em ex}-mode:\DF delete \CS{d}, move \CS{m}, copy \CS{co} \a \CS{t}
+\item \CS{10,20m0} -- move lines 10--20 to the beginning (0)
+\item \CS{.,+5d a} -- delete next 5 lines and store them to reg. {\em a}
+\stopitemize
+
+\subsection{Formatting}
+
+\startitemize
+\item Set text width:\DF \CS{set \U{t}ext\U{w}idth=$n$} % textwidht
+\item Switch on line wrap:\DF \CS{set wrap}
+\item Justify:\DF \CS{\U{ce}nter}, \CS{\U{ri}ght}, \CS{\U{le}ft}
+\item Format line:\DF \CC{gqq}
+\item Format paragraph:\DF \CC{gqap} jump to end, \CC{gwap} 
+\item Reverse case of char:\DF \CC{\symtilda}, line \CC{g\symtilda\symtilda}
+\item Line to upper/lower:\DF \CC{gUU}\,/\,\CC{Vu} \a \CC{guu}\,/\,\CC{VU}
+\item Whole file to upper/lower case:\DF \CC{gggUG}\,/\,\CC{ggguG}
+\item While line/file {\em ROT13} encoding:\DF \CC{g??}\,/\,\CC{ggg?G}
+\stopitemize
+
+\subsubsection{Indentation}
+
+\startitemize
+\item Shift line:\DF \CC{>>}, \CE{\CT+t} of \CS{set \U{s}hift\U{w}idth=$n$} %shiftwidth
+\item Shift line leftwards:\DF \CC{<<}, \CE{\CT+d}
+\item Tabbing:\DF \CE{\TT} \a \CE{\CT+i} 
+%\item Přidej/uber odsazení o jednu úroveň:\DF \CE{\CT+t}\,/\,\CE{\CT+d}
+\item Shift line same as before:\DF \CC{==} %POZOR
+\item Indent block relatively:\DF \CC{=a\symlb } %POZOR
+\item Refresh indentation of whole file:\DF \CC{gg=G}
+\stopitemize
+
+\subsection{Complementation}
+
+\startitemize
+\item Complement word before/after cursor:\DF \CE{\CT+p}\,/\,\CE{\CT+n}
+\item Name of file in working directory:\DF \CE{\CT+x \CT+f}
+\item Name of directory:\DF \CE{\CT+x \CT+d}
+\item Whole line:\DF \CE{\CT+x \CT+l}
+\item Word from dictionary:\DF \CE{\CT+x \CT+k}
+\item System command (reads \type{$PATH}):\DF \CE{\CT+x \CT+v}
+\item Increase/decrease number under cursor:\DF \CC{\CT+a}\,/\,\CC{\CT+x}
+\item Name of current file:\DF \CE{\CT+r\%}
+\stopitemize
+
+\subsubsection{Completition at {\em ex}-command line}
+
+\startitemize
+\item Insert content of register {\em a}:\DF \CSK{\CT+r{\em a}}
+\item Insert word under the cursor:\DF \CSK{\CT+r \CT+a} 
+\item Cancel command:\DF \CSK{\CT+u} %, \CSK{\CT+c} go to command mode
+\stopitemize
+
+\subsection{Insert special sumbols}
+
+\startitemize
+\item Insert ASCII char:\DF \CE{\CT+v\,{\em code}\,\EN}
+\item Show ASCII/UTF-8 of char under cursor:\DF \CC{ga}\,/\,\CC{g8}
+\item Suppress control character, e.g. \C{\TT} (\type{^I}):\DF \CE{\CT+v\,\TT} 
+\item Table of Unicode digraphs:\DF \CS{\U{dig}raphs} %digraphs 
+\item Insert digraphs:\DF\CE{\CT+k\,{\em K\low{1}\,K\low{2}}}
+\item Digraphs: ±\,\type{+-}\hfill °\,\type{DG}\hfill ×\,\type{*X}\hfill ÷\,\type{-:}\hfill –\,\type{-N}\hfill —\,\type{-M}\hfill „\,\type{:9}\hfill “\,\type{:6}
+\item Define digraphs \type{.3} for „…“ (U+2026):\DF \CS{dig .3 8230}
+\stopitemize
+
+%Vložení nenapsatelného ASCII znaku, např. \TT: \CE{\CT+v\TT}, objeví se
+%dvojznak \type{^I}, kombinace \CE{\CT+v{\em číslo}\EN} vloží znak s daným ASCII
+%kódem.
+
+%Některé nenapsatelné znaky v kódování UTF-8 je možné psát pomocí {\em
+%digraphs}, dvojznakové kombinace, tabulku zobrazí \CS{digraphs}, znak se vkládá
+%\CE{\CT+k $K_1$ $K_2$}. 
+
+\section{Search and replace}
+
+\startitemize
+\item Ignore case:\DF \CS{set \U{i}gnore\U{c}ase}, opposite \CS{set noic}
+\item Search forward/backward:\DF \CC{/{\em pattern}}\,/\,\CC{?{\em pattern}}
+\item Repeat last search:\DF \CC{/}\,/\,\CC{?}
+\item Ignore case:\DF \CC{/\backslash{}c{\em pattern}}
+\item Jump to next searched place:\DF \CC{n} forward, \CC{N} backward
+\item Search for word under the cursor:\DF \CC{\#} forward,\DF \CC{*} backward
+\item Search by ASCII code of „M“:\DF \type{\%d77}, \type{\%x4d}, \type{\%o0115} 
+\item Search Unicode character „\symalpha“ (U+03B1):\DF \type{\%u03b1}
+\item Substitution:\DF \CS{\U{s}ubstitute/from/to/{\em flag}}, abbr. \CS{s}
+\item Repeat last substitution:\DF \CS{s} \a\CS{s//\symtilda/}
+\item The delimiter \type{/} can be any char instead \type{\}, \type{"} and \type{|}
+\item Flags:\DF {\tt c}~-- confirmation, {\tt g}~-- for whole line, {\tt p}~-- print, without flag changes only first occurence
+%\item Na řádcích, kde je {\em regex} proveď {\em ex-příkaz}:\DF \CS{g/{\em regex}/{\em příkaz}}
+%\item Najdi a nahraď:\DF \CS{g/Windows/s//Linux/g}
+%\item Příznaky: {\em žádný}~-- nahrazuje první výskyt, \type{g}~-- na celém řádku, \type{c}~-- potvrzovat
+\item Cancel highlight:\DF \CS{\U{noh}lsearch} % nohlsearch
+\item Search in more files:\DF\CS{\U{vim}grep /{\em pattern}/g {\em f}\low{1} {\em f}\low{2} \ldots {\em f}\low{n}}
+\item Execute command on line with:\DF \CS{\U{g}lobal/{\em pattern}/{\em command}} 
+\item Execute where pattern not match:\DF \CS{g!/{\em pattern}/{\em command}}
+\stopitemize
+
+\subsection{Regular expressions}
+
+\startitemize
+\item Begin/end of:\DF line \type{^}\,/\,{\tt \symdollar}, word \type{\<}\,/\,\type{\>}, file \type{\%^}\,/\,\type{\%$} 
+\item Last searched pattern/substitution: \DF \type{&}\,/\,{\tt \symtilda} %\type{~}
+\item Matches any character:\DF \type{.} (dot)
+\item Or/and:\DF \type{\|}\,/\,\type{\&}
+\item Suppress next special symbol:\DF \type{\.}, \type{\&}, {\tt \symdollar}, \type{\^}, \type{\\}, \type{\*} 
+\item Atom:\DF \type{\(}pattern\type{\)}
+\item $N$\high{th} reference:\DF {\tt \type{\}{\em N}},\DF first \type{\(}pattern\type{\)} = \type{\1}
+\item Ranges:\DF \type{[abcd]} \a \type{[a-d]}, \type{[a-zA-Z]} \a {\tt \backslash{}a}, \type{[0-9]} \a \type{\d}
+\item Ignored chars and ranges:\DF \type{[^abcd]} \a \type{[^a-d]}
+\item Zero or multiple {\em z}:\DF {\tt {\em z}\type{*}} \a{\tt{\em z}\type{\{0,\}}}
+\item One or multiple {\em z}:\DF {\tt {\em z}\type{\+}} \a{\tt{\em z}\type{\{1,\}}}
+\item One or zero times:\DF {\tt {\em z}}\type{\?} \a{\tt{\em z}\type{\{0,1\}}}
+\item Repetition {\em z}:\DF \type{z\{n\}} accurate $n\times$, \type{z\{n,\}} minimal $n\times$, \type{z\{n,m\}} min. $n$ and max. $m$ times 
+
+%\item Obsahuje 
+%Třídy znaků: \type{[:alnum:]}
+%[:alpha:] [:ascii:] [:blank:] [:digit:]
+%{\bf Příklady:} 
+\stopitemize
+
+\section{Folding of text blocks (\CS{help folding})}
+
+\startitemize
+\item Fold text:\DF \CC{zf}, selected \CV{zf} 
+\item Jump to beginning/end of fold:\DF \CC{[z}\,/\,\CC{]z}
+\item Open fold under the cursor:\DF \CC{zo}, recursively \CC{zO}
+\item Open/close all:\DF \CC{zR}\,/\,\CC{zM}
+\item Switch fold-unfold:\DF \CC{za}, recursively \CC{zA}
+\item Highlight folded parts:\DF \CS{set \U{f}ol\U{dc}olumn=5} %foldcolumn
+\stopitemize
+
+\section{Edit more files, windows and tabs}
+
+\subsection{More files (edit buffers)}
+
+\startitemize
+%Spustit ViM, kde parametrem jsou názvy několika souborů.
+\item Start vim:\DF {\tt vim file\low{1} file\low{2}\ldots}
+\item Display buffers:\DF \CS{ls} \a \CS{files} (numbered)
+\item Switch to next/previous file:\DF \CS{\U{n}ext}\,/\,\CS{\U{p}rev} % next prev
+\item Switch to first/last file:\DF\CS{\U{rew}ind} \a \CS{\U{fir}st}\,/\,\CS{\U{la}st} % rewind first
+\item Perform mass {\em command} for all files:\DF\CS{bufdo {\em command}}
+\stopitemize
+
+\subsection{Windows}
+
+\startitemize
+\item New window:\DF \CS{new} \a \CC{\CT+wn} 
+\item Split window:\DF \CS{\U{sp}lit} \a \CC{\CT+ws} %split
+\item Vertically split window:\DF \CS{\U{vs}plit} \a \CC{\CT+wv} %vsplit
+\item Close window:\DF \CS{\U{clo}se} \a \CC{\CT+wc} 
+\item Close all except current:\DF \CS{\U{on}ly} \a \CC{\CT+wo}
+\item Jump to next window:\DF \CC{\CT+ww}
+\item Shrink/large window by $n$ lines:\DF \CC{\CT+w$n$-}\,/\,\CC{\CT+w$n$+}
+\item Shrink/large window by $n$ columns:\DF \CC{\CT+w$n$\type{<}}\,/\,\CC{\CT+w$n$\type{>}}
+\item Same size for all windows:\DF \CC{\CT+w=}
+\item Mass:\DF write \CS{\U{wa}ll}, quit \CS{\U{qa}ll}, \CS{\U{wqa}ll}
+\item Perform mass {\em command} for all windows:\DF \CS{windo {\em command}}
+\item Open name under cursor in new window:\DF \CC{\CT+wf}
+\stopitemize
+
+\subsubsection{Moving in window}
+
+\startitemize
+\item Jump to window line:\DF top \CC{H}, middle \CC{M}, last \CC{L}
+\item Jump to $n$\high{th} line from top/bottom:\DF \CC{$n$H}/\CC{$n$L}
+\item Set actual line to:\DF top \CC{z\EN}, center \CC{z.}, bottom \CC{z-}
+\item Scroll window up/down by:\Df line \CC{\CT+e}\,/\,\CC{\CT+y}, page \CC{\CT+b}\,/\,\CC{\CT+f}, half-page \CC{\CT+u}\,/\,\CC{\CT+d}
+\item Redraw window without scrolling:\DF \CC{\CT+l}
+\stopitemize
+
+\subsection{Tabs}
+
+\startitemize
+\item Command:\DF {\tt vim -p $f$\low{1}, $f$\low{2} \ldots} open files in tabs
+\item Create/close tab:\DF \CS{\U{tab}n\U{e}w}\,/\,\CS{tabc}
+\item Close all, except current tab:\DF \CS{tabo}
+\item Go to next/previous:\DF \CS{tabn} \a \CE{\CT+\PD}\,/\,\CS{tabp} \a \CE{\CT+\PU}
+\item Move after the fold $n$:\DF \CS{tabm $n$}
+\item Perform mass {\em command}:\DF \CS{\U{tabd}o {\em command}}
+\item Change tab design:\DF \CS{set \U{ta}b\U{l}ine} %tabline
+\item Open name of file under cursor in new tab:\DF \CC{\CT+wgf}
+\stopitemize
+
+\section{Visual mode}
+
+\startitemize
+\item Select:\DF chars \CC{v}, lines \CC{V}, cursor sets range
+\item Block text selection:\DF \CC{\CT+V}
+\item Change to upper/lower case:\DF \CV{U}\,/\,\CV{u}
+\item Select:\DF word \CV{aw}, ()/\symlb\symrb block \CV{ab}\,/\,\CV{aB}, no brackets \CV{ib}\,/\,\CV{iB}; XML block with marks \CV{at}, inside marks \CV{it}
+\item Perform {\em command} in selected range:\DF \CS{'<,'> {\em command}}
+\stopitemize
+
+
+\section{Abbreviations, key maps and macros}
+
+\startitemize
+\item Define abbreviation:\DF \CS{\U{ab}reviate {\em abbr} {\em full expansion}}
+\item Abbreviations for insert/ex-mode:\DF \CS{\U{ia}bbrev}\,/\,\CS{\U{ca}bbrev} % iabbrev cabbrev
+\item List/delete abbreviations:\DF \CS{ab}\,/\,\CS{unab {\em abbreviation}}
+\item Map key {\em x}:\DF \CS{map {\em x} {\em commands}}
+\item Map by mode:\DF \CS{map} \CS{\U{im}ap} \CS{\U{cm}ap} \CS{\U{nm}ap} \CS{\U{vm}ap}
+\item Map key for insert mode:\DF \CS{map! {\em x} {\em commands}}
+\item List key mapping:\DF \CS{map}/\CS{map!}
+\item Delete mapping:\DF \CS{\U{unm}ap {\em x}}/\CS{\U{unm}ap! {\em x}}
+\item Write macro to register {\em a}:\DF \CC{q{\em a}}
+\item End macro definition:\DF \CC{q}
+\item Perform macro in register {\em a}:\DF \CC{\type{@}{\em a}}
+\item Repeat last called macro:\DF \CC{\type{@@}}
+\item Execute macro {\em a} as {\em ex}-command:\DF \CS{@{\em a}}
+\stopitemize
+
+%\section{Kontrola pravopisu (ViM$^{7+}$)}
+\section{Spell checking}
+
+%ViM umí zvýraznit překlepy, je nutné mu dodat slovník (např. z {\em OpenOffice.org} [\type{cz_CZ.aff}, \type{cs_CZ.dic}]), ze kterého si vygeneruje vnitřní binární reprezentaci slovníku.
+
+% http://ftp.linux.cz/pub/localization/OpenOffice.org/devel/Czech/spell_checking/cs_CZ.zip
+% unzip -x cs_CZ.zip cs_CZ.aff cs_CZ.dic
+% vim -e -s << EOF
+% :mkspell cs cs_CZ
+% :!cp cs.utf-8.spl $VIMRUNTIME/spell  
+% EOF
+
+\startitemize
+%\item Vytvoření slovníku:\DF \CS{mkspell cs cs\_CZ}
+\item Switch on spelling:\DF \CS{set spell \U{sp}e\U{l}llang=cs,en} %spelllang
+\item Search next/previous mistype:\DF \CC{]s}\,/\,\CC{[s}
+%\item Nabídni podobné tvary:\DF \CE{\CT+xs}
+\item Add to dictionary a word under cursor:\DF \CC{zg}
+\item Add temporary to dictionary:\DF \CC{zG}
+\item Set word as bad:\DF \CC{zw}, temporary \CC{zW}
+\item Suggest correctly spelled words:\DF \CC{z=}
+\item Always take the first suggestion:\DF \CC{1z=}
+\stopitemize
+
+\section{Programmer support}
+
+\startitemize
+\item Run {\tt make}:\DF \CS{\U{mak}e} %make
+\item Jump to next/previous error:\DF \CS{\U{cp}revious}\,/\,\CS{\U{cn}ext}
+\item List all errors:\DF \CS{\U{cl}ist}
+\item Add window with list of errors:\DF \CS{\U{cope}n}
+%\item Zobrazení čísel řádků: \CS{set \U{nu}mber} %number
+%\item Obarvení syntaxe: \CS{set syntax}
+\stopitemize
+
+\section{Other}
+
+\startitemize
+\item Start shell:\DF \CS{\U{sh}ell} % shell
+\item Open manpage of command under cursor:\DF \CC{K}
+\item Open file under the cursor:\DF \CC{gf}
+%Překreslit obsah okna: \CC{z}.
+\item Save as color HTML:\DF \CS{\U{ru}ntime! syntax/2html.vim}
+\item Wildcard of current file \type{%}, e.g. \CS{!context \%} process current file with \CONTEXT %Con\TeX{}t
+\stopitemize
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\stopcolumns
+\stoptext
+
+
+
+
+
