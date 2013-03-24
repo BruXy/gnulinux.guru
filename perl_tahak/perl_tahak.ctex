@@ -1,0 +1,575 @@
+\input perl_vzhled.ctex
+
+\def\IF{{\bf if}{} }
+\def\ELSIF{{\bf elsif}{} }
+\def\ELSE{{\bf else}{} }
+\def\UNLESS{{\bf unless}{} }
+\def\FOR{{\bf for}{} }
+\def\FOREACH{{\bf foreach}{} }
+\def\CONTINUE{{\bf continue}{} }
+\def\GOTO{{\bf goto}{} }
+\def\DO{{\bf do}{} }
+\def\DEFAULT{{\bf default}{} }
+\def\WHEN{{\bf when}{} }
+\def\GIVEN{{\bf given}{} }
+\def\WHILE{{\bf while}{} }
+\def\UNTIL{{\bf until}{} }
+\def\SUB{{\bf sub}{} }
+\def\block{{\sl blok}{} }
+\def\expr{{\sl výraz}{} }
+
+\def\btt#1{{\tt\bf #1}{}}
+\def\stt#1{{\tt\sl #1}{}}
+
+\def\tbs{\textbackslash{}}
+
+\setupTABLE[r][first][align=center]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\starttext
+
+\startcolumns[n=2]
+	
+\title{Perl}
+
+\mycopyright
+	
+%\blank[small]
+
+Nastavení interpretru: \type{#!/usr/bin/perl} \qquad Komentáře: \type{# toto je komentář}
+
+\section{Parametry příkazové řádky}
+
+\startitemize
+\item {\tt  -v} -- zobrazí verzi a základní info
+\item {\tt -e \sl příkaz} -- spustí kód daný na příkazové řádce
+\item {\tt -W } -- vypisuje varování 
+\item {\tt -X } -- potlačí varování
+\item {\tt -p -e 's/A/B/i'} -- náhrada za program {\tt sed}
+\item {\tt -n} -- skript je uvnitř \type{while(<>){...}}
+\item {\tt -F/{\sl n}/} -- nastaví vstupní oddělovač polí pro {\tt -a}
+\item {\tt -a} -- autosplit do pole \type{@F} \crlf
+%\startitemize
+\type{perl -F: -ane 'print "@F[0]\n"' /etc/passwd} -- výpis loginů
+%\stopitemize
+\item {\tt perldoc -f \sl funkce} -- dokumentace {\sl funkce}
+\stopitemize
+
+\section{Nastavení vlastností interpreta}
+
+\startitemize
+\item {\tt use utf8;} -- podpora UTF-8 pro všechny řetěz. operace 
+%\item {\tt use switch;} --
+\item {\tt use \sl verze; } -- vynutí chování perlu dané verze
+\item {\tt use warning;} -- varování
+\item {\tt use diagnostic;} -- ladící hlášky a další varování
+\item {\tt use strict;} -- vynucení striktního kódu
+\item {\tt use integer;} --  jen celočíselná aritmetika
+\item {\tt use locale;} -- operace dle lokálních zvyklostí 
+\item {\tt no \sl pragma;} -- odteď zakáže dané nastavení
+
+%\item {\tt use \sl pragma} -- další vlastnosti jazyka: 
+
+% autodie, attributes, autouse, base, bigint, bignum, bigrat, blib, bytes,
+% charnames, constant, diagnostic, encoding, feature, fields, filetest, if,
+%  integer, less, lib, locale, mrp, open, ops, overload, overloading, parent, re,
+% sigtrap, sort, strict, subs, threads, threats::shared, utf8, vars, version,
+% vmsis, warnings, warnings::register
+\stopitemize
+
+\section{Balíky a moduly}
+
+\startitemize
+\item {\tt import modul [ seznam ]} -- importuje funkce a proměnné
+\item {\tt no modul [ seznam ]} -- zakáže funkce a proměnné 
+\item {\tt require verze} -- vyžaduje k běhu perl min. dané verze
+\item {\tt require "soubor"} -- vloží kód ze souboru ({\tt .pm})
+\item {\tt unimport modul [ seznam ]} -- zruší předchozí import
+\stopitemize 
+
+\section{Řídící výrazy}
+
+\startitemize
+\item \type{$out=`date`; $out=qx(date);} -- ulož výstup sys. utility {\tt date}
+\item \type{open(...) or die "Error";} -- pokud open 0 provede die
+\item \type{print ... if(...);} -- výpis pokud platí podmínka 
+\item {\tt výraz ? \$true : \$false} -- ternární výraz
+\item {\tt \{ výraz1; výraz2; \}} -- uzavření části kódu do {\sl bloku}
+\item \IF ( \expr ) \block [ \ELSIF ( \expr ) \block \ldots ] [ \ELSE \block ]
+\item \UNLESS ( \expr ) \block [ \ELSE \block ]
+\item [ {\sl label:} ] \WHILE ( \expr ) \block [ \CONTINUE \block ] 
+\item [ {\sl label:} ] \UNTIL ( \expr ) \block [ \CONTINUE \block ] 
+\item [ {\sl label:} ] \FOR ( [ \expr ] ; [ \expr ] ; [ \expr ] ) \block
+\item [ {\sl label:} ] \FOREACH {\sl proměná}  ( {\sl seznam} ) \block [ \CONTINUE \block ]
+\item [ {\sl label:} ] \block [ \CONTINUE \block ]
+\item \GOTO {\sl label}
+\item {\bf last } [ {\sl label} ] -- okamžité opustí smyčk, přeskočí \CONTINUE blok
+\item {\bf next } [ {\sl label} ] -- spustí \CONTINUE blok a provede další iteraci
+\item {\bf redo } [ {\sl label} ] -- restartuje smyčky bez vyhodnocení podmínky, přeskočí \CONTINUE blok 
+\item  \DO \block \WHILE \expr; \DO \block \UNTIL \expr;
+\item \GIVEN ( \expr ) { \WHEN ( \expr ) \block \DEFAULT \block }
+\stopitemize
+
+\subsection{Funkce}
+
+\startitemize
+\item {\tt \SUB funkce [ ( prototyp ) ] [ atributy ] \block};
+\startitemize
+\item atributy: {\tt method}, {\tt lvalue}
+\item prototyp: \type{$} skalární, 
+\type{@ %} seznamy, \type{&} reference funkce, 
+\type{*} akceptuje jméno, konstantu, skalární výraz, typeglob, reference typeglob,
+\type{\$ \@ \% \* \& \[...]} argument musí začínat daným znakem;
+\type{_} -- vyžaduje skalár, \type{$_};
+\type{+} -- vyžaduje pole, hash nebo referenci;
+\type{;} -- další argumenty volitelné;
+\stopitemize
+\item {\tt funkce(); &funkce(); &funkce; funkce} -- volání
+\item {\tt defined &funkce} -- testuje zda je funkce definována
+\item {\tt return [ \expr ]} -- návrat z funkce
+\item \type{$_[0]}, \type{$_[1]}, \type{$_[2]}, \type{$_[3]},\ldots -- přístup k argumentům
+\item \type{sub add($$) { $a=shift; $b=shift; return $a+$b;}}
+\stopitemize
+
+\section{Proměnné}
+
+\startitemize
+\item {\tt [ my ] \$name = \sl hodnota} -- uloží hodnotu do {\tt \$name}
+\item {\tt defined \sl jmého} -- test existence (nejen) proměnné
+\item {\tt \$nic = {\bf undef}} -- přiřadí nedefinovanou hodnotu
+\item \type{$pointer = \$name} -- vytvoří ukazatel na {\tt \$name}
+\item \type{$$pointer} -- hodnota na adrese \type{$pointer}
+\item {\tt use constant PI => 3.14159;} -- definice konstanty
+\item Číselné formáty: 
+\startitemize
+	\item 	{\tt 2006}~-- desítkový int.;
+	\item 	{\tt 0775}~-- osmičkově;
+	\item 	{\tt 0xBABE}~-- hexa;
+	\item 	{\tt 0b101010}~-- dvojkově;
+	\item 	{\tt 3.14, 314e-2}~-- desetinná čísla;
+	\item 	{\tt 0b0101\_1010, 123\_456}~-- oddělovač zlepší čitelnost;
+\stopitemize
+\item {\tt scalar \sl výraz} -- vynutí skalární význam výrazu
+\item \type{__LINE__}, \type{__FILE__}, \type{__PACKAGE__} -- aktuální řádek, skript, balík
+\stopitemize
+
+\subsection{Speciální proměnné a pole}
+
+\startitemize
+\item {\tt use English;} -- pro alter. jméno za lomítkem
+\item \type{$_} / {\tt \$ARG} -- základní arg. mnoha funkcí
+\item \type{@_} / {\tt @ARG} -- seznam arg. mnoha funkcí
+\item \type{$.} / {\tt \$NR} -- číslo řádku čteného souboru
+\item \type{$,} / {\tt \$OFS} -- výstupní oddělovač prvků pole
+\item \type{$/} / {\tt \$RS} -- vstupní oddělovač, obvykle \type{\n}
+\item \type{$\} / {\tt \$ORS} -- výstupní oddělovač pro print (prázdný)
+\item \type{$!} / {\tt \$ERRNO} -- chyba posledního příkazu
+\item \type{$0} / {\tt \$PROGRAM\_NAME} -- jméno skriptu
+\item \type{$$} / {\tt \$PID} -- číslo procesu běžícího skriptu
+\item \type{$?} / {\tt \$CHILD_ERROR} -- návrat. hodnota \type{`...`}
+\item \type{$1}\ldots\type{$9} -- nalezené podvýrazy regexpu
+\item \type{@ARGV} -- pole s parametry z příkazové řádky
+\item \type{$<}~/ \type{$UID}, \type{$>}~/ \type{$EUID}, 
+	\type{$(}~/ \type{$GID}, \type{$)}~ / \type{$EGID}
+\item \type{%ENV} -- hash s parametry prostředí
+\item \type{%SIG} -- obsahuje obsluhu signálů
+\item \type{$^O} / {\tt \$OSNAME} -- jméno operačního systému
+\stopitemize
+
+\subsection{Pole}
+
+\startitemize
+\item {\tt @pole = (hodnota1, hodnota2,\ldots); } -- definice pole 
+\item {\tt @cisla=(0 .. 10);} -- zadání číselného rozsahu 
+\item {\tt @znaky=('A' .. 'Z', 'a' .. 'z');} -- znakový rozsah
+\item \type{$pole[1]} -- přístup k 2. prvku
+\item {\tt @pole[3,4,5]; @pole[3..5]} -- výřez pole
+\item \type{$pole[-1]} -- přístup k poslednímu prvku
+\item {\tt @pole = ([1, 2], [3, 4]);} -- dvourozměrné pole $2\times2$
+\item \type{$pole[1][0]} -- přístup k prvku \uv{3}
+\item {\tt @pole} -- v skalárním kontextu vrací počet prvků
+\item \type{$#pole} -- poslední index {\tt @pole}
+\item \type{$p = \@pole;} -- vytvoří ukazatel na {\tt @pole}
+\item \type{$$p[1]}, \type{$p->[1]} -- přístup k 2. prvku
+\item \type{@{$hash->{'pole'}}} -- pole jako prvek hashe
+\item {\tt exists \sl prvek} -- pravda pokud prvek existuje 
+\item {\tt pop \sl @pole} -- vyjme poslední prvek
+\item {\tt push \sl @pole,list} -- přidá nový prvek na konec
+\item {\tt shift \sl @pole} -- vyjme první prvek
+\item {\tt unshift \sl @pole} -- vloží nový prvek na začátek
+%\item {\tt splice @pole, offset [, length [, list ] ]} -- 
+\item {\tt sort \sl@pole} -- třídí prvky pole
+\item {\tt reverse \sl@pole} -- otočí pořadí prvků
+\item {\tt wantarray } -- pravda pro pole, nepravda pro skaláry
+\item {\tt join \sl znak,@pole} -- spojí prvky do řetězce a oddělí znakem
+\item {\tt @prvky=grep( /.../, @pole);} -- nové pole s prvky dle regexpu
+\item {\tt \$prvky=grep( /.../, @pole);} -- počet vyhovující výrazu
+\stopitemize
+
+\subsection{Asociativní pole -- hashe}
+
+\startitemize
+\item {\tt \%pole=( "klíč1" => "hodnota", "klíč2" => "hodnota", \ldots}) 
+\item {\tt \%pole=( "klíč1", "hodnota", "klíč2", "hodnota",\ldots})
+\item \type{$pole{'klíč1'};} -- přístup k položce
+\item \type{$pointer = \%hash;} -- vytvoří ukazatel na {\tt \%hash}
+\item \type{$$p['key']}, \type{$p->['key']} -- přístup k prvku
+\item \type{@pole['a','b']} -- výřez
+\item {\tt keys \sl @pole} -- vrací všechny klíče
+\item {\tt values \sl @pole} -- vrací všechny hodnoty
+\item {\tt each \sl @pole}  -- vrací pár klíč-hodnota
+\item \type{while (($key,$val)=(each %pole)){...}}
+\item \type{foreach $key (sort keys %pole){...}} -- seřaď podle klíčů
+\item {\tt delete \sl prvek} -- vymaže pár klíč-hodnota
+\stopitemize
+
+\subsection{Řetězce}
+
+\startitemize
+\item \type{$string = "Ahoj!\n"; $string = qq/Ahoj\n/;}  
+\item \type{$string = 'Hello'; $string = q/Hello/;}  
+\item {\tt \$str = "řetěz" x \sl n} = zopakuje řetěz $n\times$
+\item \type{q#Hello# q{Hello} q[Hello] q(Hello)}
+\item {\tt @den = qw( Po Út St Čt Pá So Ne ); }
+\item {\tt @den = ( 'Po', 'Út', 'St', 'Čt', 'Pá', 'So', 'Ne' ); }
+\item Zadání znaku: 
+	\type{\53, \053, \o{53}}~-- osmičkově;
+	\type{\cC} -- řídící znak Ctrl-C; 
+	\type{\xff} -- hexa;
+	\type{\N{GREEK SMALL LETTER ALPHA}}, \type{\N{U+03B1}}, \type{\x{03b1}} -- Unicode znak \uv{$\alpha$} 
+\item Formátovací sekvence:
+\startitemize
+	\item 	\type{\E}~-- ukončuje \type{\L}, \type{\Q}, \type{\U};
+	\item 	\type{\l}~-- následující převede na malá písmena;
+	\item 	\type{\L}~-- následující na malé, až po \type{\E}; %???
+	\item 	\type{\u}~-- následující převede na velká písmena;
+	\item 	\type{\U}~-- následující na velká, až po \type{\E};
+	\item 	\type{\Q}~-- zaeskejpuje speciální znaky, až po \type{\E}
+\stopitemize
+\item {\tt chomp} -- odstraní \uv{\type{\n}} z konce řetězce
+\item {\tt chop } -- odstraní poslední znak z řetězce
+%\item {\tt crypt } --
+\item {\tt eval } -- provede zadaný kód 
+\item {\tt index str, substr [, offset ]} -- vrátí první pozici podřetězce, od offsetu, nenalezeno vrací $-1$
+\item {\tt rindex str, substr [, offset ]} -- vrátí poslední pozici
+\item {\tt lc, uc } -- převede řetězec na malá / velká písmena
+\item {\tt lcfirst, ucfirst } -- řetězec s prvním pís. malým / velkým
+\item {\tt length } -- vrátí počet znaků
+\item {\tt quotemeta } -- zaeskejpuje speciální znaky
+\item {\tt substr expr, offset [, len [, newtext ]]} -- podřetězec
+\item {\tt \$str = sprintf(\ldots)} -- formátovaný zápis řetězce
+\item {\tt @pole = split({\sl oddělovač}, \$str);} -- rozdělení do pole
+\stopitemize
+
+\subsubsection{Regulární výrazy}
+
+\startitemize
+\item {\tt "výraz"}, {\tt qr/výrax/}, {\tt /výraz/}, {\tt m/výraz/}  
+\item {\tt s/výraz/náhrada/\sl m} -- nahrazení
+\item {\tt tr/\ldots/\ldots/\sl m}, {\tt y/\ldots/\ldots/\sl m} -- náhrada znaků
+\item Modifikátory {\sl m}: 
+\startitemize
+	\item {\tt i}~-- ignoruje velikost písmen;
+	\item {\tt m}~-- víceřádkový mód (\type{^} a \type{$} = \type{\n});
+%	\item {\tt o}~-- vyhodnotí výraz pouze jednou;
+	\item {\tt g}~-- hledá všechny výrazy;
+	\item {\tt s} -- jednořádkový mód, \uv{\tt{.}} zahrnuje \type{\n};
+	\item {\tt x} -- povolí bílé znaky a komentáře;
+\stopitemize
+%a -- vynutí striktní ASCII režim
+%d
+%l
+%u -- vyhodnotí výraz s Unicode sémantikou
+
+\item \type{$&} / \type{$MATCH} -- zachycený řetězec
+\item \type{$`} / \type{$PREMATCH} -- řetězec před \type{$&}
+\item \type{$'} / \type{$POSTMATCH} -- řetězec za \type{$&}
+%\type{$+ \type{$LAST_PARENT_MATCH
+\item \type{.} (tečka) -- libovolný znak
+\item {\tt [\ldots]}/{\tt [^\ldots]} -- množina/negovaná množina znaků
+\item \type{^}/\type{$} -- začátek/konec řádku nebo řetězce
+\item {\tt ( )} -- seskupení výrazu
+\item {\type{|}} -- nebo, alternativní výrazy
+\item \type{\}{\stt n} -- $n$-tý zachycený podvýraz
+
+\definetype[regexp][option=RAW,blank=small] 
+
+\def\IsSpace{
+	{\tt [ \tbs{}t\tbs{}n\tbs{}r\tbs{}f]}
+}
+
+\def\IsNotSpace{
+	{\tt [\type{^} \tbs{}t\tbs{}n\tbs{}r\tbs{}f]}
+}
+
+
+\bTABLE\tfx
+\setupTABLE[c][1,2,3,4][align=center]
+\bTABLEhead
+\bTR\bTH Meta \eTH\bTH POSIX \eTH\bTH Unicode \eTH\bTH  Množina \eTH\bTH Popis \eTH\eTR
+\eTABLEhead
+\bTABLEbody
+\bTR\bTD \type{\d} \eTD\bTD \type{[:digit:]}  \eTD\bTD {\tt \tbs{}p}\type{{IsDigit}}    \eTD\bTD \type{[0-9]}         \eTD\bTD Číslice\eTD\eTR
+\bTR\bTD \type{\D} \eTD\bTD                   \eTD\bTD {\tt \tbs{}P}\type{{IsDigit}}    \eTD\bTD \type{[^0-9]}        \eTD\bTD Cokoliv mimo číslici\eTD\eTR
+\bTR\bTD \type{\s} \eTD\bTD \type{[:space:]}  \eTD\bTD {\tt \tbs{}p}\type{{IsSpace}}    \eTD\bTD 
+\IsSpace
+%\type{[ \t\n\r\f]}   
+\eTD\bTD Bílý znak\eTD\eTR
+\bTR\bTD \type{\S} \eTD\bTD                   \eTD\bTD {\tt \tbs{}P}\type{{IsSpace}}    \eTD\bTD 
+%\type{[^ \t\n\r\f]}  
+\IsNotSpace
+\eTD\bTD Cokoliv mimo bílého znaku\eTD\eTR
+\bTR\bTD \type{\w} \eTD\bTD \type{[:word:]}   \eTD\bTD {\tt \tbs{}p}\type{{IsWord}}     \eTD\bTD \type{[a-zA-Z0-9_]}  \eTD\bTD Znaky identifikátorů\eTD\eTR
+\bTR\bTD \type{\W} \eTD\bTD                   \eTD\bTD {\tt \tbs{}P}\type{{IsWord}}     \eTD\bTD \type{[^a-zA-Z0-9_]} \eTD\bTD Cokoliv mimo znaků identifikátorů\eTD\eTR
+\bTR\bTD \type{\b} \eTD\bTD                   \eTD\bTD                       \eTD\bTD                      \eTD\bTD hranice slova, opakem je \type{\B}\eTD\eTR
+\bTR\bTD           \eTD\bTD \type{[:alnum:]}  \eTD\bTD {\tt \tbs{}p}\type{{PosixAlnum}} \eTD\bTD \type{[A-Za-z0-9]}   \eTD\bTD Alfanumerické znaky\eTD\eTR
+\bTR\bTD           \eTD\bTD \type{[:xdigit:]} \eTD\bTD {\tt \tbs{}p}\type{{PosixXDigit}}\eTD\bTD \type{[A-Fa-f0-9]}   \eTD\bTD Hexadecimální čísla\eTD\eTR
+\bTR\bTD           \eTD\bTD \type{[:print:]}  \eTD\bTD {\tt \tbs{}p}\type{{PosixPrint}} \eTD\bTD 
+{\tt [\tbs{}x20-\tbs{}x7E]}
+\eTD\bTD Tisknutelné znaky\eTD\eTR
+\bTR\bTD           \eTD\bTD \type{[:alpha:]}  \eTD\bTD {\tt \tbs{}p}\type{{PosixAlnum}} \eTD\bTD \type{[A-Za-z]}      \eTD\bTD Abecední znaky\eTD\eTR
+\eTABLEbody
+\eTABLE
+
+\item Kvantifikátory:
+
+\def\match{\inframed[frame=off,
+    background=color,
+	bottomframe=on,
+    backgroundcolor=gray,
+    backgroundoffset=0pt]}
+
+\bTABLE%\tfx
+\setupTABLE[c][1,2][align=center]
+\setupTABLE[c][4][align=left]
+\bTABLEhead
+\bTR\bTH Stand. \eTH\bTH Líný \eTH\bTH Rozsah \eTH
+\bTD[nr=7,frame=off,align=flushleft]
+
+\tfx
+{\bf Příklady:}
+	\startitemize
+		\item \regexp{a*b} -- \match{aab}c \match{ab}c \match{b}c
+		\item \regexp{a?b} -- a\match{ab}c \match{ab}c \match{b}c
+		\item \regexp{a+b} -- \match{aab}c \match{ab}c bc
+		\item \regexp{[els]{1,3}} -- a\match{ll} in th\match{e} darkn\match{ess}
+		\item \regexp{Pe(t|p)a} -- Pera \match{Peta} \match{Pepa}
+%		\item \regexp{<[^>]*>} -- \match{<meta>} \match{<b id="c">}
+		\item \regexp{".*"} -- \match{"Ahoj" "Hello"}
+		\item \regexp{"[^"]*"} -- \match{"Ahoj"} \match{"Hello"}
+	\stopitemize
+
+\eTD
+\eTR
+\eTABLEhead
+\bTABLEbody
+\bTR\bTD \type{*}    \eTD\bTD \type{*?}     \eTD\bTD 0 a víc\eTD\eTR
+\bTR\bTD \type{+}    \eTD\bTD \type{+?}     \eTD\bTD 1 a víc\eTD\eTR
+\bTR\bTD \type{?}    \eTD\bTD \type{??}     \eTD\bTD 0 nebo 1 položka\eTD\eTR
+\bTR\bTD \type{{n}}  \eTD\bTD \type{{n}?}   \eTD\bTD přesně $n\times$\eTD\eTR
+\bTR\bTD \type{{n,}} \eTD\bTD \type{{n,}?}  \eTD\bTD minimálně $n\times$\eTD\eTR
+\bTR\bTD \type{{n,m}}\eTD\bTD \type{{n,m}?} \eTD\bTD min. $n\times$ a max. $m\times$.\eTD\eTR
+\eTABLEbody
+\eTABLE
+\stopitemize
+
+\section{Práce se soubory}
+
+\startitemize
+\item Předdefinované ovladače: {\tt STDIN, STDOUT, STDERR, DATA, ARGV}
+\item {\tt open(FH, "<název"); open(FH, "název");}-- otevře pro čtení;
+\type{>}~-- zápis; 
+\type{>>}~-- připojení; 
+\type{+<}~-- nejdřív čtení, pak zápis;
+\type{+>}~-- nejdřív zápis, pak čtení;
+\type{"příkaz |"}, \type{"| příkaz"}~-- čtení, zápis z roury;
+\type{"|-", "-|"}~-- roura do forknutého příkazu;
+\type{>&FH}, \type{<&FH}~-- duplikace FH pro čtení, zápis
+\item \type{open(FH, "soubor") or die "Nelze otevřít $!\n";}
+\item \type{print FH "Zápis do souboru\n";}
+\item {\tt close(FH);} -- zavře soubor
+\item \type{while(<FH>){ print; }} -- vypíše soubor po řádcích
+\item {\tt @lines = <FH>;} -- načte soubor do pole
+\item \type{<*>}, \type{<*.c>}, \type{<${pattern}>} -- soubory v adresáři
+%\item chmod
+%\item chown
+%\item link
+%\item mkdir
+%\item readling
+%\item rename
+%\item rmdir
+\item {\tt stat \sl soubor } -- vrací seznam informací: 
+{\tfx
+{\tt 0}/{\tt dev},
+{\tt 1}/{\tt ino},
+{\tt 2}/{\tt mode},
+{\tt 3}/{\tt nlink},
+{\tt 4}/{\tt uid} ,
+{\tt 5}/{\tt gid},
+{\tt 6}/{\tt rdev},
+{\tt 7}/{\tt size},
+{\tt 8}/{\tt atime},
+{\tt 9}/{\tt mtime},
+{\tt 10}/{\tt ctime},
+{\tt 11}/{\tt blksize},
+{\tt 12}/{\tt blocks}
+}
+%\item lstat -- jako stat, ale link 
+%\item symlink
+%\item truncate
+%\item unlink
+%\item utime
+\item Operátory pro testování souborů:
+{\tfx
+\startitemize
+	\item {\tt -r -w -x} -- pro efektivní, {\tt -R -W -X} reálné UID/GID
+	\item {\tt -e -z} -- existuje/nulová velikost
+	\item {\tt -s} -- vrací nenulovou velikost
+	\item {\tt -f -d } -- soubor/adresář
+	\item {\tt -l -S -p} -- symlink/socket/FIFO
+	\item {\tt -T -B} -- textový/binární
+%	\item {\tt -b -c} -- blokové/znakové zařízení
+	\item {\tt -u -g -k} -- setuid/setgid/sticky bit
+%	\item {\tt -t} -- 
+\stopitemize
+}
+\stopitemize
+
+
+
+
+\subsection{Zpracování vstupu po řádcích}
+
+\section{Operátory}
+
+\startitemize
+	\item Porovnávání -- číselné / řetězcové:
+	\startitemize
+	\item {\tt ==} / {\tt eq}  -- shoda 
+	\item {\tt !=} / {\tt ne}  -- nerovná se 
+	\item {\tt > } / {\tt gt}  -- větší než 
+	\item {\tt < } / {\tt lt}  -- menší než 
+	\item {\tt >=} / {\tt ge}  -- větší nebo rovno 
+	\item {\tt <=} / {\tt le}  -- menší nebo rovno 
+	\item {\tt <=>} / {\tt cmp}  -- vrací --1, 0 nebo 1 pro menší, rovno nebo větší 
+	\stopitemize
+	
+%	\bTABLE\tfx
+%	\setupTABLE[c][1,2][align=center]
+%	\bTABLEhead
+%		\bTR \bTH Čísla\eTH \bTH Řetězce\eTH \bTH Význam\eTH \eTR
+%	\eTABLEhead
+%	\bTABLEbody
+%		\bTR\bTD {\tt ==} \eTD\bTD {\tt eq} \eTD \bTD shoda \eTD \eTR
+%		\bTR\bTD {\tt !=} \eTD\bTD {\tt ne} \eTD \bTD nerovná se \eTD \eTR
+%		\bTR\bTD {\tt > } \eTD\bTD {\tt gt} \eTD \bTD větší než \eTD \eTR
+%		\bTR\bTD {\tt < } \eTD\bTD {\tt lt} \eTD \bTD menší než \eTD \eTR
+%		\bTR\bTD {\tt >=} \eTD\bTD {\tt ge} \eTD \bTD větší nebo rovno \eTD \eTR
+%		\bTR\bTD {\tt <=} \eTD\bTD {\tt le} \eTD \bTD menší nebo rovno \eTD \eTR
+%		\bTR\bTD {\tt <=>} \eTD\bTD {\tt cmp} \eTD \bTD vrací --1, 0 nebo 1 pro menší, rovno nebo větší \eTD \eTR
+%	\eTABLEbody
+%	\eTABLE
+
+
+	\item Další typy operátorů: 
+	\startitemize
+		\item pre/postfixové: {\tt \$i++}, {\tt ++\$i}, {\tt \$i--}, {\tt --\$i}, 
+		\item aritmetické: {\tt +}, {\tt -}; {\tt **} umocňování, {\tt *}, {\tt /}, \type{%} zbytek po dělení;
+		\item logické: \type{!}/{\tt neg}, \type{&&}/{\tt and}, \type{||}/{\tt or};
+		\item binární: \type{~}, \type{&}, \type{|}, \type{^} xor; \type{<<}, \type{>>} posuvy;
+		\item řetězcové: \type{.}, \type{,} spojení; \type{x} opakování
+		\item přiřazení: \tfx\type{= **= += *= &= <<= &&= -= /= |= >>= ||= .= %= ^= x=};
+	\stopitemize
+\stopitemize
+
+\section{Aritmetické funkce}
+
+\startitemize
+\item {\tt abs} -- absolutní hodnota
+\item {\tt atan2 x,y;} -- arkustanges $y/x$ v  $(-\frac{\pi}2, \frac{\pi}2)$
+\item {\tt cos, sin} -- vstup v radiánech
+\item {\tt exp} -- mocnina $e = 2{,}718281\ldots$
+\item {\tt int} -- celá část čísla
+\item {\tt log} -- přirozený logaritmus
+\item {\tt rand [ {\sl n} ]} -- náhodné desetiné číslo mezi 0 a 1 (nebo $n$) 
+\item {\tt sqrt} -- odmocnina
+\item {\tt srand} -- nastavení pro generátor náhodných čísel
+\item {\tt time} -- aktuální unixový čas
+\stopitemize
+
+\section{Konverzní funkce}
+
+\startitemize
+\item {\tt chr \expr} -- vrátí znak reprezentovaný hodnotou
+\item {\tt hex \expr} -- vrátí desítkově ze šestnáctkové 
+\item {\tt localtime}, {\tt gmtime} -- převod unixového času na lokální nebo UTC, vrací seznam s daty:
+	{\tfx 
+	{\tt 0}/{\tt sec},
+	{\tt 1}/{\tt min},
+	{\tt 2}/{\tt hour},
+	{\tt 3}/{\tt mday},
+	{\tt 4}/{\tt mon} (0 = leden),
+	{\tt 5}/{\tt year} (od roku 1900),
+	{\tt 6}/{\tt wday} (0 = neděle),
+	{\tt 7}/{\tt yday} (0 = 1. leden),
+	{\tt 8}/{\tt isdst}
+	}
+\item {\tt oct \expr} -- vrátí desítkově z osmičkové
+\item {\tt ord \expr} -- ASCII hodnota prvního znaku výrazu
+%\item {\tt vec \sl výraz, offest, bity} -- 
+\item {\tt pack \sl template,list} -- strukturovaná konverze
+\item {\tt unpack \sl template,výraz} -- strukturovaná konverze
+\stopitemize
+
+\section{Výstup na obrazovku}
+
+\startitemize
+\item {\tt print \sl value1, value2, value3;}
+\item Dlouhý výstup
+\starttyping
+print <<"EOF";
+Řetězec na 
+víc řádků
+EOF
+\stoptyping
+
+\item {\tt printf("formát", data\ldots);}
+{\tfx
+\startitemize[columns,two]
+	\item \type{%b} -- dvojkové
+%	\item \type{%c} -- znak
+	\item \type{%d}, \type{%i}, \type{%ld}, \type{%D} -- znaménkové, long
+	\item \type{%e}, \type{%E} -- desetinná č. ve vědecké notaci
+	\item \type{%f}, \type{%F}, \type{%g}, \type{%G} -- desetinná čísla
+	\item \type{%o}, \type{%lo}, \type{%O} -- osmičkové, long
+	\item \type{%p} -- adresa, \type{%s} -- řetězec, \type{%c} -- znak 
+	\item \type{%u}, \type{%lu}, \type{%U} -- neznaménkové, long 
+	\item \type{%x}, \type{%X}, \type{%lx} -- šestnáctkové
+	\item \type{%%} -- vypiš procento
+	\item \type{%-} -- zarovnání vlevo
+	\item \type{%#} -- doplní prefix {\tt 0x, 0b, 0} podle č. typu
+	\item {\tt \%$n$} -- šířka sloupce $n$
+	\item {\tt \%.$n$} -- $n$ desetinných míst 
+	\item \type{%0} -- doplní hodnotu o předchozí nuly
+\stopitemize
+}
+\item {\tt use Data::Dumper; print Dumper({\sl proměná})} -- debugovací
+výpis strukturované proměnné
+\stopitemize
+
+%\section{Systémové funkce}
+
+%\startitemize
+%	\item {\tt system("", "");} --
+%\stopitemize
+
+%\section{Objektově-orientované programování}
+
+%package Jméno;
+%sub new {...} # kontstruktor
+
+\stopcolumns
+\stoptext
+
+
