@@ -1,0 +1,23 @@
+Makra
+=====
+
+def <symbolic token> = <replacement text> enddef
+
+begingroup
+	<statement list>
+	<expression>
+endgroup
+
+statement list = sekvence výrazů
+
+save x, y -- z těchto proměnných se stanou lokální proměnné
+
+interim <interní hodnota> := <číselný výraz> | <řetězcový výraz>
+
+dočasné předefinování interní proměnné
+
+
+Makra s parametrem
+==================
+
+

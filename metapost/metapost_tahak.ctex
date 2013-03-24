@@ -1,0 +1,508 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                               %
+%  Rychla reference k nekterym prikazum programu METAPOST       %
+%                                                               %
+%  Martin Bruchanov -- bruxy at regnet dot cz                   %
+%                                                               %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\mainlanguage[cz]
+\language[cz] 
+\enableregime[utf]
+
+\setupoutput[pdftex] % dvips, acrobat
+\setupbodyfont[csr, 10pt]  %
+%\setuppapersize[A3, landscape][A4, portrait] % A3, A4, A5, A6; landscape
+\setuppapersize[A4, portrait][A3, landscape] % A3, A4, A5, A6; landscape
+\setuparranging[2SIDE] % zmena stranek pro vyrobu knizky, 
+%\setuparranging[2SIDE] % zmena stranek pro vyrobu knizky, 
+%\setuppapersize[A4, portrait] % A3, A4, A5, A6; landscape
+% 2SIDE -- dve stranky na jeden list vis setuppapersize
+
+% Rozmery stranky
+\setuplayout[%
+	width=200mm,%
+	height=286mm,%
+	header=0mm, %
+	footer=0mm, %
+	topspace=5mm, %
+	leftmargin=0mm, %
+	rightmargin=0mm, %
+	leftedge=0mm,
+	backspace=5mm,
+]
+
+\setuppagenumbering[%
+	alternative=singlesided,  % doublesided
+	location={footer, right}, % header, middle, inleft, inmargin
+	style=bold,               %
+%	conversion=numbers,        % characters Characters romannumerals 
+%	left={--~},               % znak pred
+% 	right={~--},              % znak za
+]
+
+% Nastaevni nadpisu
+\setuphead[title][before={\blank[4*small]},
+	after=\nowhitespace]
+
+
+\definefont[SectionFont][RegularBold sa 1.2] 
+\def\Cislovani#1{{#1}.} % tecka za cislem kapitoly
+\setuphead[section][style=\SectionFont,
+	numbercommand=\Cislovani,
+	before={\blank[2*small]},
+	after=\nowhitespace]
+
+\definefont[SubsectionFont][RegularBold sa 1.0] 
+\setuphead[subsection][   %
+   style=\SubsectionFont, %
+   numbercommand=\Cislovani,%
+   before={\blank[1*small]},
+   after=\nowhitespace   %
+]
+	
+% mezery mezi odstavci
+\setupwhitespace[none] 
+
+% velikost odsazeni
+\setupindenting[none]  % none, small, medium, bix, next, first, [rozmer]
+
+% vicesloupcova sazba
+%\setupcolumns[n=, ]
+
+% Nastaveni hlavicky
+%\setupheadertexts[][][]
+
+% Nastaveni paticky
+%\setupfootertexts[][][]
+
+% Pouziti barev
+\setupcolors[state=start]
+\setupcolor[rgb]
+
+% Nastaveni seznamu s odrazkami
+\setupitemize[1][standard,packed,joinedup] 
+% joinedup -- zadne mezery pred a za
+
+%beforehead={\nowhitespace}]
+
+% Vypnuti popisku 
+\setupcaptions[location=none]
+
+% nezery pred a za plovoucimi objekty
+\setupfloats[spacebefore=,spaceafter=]
+
+% vlastnosti verbatim
+\setuptyping[typing][before={\blank[-.5mm]},after={\blank[2mm]}]
+
+%%%%%%%%%% Prikazy
+
+\def\dd{{\tt ..}}
+\def\bod{{\it bod}}
+
+\def\ods{\hskip2em{}}
+\def\pods{\hskip1em{}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\starttext
+\startcolumns[n=2]
+
+\title \MetaPost{}  
+
+\section{Datové typy}
+
+\startitemize[1]
+\item {\tt numeric} -- uložení čísla
+\item {\tt pair} -- uložení souřadnic ({\tt xpart}, {\tt ypart})
+\item {\tt boolean} -- booleovský typ ({\tt true}, {\tt false})
+\item {\tt path} -- uložení cesty (křivky)
+\item {\tt pen} -- uložení pera {\tt pen r; r := pencircle;}
+\item {\tt picture} -- uložení obrázku, {\tt q := nullpicture;}
+\item {\tt transform} -- uložení afinní transformace
+\item {\tt color} -- uložení barvy ($R,G,B$\/), $R,G,B \in\langle 0,{}1 \rangle$
+\item {\tt cmykcolor} -- barva ($C,M,Y,K$), $R,G,B \in\langle 0,{}1 \rangle$ 
+\item {\tt string} -- uložení řetězce {\tt s := "MetaPost";} 
+\stopitemize
+
+%Přiřazení: \type{a := 10cm;}
+%Deklarace:  {\it typ název};
+
+\startlines
+Pole: {\tt numeric q[];} deklaruje {\tt q1, q2, \dots}
+\ods {\tt path p[]q[]} $\sim$ {\tt p2q3}, %
+ {\tt path pq[][]} $\sim$ {\tt pq1.4}
+\stoplines
+
+Jednotky: (1/72") bp, (1/72,72") pt, in, mm, cm
+
+\startlines
+{\tt input makra.mp;
+defaultfont:="csr10"; 
+\%} komentář
+\ods \dots definice \dots
+{\tt beginfig(1)}
+\ods \dots příkazy \dots
+{\tt endfig;}
+{\tt end;}
+\stoplines
+
+
+\section{Body a parametry křivek}
+
+\def\sfx{$\langle${\rm\em suffix}$\rangle$}
+
+\startitemize[1]
+\item Bod:	{\tt z\sfx = (x\sfx{}, y\sfx{});}\crlf
+\type{pair a; z.a = (x.a, y.a); z1r = (x1r, y1r);}
+ 
+\item Bod v 1/2 mezi $z2$ a $z3$: \type{z1 = 1/2[z2,z3];}\crlf
+\type{z1 = a[z2,z3]} znamená $z_1 = z_2 + a(z_3-z_2)$
+	
+\item Průsečík: \type{z5=whatever*[z1,z2]=whatever*[z3,z4];}
+\item Průsečík cest $a$, $b$: \type{z2 = a intersectionpoint b;}
+\item Parametry polohy $(t_a, t_b)$ průsečíků cest $a$, $b$:\crlf
+	\type{z2 = a intersectiontimes b;}
+\item Zjištění souřadnice bodu na křivce: {\tt point} t {\tt of} cesta;
+\item Čas křivky: {\tt lenght} cesta;
+\item Úsek: {\tt subpath} $(t_1, t_2)$ {\tt of} cesta;
+\item Tečný vektor křivky v $t$: {\tt direction} t {\tt of} cesta;
+\item $t$ pro daný vektor: {\tt directiontime} vektor {\tt of} cesta;
+\item Bod daného teč. vektoru: {\tt directionpoint} vektor {\tt of} cesta
+\item Oblouková míra křivky: {\tt arclenght} cesta;
+\item Čas pro obloukovou míru: {\tt arctime} míra {\tt of} cesta;
+\stopitemize
+
+\section{Kreslení}
+
+\subsection{Křivky}
+
+\startitemize[1]
+\item Bod: {\tt drawdot} \bod
+\item Lomená čára: {\tt draw} \bod{\tt --}\bod{\tt --}\bod{\tt --}{\tt cycle}
+\item Beziérova křivka: {\tt draw} \bod\dd\bod\dd\bod
+	\startitemize[2]
+		\item Úhel směru tečen: {\tt draw} \bod\type"{dir "{\it stupeň}\type"}"\dd\bod\dd\bod\crlf
+			  místo \type{{dir }{\it stupeň}\type{}} možno: 
+		\type{{up}},	
+		\type{{down}},	
+		\type{{left}},	
+		\type{{right}} a nebo  \type{{}$x,y$\type{}}.
+		\item Napětí křivky: {\tt draw} \bod\dd{\tt tension} $n$ {\tt and} $n$\dd\bod;\crlf
+			$n=\langle {3 \over 4}; \infty \rangle$, $\infty =\,${\tt infinity} $\sim$ {\tt ...},
+			$1 \sim$ {\tt ..}
+		\item Zakřivení: {\tt draw}  \bod\type{{curl }{\it $n$}\type{}}\dd\bod\dd\bod;\crlf
+		$n<1$~-- zvýšení, $n>1$~-- snížení zakřivení
+
+		\item Kontrolní body: {\tt draw} \bod\dd{\tt controls} \bod{} {\tt and} \bod\dd\bod; 
+		\item {\tt ...} -- spojení segmetu křivkou s ostrými spoji
+	\stopitemize
+
+	\item Vymazání: {\tt undrawdot, undraw}
+\stopitemize
+
+\subsection{Kružnice a čtverec}
+
+
+Kružnice typu {\tt path} má jednotkový průměr a střed v počátku,
+čtverec má levý dolní roh v počátku.
+
+%\placefigure[][]{}{
+	\pods\externalfigure[circle-1.pdf][frame=off]
+%	}
+
+\subsection{Typy čar, zakončení a šipek}
+
+\startitemize[1]
+
+\item {\tt draw} {\it cesta} ({\it transformace\/}) {\tt dashed} {\it vzorek} ({\it barva\/});
+
+\pods\externalfigure[dashed-1.pdf][frame=off]
+
+\item Vlastní definice:
+
+\starttyping
+picture cerch;
+cerch:=dashpattern (on 3mm off 1mm on 1mm off 1mm);
+draw (0,0)--(50mm,0) dashed cerch; 
+\stoptyping
+
+\item {\tt drawarrow} {\it cesta} -- šipka na konci čáry
+
+\item {\tt drawarrow reverse} {\it cesta} -- šipka na začátku
+
+\item {\tt drawblarrow} {\it cesta} -- šipka na obou koncích
+
+\item {\tt linecap :=} tvar čáry v krajních bodech.
+
+\pods\externalfigure[linecap-1.pdf][frame=off]
+
+\item {\tt linejoin :=} rohy lomené čáry
+
+\pods\externalfigure[linejoin-1.pdf][frame=off]
+
+\item {\tt ahlenght :=} velikost šipky
+
+\item {\tt ahangle :=}  úhel který svírá šipka s křivkou
+\stopitemize
+
+\section{Výplně}
+
+\startitemize[1]
+\item {\tt fill} {\em uzavřená cesta} {\tt withcolor} {\em barva};
+\item {\tt filldraw} {\em uzavřená cesta} {\tt withcolor} {\em barva};
+\item {\tt unfill, unfilldraw}
+\item {\tt overdraw} MFBook 126
+\item {\tt buildcycle}($p_1, p_2, \dots p_n$) -- vytvoření uzavřené
+cesty dané cestami $p_1, p_2, \dots p_n$
+
+\item {\tt background :=} barva nastavení pozadí
+\stopitemize
+
+\section{Pera}
+
+Změna tloušťky: {\tt pickup pencircle scaled .4mm }
+
+
+Výběr: {\tt pickup} pero
+       {\tt pickup defaultpen}
+
+Pera: {\tt pencircle}, {\tt pensquare}, {\tt penrazor}
+
+Vlastní definice:
+
+\starttyping
+pen p; 
+p := makepen((-.5,-.5)--(.5,-.5)--(.5,.5)--
+             (-.5,.5)--cycle);
+pickup p;
+\stoptyping
+
+
+
+\section{Transformace}
+
+\starttabulate[|l|c|]
+%\HL
+ {\tt shifted (a,b)} \NC  $(x + a, y + b)$ \NR
+ {\tt scaled s} \NC $(sx, sy)$ \NR
+ {\tt xscaled s} \NC $(sx, y)$ \NR
+ {\tt yscaled s} \NC $(x, sy)$ \NR
+ {\tt zscaled (u,v)} \NC $(xu - yv, xv + yu)$ \NR
+ {\tt slanted s} \NC $(x + sy, y)$ \NR
+ {\tt rotated r} \NC $(x \cos(r) - y \sin(r), x \sin(r) + y \cos(r))$ \NR
+ {\tfx\tt rotatedaround((a,b),u)} \NC rotace kolem středu $(a,b)$ o úhel  $u$ \NR
+ {\tfx\tt reflectedabout (a,b)} \NC zrcadlení podle přímky dané body $(a,b)$ \NR
+%Posunutí \NC {\tt shifted (a,b)} \NC  $(x + a, y + b)$ \NR
+%Stejnolehlost \NC {\tt scaled s} \NC $(sx, sy)$ \NR
+%Měřítko $x$ \NC {\tt xscaled s} \NC $(sx, y)$ \NR
+%Měřítko $y$ \NC {\tt yscaled s} \NC $(x, sy)$ \NR
+%Rotace a stejnolehlost \NC {\tt zscaled (u,v)} \NC $(xu - yv, xv + yu)$ \NR
+%Zkosení \NC  {\tt slanted s} \NC $(x + sy, y)$ \NR
+%Rotace proti směru hodin \NC  {\tt rotated r} \NC $(x \cos(r) - y \sin(r), x \sin(r) + y \cos(r))$ \NR
+%\HL
+\stoptabulate
+
+\starttyping
+path p;
+p := (0,0)--(1,0);
+p shifted (x, y);
+p rotated deg;
+
+transform t;
+t = indentity scaled .8 shifted (0,1);
+\stoptyping
+
+Inverzní transformace k zadané $t$:\crlf
+{\tt p = q transformed inverse t;}
+
+\section{Vložení textu}
+
+\subsection{Práce s řetězci}
+
+Spojení: {\em text} {\tt \&} {\em text}
+Délka: {\tt length} (index od nuly)
+Podřetězec: {\tt substring($pos_1$,$pos_2$) of $s$}
+
+{\tt defaultfont := "}název fontu{\tt ";}\crlf
+{\tt defaultscale := 12pt/fontsize defaultfont;}
+
+{\tt label.}{\it pozice}{\tt ("...", bod);}
+
+{\tt label.}{\it pozice}{\tt (textext("abc " \& decimal(x) \& " def"), bod);}
+
+{\tt label.}{\it pozice}{\tt (btex} {\em \TeX{}ové příkazy} {\tt etex, bod);}
+
+{\tt dotlabel} -- v místě nápisu tečka
+
+{\tt labeloffset :=} {\em vzdálenost od bodu};
+
+Pozice: 
+
+\placefigure[right,2*hang]{}{
+	\externalfigure[pozice-1.pdf][frame=off]
+} 
+
+Definice labelu jako nového obrázku (s obrázkem možno
+provádět další operace [transformace, změna barvy,\dots]):
+
+\starttyping
+picture a;
+a = thelabel.bot("A",(0,0));
+draw a;
+\stoptyping
+
+Formátování:
+textpart
+decimal
+
+\section{Proměnná typu {\tt picture}}
+
+\startlines
+Vytvoření a naplnění proměnné typu {\tt picture}:
+picture {\it obrázek}; {\it obrázek} := nullpicture; 
+{\tt addto} {\it obrázek} {\tt also} {\it obrázek};
+{\tt addto} {\it obrázek} {\tt contour} {\it cyklus};
+{\tt addto} {\it obrázek} {\tt doublepath} {\it cesta};
+\stoplines
+
+
+\section{Editace, ořezávání}
+
+Vzdálenosti relativně k dané cestě: \blank[1mm]
+
+\pods\externalfigure[corners-1.pdf]
+
+{\tt clip} {\it obrázek} {\tt to} {\it cesta};
+
+\pods\externalfigure[clip-1.pdf]
+
+{\tt bbox} {\it proměnná} -- bounding box daného objektu
+
+Zvětšení okraje obrázku:
+
+{\tt setbounds currentpicture to \crlf
+   boundingbox currentpicture enlarged 2mm;}
+
+\section{Řídící příkazy}
+
+\startlines
+{\tt if} {\em podmínka}: posloupnost  příkazů;
+{\tt elseif} {\em podmínka}: posloupnost  příkazů;
+{\tt else}: posloupnost příkazů;
+{\tt fi;}
+
+Výrazy: {\tt and, or, not, known, unknown, odd}
+Test typu: {\tt if (pair a=true):} \dots
+\stoplines
+
+\startlines
+{\tt for} token {\tt =} výraz 1 {\tt step} krok {\tt until} výraz 2:
+\ods \dots	posloupnost příkazů \dots
+{\tt endfor}
+
+$i$ {\tt upto} $j$\quad  $i$ {\tt downto} $j$ \quad $i$ {\tt step} $k$ {\tt until} $j$
+\stoplines
+
+\starttyping
+for i=0 upto 10: 
+	show i/10; % Vypiš na terminál
+endfor;
+
+for i = z0,z1,z2,z3:
+   drawdot i withpen pencircle scaled 0.2mm;
+endfor;
+\stoptyping
+
+%Cyklus uvnitř výrazu:
+
+\subsection{Definice maker}
+{\tt def} {\it název} {\tt =} \ods nahrazující text  {\tt enddef;}
+
+{\tt begingroup} \dots {\tt endgroup}
+
+Lokální proměnná, uschování: {\tt save} {\it proměnná}
+
+Načtení souboru: {\tt include} {\it soubor};
+
+
+Makro s parametry:
+
+\starttyping
+def makro(expr a,b) = draw a scaled b;	enddef;
+\stoptyping
+
+{\tt expr} -- výraz libovolného datového typu
+
+\starttyping
+def makro(text t) (expr barva) =
+	...
+enddef;
+\stoptyping 
+
+Použití: {\tt makro()()}
+
+{\tt suffix} --
+
+\starttyping
+def incr (suffix \$) =
+ $:=$+1;
+enddef;
+\stoptyping
+
+\section{Matematické operace a funkce}
+
+{\tt +, -, *, / , **, =, <, >, <=, >=, ++, +-+}\crlf
+$a$ {\tt ++} $b = \sqrt{a^2 + b^2} \quad a$ {\tt +-+} $b = \sqrt{a^2 - b^2}$
+
+
+\startitemize[1]
+\item {\tt round} -- zaokrouhlení podle obvyklých pravidel,
+\item {\tt floor} -- zaokrouhlení směrem dolů,
+\item {\tt ceiling} -- zaokrouhlení směrem nahoru,
+\item {\tt div, mod} -- celočíselné dělení a zbytek,
+\item {\tt min} -- minimum (dva a více argumentů),
+\item {\tt max} -- maximum (dva a více argumentů),
+\item {\tt abs} -- absolutní hodnota,
+\item {\tt sqrt} -- druhá odmocnina,
+\item {\tt pow(x, p)} --  odmocnina $x^p$,
+\item {\tt mlog} -- logaritmus se základem e$^{1/256}$ (mlog$ = 256 ln x$),
+\item {\tt mexp} -- inversní funkce k funkci předchozí
+\item {\tt asin, acos, atan} -- výslede ve stupních,
+\item {\tt sin, cos, tan, cot, sec, csc} -- argument v radiánech
+\item {\tt sind, cosd, tand, cotd, secd, cscd}  -- ve stupních,
+\item {\tt invsin, invcos, invtan} -- výsledek dostáváme v radiánech
+\item {\tt sinh, cosh, tanh, asinh, acosh, atanh}  -- hyperbolické a inv. hyp. gon. funkce
+\stopitemize
+
+\section{\TeX{}ové příkazy}
+
+\startlines
+{\tt verbatimtex}
+\ods \dots TeX{}ové příkazy \dots
+{\tt etex}
+\stoplines
+
+\subsection{Nastavení fontu}
+
+\starttyping
+verbatimtex
+   \font\hlavni=csr10
+   \font\tt=cstt10
+etex
+\stoptyping
+
+Použití:
+\type{btex \tt abced etex}
+
+\subsection{Matematika}
+
+\type{$y=\sum_i^n{2\over1+i}$} \dots $y=\sum_i^n{2\over1+i}$
+
+
+\type{$\displaystyle y=\sum_i^n{2\over1+i}$} \dots $\displaystyle y = \sum_i^n {2 \over 1 + i}$
+
+
+	\stopcolumns
+\stoptext
+
