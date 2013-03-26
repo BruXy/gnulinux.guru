@@ -1,0 +1,432 @@
+\input matlab_vzhled.ctex 
+
+\starttext
+\startcolumns[n=2]
+
+\title{Matlab}
+
+\section{Základní ovládání}
+
+\startitemize
+\item {\tt matlab -nodesktop} -- spustí v textovém režimu
+\item {\tt \% Komentář} -- jednořádkový komentář
+\item {\tt \%\{ ... \%\} } -- víceřádkový komentář
+\item {\tt \%\% Název} -- oddělovač sekcí souboru
+\item {\tt\sl příkaz;} -- provede příkaz, ale nevypisuje výstup
+\item {\tt help {\sl příkaz}} -- nápověda k příkazu
+\item {\tt helpwin} -- prohlížeč témat k nápovědě
+\item {\tt doc {\sl příkaz}} -- referenční stránka v prohlížeči dokumentace
+\item {\tt lookfor {\sl slovo}} -- hledá slovo v nápovědě příkazů
+\item {\tt clc}, {\tt home} -- vyčistí okno s příkazy
+\item {\tt quit}, {\tt exit} -- ukončení a odchod
+\item {\tt a=input('Zadej číslo:')} -- interaktivní načtení hodnoty
+\item {\tt str=input('Vlož:', 's')} -- interaktivní načtení řetězce
+\item {\tt disp} -- zobrazení hodnoty
+\item {\tt fprintf} -- formátovaný výpis na obrazovku, jako v C
+\item {\tt diary('{\sl soubor}')} -- začne ukládat příkazové okno do souboru
+\item {\tt diary off} -- ukončí ukládání příkazového okna 
+\item {\tt save('soubor')} -- uloží proměnné do souboru
+\item {\tt load('soubor')} -- načte proměnné ze souboru
+\item {\tt run skript.m, run('skript.m')} -- spustit program
+\item {\tt ...} -- rozdělení dlouhých řádků
+\item {\tt Ctrl+c} -- ukončení běhu prováděného příkazu
+\stopitemize
+
+\section{Systémové příkazy}
+
+pwd
+cd
+dir, ls
+mkdir
+copyfile
+path -- cesta vyhledávání
+
+\section{Proměnné}
+
+\startitemize
+\item {\tt proměnná = hodnota} -- přiřazení
+\item {\tt pole = \{ \}} -- seznam proměnných
+\item {\tt ans } -- výsledek předchozího výrazu
+\item {\tt who} -- seznam použitých proměnných
+\item {\tt whos} -- podrobný seznam se zobrazením typů a velikostí
+\item {\tt clear {\sl proměnná}} -- odstraní danou proměnnou
+\item {\tt clear}, {\tt clear all}  -- odstraní všechny proměnné
+\item Znaménkové a neznaménkové konverze:
+\startitemize
+\item {\tt int8(n), int16(n), int32(n), int64(n)}
+\item {\tt uint8(n), uint16(n), uint32(n), uint64(n)}
+\stopitemize
+\item {\tt intmin('{\sl typ}'), intmax('{\sl typ}')} -- vrátí krajní hodnoty typu
+\item {\tt rand} -- pseudonáhodné číslo z intervalu $(0,1)$, rovnoměrné rozdělení
+\item {\tt randn} -- pseudonáhodné číslo, normální  rozdělení
+\item {\tt rand('state', hodnota)} -- inicializace generátoru 
+\item {\tt rand(r,c)} -- matice $r$ řádků a $c$ sloupců
+\item {\tt isempty(A)} -- vrací 1 pokud $A$ prázdný vektor 
+\stopitemize
+
+
+\subsection{Řetězce}
+
+\startitemize
+\item {\tt 'a', 'abcde'} -- proměnné typu znak, řetězec
+\item {\tt int8('a')}, {\tt abs('a')} -- ASCII hodnota „a“, 97
+\item {\tt char(97)} -- vrátí odpovídající ASCII znak
+\item {\tt str='Ahoj!'} -- indexování od 1, {\tt str(1) = 'A'}
+\item {\tt ischar, isletter} --
+\item {\tt new=strcat(s1, s2), new=[s1 s2]} -- horizontální sjednocení
+\item {\tt new=strvcat(s1, s2), new=[s1; s2]} -- vertikální sjednocení
+\item {\tt blanks(n)} -- prázný řetezec délky $n$
+\item {\tt deblank(s)} -- odstraní bíle znaky z konce řetězce
+\item {\tt mat2str, num2str, int2str} -- převod proměnné na řetězec
+\item {\tt sprintf({\sl 'formát'}, {\sl hodnoty})} -- formátování, jako v jazyce C 
+\item {\tt strcmp(a,b)} -- porovná řetězce, 1 = shoda, 0 = různé
+\item {\tt strcmpi} -- porovnání ignoruje velikost písmen
+\item {\tt upper, lower} -- převede na velká, malá písmena
+\item {\tt regex(str, pat), regexi} -- vrátí index začátku slova vyhovující regexu
+\stopitemize
+
+\subsection{Struktury}
+
+\startitemize
+\item {\tt package = struct('A', 0, 'B', 20);}
+\item {\tt package.A} -- přístup k záznamu
+\item {\tt rmfield} --
+\item {\tt Vektor struktur} -- %%%%%%%%%
+\item {\tt package(2) = struct(...)} --
+\item {\tt package(3) = struct(...)} --
+\item cell -- objekt obsahující najednou různé typy
+celldisp cellplot
+\stopitemize
+
+\subsection{Konstanty}
+
+\startitemize
+\item {\tt pi } -- $\pi =  3{,}141592653589793$
+\item {\tt i, j} -- $i, j = \sqrt{-1}$
+\item {\tt Inf} -- $\infty$
+\item {\tt Nan} -- neplatné číslo, např. $0/0$
+\item {\tt eps} -- $\varepsilon = 2^{-52}$
+\item {\tt realmin, realmax} -- $2^{-1022}$, $(2-\varepsilon)2^{1023}$ 
+\stopitemize
+
+\subsection{Zápis a zobrazení čísel}
+
+\startitemize
+\item {\tt 6.022e23} --  $6{,}022\times{}10^{23}$, vědecká notace
+\item {\tt 1+2i, 1+2j, 1.0+2.0*j} -- komplexní číslo
+\item {\tt z = complex(3,-3)} -- $z=3+3j$
+\item {\tt real(z), imag(z)} -- vrátí reálnou, imaginární část $z$
+\item {\tt conj(3+4j)} -- vrátí sdružené číslo, tj. $3-4j$
+\item {\tt bin2dec('101010'), dec2bin(42)} -- konverze čísel mezi dvojkovou soustavou
+\item hex2dec, dec2hex, hex2num
+\item loose/compact
+
+int2str
+str2num
+num2str
+sscanf
+sprintf
+mat2str
+
+
+\item {\tt format short} -- 4 desetinná místa 
+\item {\tt format long} -- 14 desetinných míst
+\item {\tt format bank} -- 2 desetinná místa 
+\item {\tt format hex} --  hexa-hodnota IEEE-754 (double precision)
+\item {\tt format rat} -- jako podíl dvou celých čísel
+\item {\tt format shortEng, format longEng} -- vědecká notace
+\item {\tt format +} -- zobrazuje jen znaménka výsledku, 0 bez znaménka
+\stopitemize
+
+\subsection{Zaokrouhlování}
+
+\startitemize
+\item {\tt fix([-3.3 3.6])}   -- celá část, {\tt [-3 3]}
+\item {\tt floor([-3.3 3.6])} -- směrem k $-\infty$, {\tt [-4 3]}
+\item {\tt ceil([-3.3 3.6])}  -- směrem k $+\infty$, {\tt [-3 4]}
+\item {\tt round([-3.3 3.6])} -- k nejbližšímu celému číslu, {\tt [-3 4]}
+\stopitemize
+
+\subsection{Matice a vektory}
+
+\startitemize
+\item Rozměry jsou indexovány od 1 do N.
+\item {\tt []} -- prázdný vektor
+\item {\tt [1 2 3 4]}, {\tt [1, 2, 3 ,4]} -- vektor $(1,2,3,4)$ 
+\item {\tt [1; 2; 3; 4], [1 2 3 4]'} -- sloupcový vektor $(1,2,3,4)$ 
+\item {\tt 1:4} -- vektor $(1,2,3,4)$
+\item {\tt 1:2:9} -- vektor $(1,3,5,7,9)$
+\item {\tt linspace(v1,v2,[n])} -- rovnoměrně rozložené vektory $n=100$
+\item {\tt logspace(x,y[,n])} -- logaritmické rozložení od $10^x$ do $10^y$ 
+\item {\tt lenght(v)} -- velikost vektoru nebo řádku matice
+% \item numel
+\item {\tt A=[1 2 3; 4 5 6; 7 8 9]} -- matice
+\item {\tt A(2,3)} -- hodnota na 2. řádku, 3. sloupec (6)
+\item {\tt eye(n,m)} -- jednotková matice $m\times{}n$
+\item {\tt ones(n,m)}, {\tt zeros(n,m)} -- matice $m\times{}n$ jedniček, nul 
+\item {\tt [n m]=size(A)} -- rozměry $n$ řádků, $m$ sloupců
+\item {\tt A, A(:,:)} -- celá matice
+\item {\tt v=A(:)} -- převede matici na sloupcový vektor
+\item {\tt end} -- adresuje poslední prvek
+\item {\tt A(i:j, k)} -- prvku v řádcích $i$ až $j$, v sloupci $k$
+\item {\tt A(i,j:k)} -- prvky v řádku $i$, od sloupce $j$ do $k$
+\item {\tt A(i, [j k])} -- prvky v řádku $i$, pouze sloupce $j$ a $k$
+\item {\tt A(i,:), A(:,j)} -- celý $i.$ řádek, celý $j.$ sloupec
+\item {\tt A(:,end), A(end,:)} -- celý poslední sloupec, řádek
+\item {\tt A(:,2) = []} -- vymaže 2. sloupec
+\item cell -- pole matic
+\item {\tt [X Y] = meshgrid(vx, vy)} -- vstupní matice pro $z=f(x,y)$
+\stopitemize
+
+\subsection{Maticové operace}
+
+\startitemize
+\item {\tt magic(n)} -- prvky matice tvoří magický čtverec
+\item {\tt pascal(n)} -- prvky tvoří hodnoty Pascalova trojúhelníku
+\item {\tt cross(vec1,vec2)} -- vektorový součin
+\item {\tt fliplr, flipud} -- obrátí matici zleva doprava, shora-dolů.
+\item {\tt reshape(A,n,m)} -- převede matici na rozměr $n\times{}m$
+\item {\tt v = diag(A), A=diag(v)} -- vrátí prvky na diagonále jako sloupcový vektor a obráceně
+\item {\tt rot90(A[, K])} -- otoč K-krát o 90$^\circ$ po směru hodin
+\item {\tt repmat}
+\item {\tt triu, tril} -- vrátí horní, dolní trojúhelníkovou matici
+\item {\tt A*x=b; x=inv(A)*b} nebo {\tt x=A\backslash{}b}
+\item {\tt det(A)} -- determinant matice A
+\item {\tt trace(A)} -- součet prvků na diagonále
+\item {\tt eig(A)} -- vlastní vektor matice
+% rref() -- 
+\item {\tt A'} -- transponování matice
+%\item {\tt + - * / \backslash ^ '} --
+%\item {\tt .+ .- .* ./ .\backslash .^ .'} --
+\stopitemize
+
+\section{Operátory}
+
+\startitemize
+\item {\tt uplus(n), uminus(n)} -- unární plus $+n$ a mínus $-n$
+\item {\tt +, plus(n,m)}/{\tt -, minus(n,m)} -- $n+m$, $n-m$
+\item {\tt C=A*B, C=mtimes(A,B)} -- maticové násobení $c_{ij}=\sum_{k=1}^{n}a_{ik}b_{kj}$
+\item {\tt C=A.*B, C=times(A,B)} -- násobení po prvcích $c_{ij} = a_{ik}b_{kj}$
+\item {\tt C=A^n, C=mpower(A,n)} -- maticové umocňování 
+\item {\tt C=A.^n, C=power(A,n)} -- umocňování po prvcích
+\item {\tt C=A/B, C=mrdivide(A,B)} -- maticové dělení zprava doleva
+\item {\tt C=A./B, C=rdivide(A,n)} --  dělení zleva doprava po prvcích
+\item {\tt C=A\backslash{}B, C=mldivide(A,B)} -- levé maticové dělení {\tt C=B/A}
+\item {\tt C=A.\backslash{}B, C=ldivide(A,B)} --  dělení zleva doprava po prvcích
+\item {\tt C=kron(A,B)} -- Kroneckerův tenzorový součin $\mathbf{A}\otimes\mathbf{B}$
+\item Relace: {\tt a>b gt(a,b)}, {\tt < lt}, {\tt  >= ge}, {\tt <= le}, {\tt == eq}, \type{~= ne} ($\not=$)
+%\item {\tt \| \& maticové and, or po prvcích
+\item Logické operace: {\tt x||y or(x,y)}, {\tt && and}, {\tt \~ not}, {\tt xor(x,y)}
+\item {\tt bitand(a,b); bitor; bitxor} -- bitový and, or a xor
+\item {\tt bitcmp(uint8(255))} -- bitová negace, vrátí 0
+\item {\tt bitget(x,n)} -- vrátí $n$. bit čísla $x$, pozice LSB $n=1$
+\item {\tt c=bitset(a,n,0/1)} -- nastaví $n.$ bit čísla $a$ na 1/0
+\item {\tt bitshift(a,n)} -- bit. posun o $n$ míst, $n>0$ $\leftarrow$, $n<0$ $\rightarrow$
+%    bitmax   
+\item {\tt any(vektor)} -- vrátí 1 pokud je alespoň jeden prvek nenulový
+\item {\tt all(vektor)} -- vrací 1 pokud jsou všechny prvky nenulové
+\item {\tt find(vektor)} -- vrátí indexy nenulových prvků vektoru, matice
+\item {\tt [r c] = find(A>10)} -- vrátí indexy pro prvky matice $A_{ij}>10$
+\stopitemize
+
+\section{Základní funkce}
+
+\startitemize
+\item {\tt y=sqrt(x)} -- $y=\sqrt{x}$, u vektoru po prvcích
+\item {\tt X=sqrtm(A)} -- maticová odmocnina, $X\cdot{}X=A$
+\item {\tt X=expm(A)} -- maticový exponent, $e^{A}$
+\item {\tt X=logm(A)} -- maticový logaritmus, $A=e^{\log{A}}$
+\item {\tt rem(a,b)} -- zbytek po dělení $a/b$, ${a-fix(a./b)*b}$
+\item {\tt mod(a,b)} -- modulus po dělení $a/b$, ${a-floor(a./b)*b}$
+\item {\tt abs(x)} -- absolutní hodnota $|x|$
+\item {\tt angle()} -- fázový úhel komplexního čísla v radiánech
+\item {\tt sign(x)} -- vrací 1 pro $x>0$, 0 pro $x=0$ a $-1$ pro $x<0$
+\item {\tt hypot(a,b)} -- $\sqrt{|a|^2+|b|^2}$
+\item {\tt norm} --  $p$-norma, $p \ge 1, \|{\it {\bf x}}\|_p = \left( \sum_{i=1}^n |x_i|^p \right)^{1 \over p}.$ Pro Eukleidovskou normu $p = 2$.
+\item {\tt factor(n)} -- rozloží $n$ na prvočísla
+\item {\tt diff([4 7 15 32])} -- rozdíly mezi po sobě následujícími elementy [3 8 17]
+\item {\tt gcd(x,y)} -- největší společný dělitel
+\item {\tt factorial(n)} -- faktoriál $n!$
+\item {\tt exp(x)} -- exponenciální funkce $e^x$
+\item {\tt log(x)} -- přirozený logaritmus (ln)
+\item {\tt log10(x)} -- dekadický logaritmus
+\item {\tt sqrt(x)} -- $\sqrt{x}$
+\item {\tt nroot(A,n)} -- $\sqrt[n]{A_{ij}}$
+\stopitemize
+
+\subsection{Trigonometrické funkce}
+
+\startitemize
+\item Funkce končící {\tt d} pracují s úhly ve stupních, jinak radiány.
+\item {\tt sin, sind, asin, asind, sinh, asinh; cos; tan; cot; csc; sec;}
+\stopitemize
+
+
+\section{Symbolické výpočty} % help symbolic
+
+\startitemize
+\item {\tt syms a, a=sym('a')} -- zavedení symbolické proměnné
+\item {\tt sym('a'), sym('pi/2'), sym('(a+b)^2')} -- příklady symb. proměnných
+\item {\tt expand()} -- rozloží symbolický výraz
+\item {\tt simplify('')} -- zjednodušší symbolický výraz
+\item {\tt collect('',x)} -- seskupí danou proměnnou
+\item {\tt subs(x*y,y,a)} -- substituce $y=a$
+\item {\tt pretty('výraz')} -- zobrazí jako ASCII art
+\item {\tt ezplot('cos(x)', [0 pi])} -- vykreslí graf v daném rozsahu
+\item {\tt ezpolar('cos(x)', [0 pi])} -- vykreslí graf v daném rozsahu
+\item {\tt ezcontour, ezplot3, excontourf, ezsurf, ezsurfc}\,--\,další gr.
+\item {\tt solve('2*x^2 + x = 6')} -- vyřeší např. kvadratickou rovnici
+\item {\tt [x,y]=solve('x^2-y=2','y-2*x=5')} -- rovnice o 2 neznámých
+%\item {\tt solve(f1,f2)} --
+\item {\tt horner('\type{x^3-6*x^2+11*x-6}')} -- převede na Hornerovo schéma
+\item {\tt vpa(výraz, n)} -- vyhodnotí výraz na $n$ desetinných míst
+\item {\tt poly2sym([2 0 -1 5])} -- vektor na polynom $2x^3-x+5$
+\item {\tt sym2poly(x^3 - 2*x - 5)} -- polynom na vektor {\tt [1 0 -2 -5]}
+\item {\tt polyval(polynom, n)} -- hodnota mnohočlenu v bodě $n$
+\item {\tt polyfit(vx,vy,n)} -- proloží body polynomem n-tého řádu
+\item {\tt polyder([1 2 -3 4])} -- derivace polynomu $x^3+x^2-3x+4$ %=3x^2+4x-3$
+\item {\tt roots([1 0 -1])} -- kořeny polynomu $x^2-1$, $1$ a $-1$
+\item {\tt diff(fce,x [,n])} -- $n.$ derivace podle $x$, $n=1$
+\item {\tt int(3*x^2-1)} -- integrál $\int{3x^2 - 1 dx}= x^3 -x$
+\item {\tt int(f,x,-2,2)} -- určitý integrál $\int\nolimits_{-2}^2{f dx}=$
+\item {\tt limit(f,x,h [,'left'/'right'])} -- limita $\lim_{x\rightarrow{}h}f(x)$
+\item {\tt quad}, {\tt quad8} -- numerická integrace 
+\item {\tt taylor} --
+\stopitemize
+
+\section{Řídící výrazy}
+
+\startitemize
+\item {\tt false, true} -- vrací 0 nebo 1
+\item {\tt exist A, exist('A')} -- 0 pokud proměnná, funkce neexistuje
+\item {\tt if podmínka ; akce; elseif akce else end}
+\item {\tt switch výraz
+case
+case
+otherwise
+end}
+\item {\tt for proměnná = rozsah; akce; end}
+\item {\tt while podmínka; akce; end}
+\item {\tt break}, {\tt continue} -- pro {\tt for} a {\tt while}
+\item {\tt eval {\sl text} } -- vyhodnotí text jako kód
+\item {\tt isinf, isfinite} -- 
+\item {\tt isnan} -- vrací vektor, kde nulové prvky jsou platná čísla nebo $\pm$Inf
+\item {\tt iskeyword('str')} -- rozhodne zda se jedná o klíčové slovo
+\stopitemize
+
+\subsection{Funkce}
+
+\startitemize
+\item {\tt f = @(x) x^2 } --  anonymní funkce, $f(2)=4$
+\item {\tt f = inline('x^2', 'x');}
+\item Složitější funkce musí být uvnitř M-souboru {\tt nazev_funkce.m}:
+\starttyping
+function vystup = nazev_funkce(vstupní argumenty)
+% Popisující komentář, bude vypsán při "help nazev_funkce"
+
+vystup = ...;
+\item {\tt nargin}, {\tt nargout} -- počet vstupních, výstupních argumentů
+\stoptyping
+
+\item function [v1 v2] = nazev(vstup) -- vrací vektor
+findargtype(proměnná) -- vrací scalar, vector, matrix
+\item {\tt funkce(@sin)} -- parametřem může být jiná funkce
+\item {\tt nargin, nargout} -- počet vst. a výst. parametrů funkce
+\item {\tt varargin, varagout} -- přístup k těmto parametrům
+\stopitemize
+
+
+\section{Grafy}
+
+\startitemize
+\item {\tt clf} -- vymaže obsah okna s grafem
+\item figure(n) -- 
+\item legend --
+\item hold on --
+\item grid on --
+\item {\tt axis([x1 x2 y1 y2])} -- nastavení intervalu os
+\item {\tt plot(x, y, '')} -- 
+\item {\tt polar(t, f(t), '-{}-r')} -- polární funkce, červeně přerušovanou čarou
+\item {\tt loglog, semilogx, semilogy} -- jako {\tt plot}, ale s log. osou
+\item {\tt plot3(x, y, z, '')} -- 
+
+\item {\tt bar, barh, area, stem, hist, pie} --
+\item {\tt title('Nadpis')}
+\item {\tt xlabel('Popis'), ylabel('Popis')} -- popis os
+\item {\tt text(x,y,'nápis')} -- umístí nápis na pozici $x$, $y$
+
+\item {\tt } --
+\item Barvy: {\tt b c g k m r y}
+\item Symboly bodů: {\tt . o x + * s d v ^ < > p h}
+\item Typy čar: {\tt -{}- -. : -}
+\item {\tt hl = line(x,y,'LineWidth', 3, 'Color', [0.5 0.5 0.5])} -- vytvoří křivku z vektorů souřadnic a zobrazí z danými atributy
+\item {\tt print(n, '-depsc', 'graf.eps')} -- uloží okno $n$ jako barevný EPS {\tt graf.eps}
+\stopitemize
+
+\section{Import a export dat}
+
+textscan
+
+\subsection{Nízkoúrovňové V/V operace}
+
+\startitemize
+\item open, fopen, fclose, fseek, ftell, frewind, ferror
+\item read fwrite fprintf  fscanf fgetl fgets  textread
+xmlread xmlwrite wklread wklwrite saveas 
+\item {\tt fileID = fopen(name, permission, format, encoding)} --
+\item {\tt r w a r+ w+ a+ A W} --
+\item {\tt machine format: n b l s a} --
+\item {\tt encoding 'UTF-8' 'ISO-8859-2' 'windows-1250'} 
+\stopitemize
+
+\section{Statistické funkce}
+
+\startitemize
+\item {\tt min(A), max(A)} -- min. nebo max. hodnota vektoru, řádkový vektor hodnot u matic [] 
+\item {\tt [h i] = min(A)}/{\tt max(A)} -- vrátí danou hodnotu a její index
+\item {\tt mean} -- aritmetický průměr (stř. hodnota) vektoru nebo sloupce
+\item {\tt var} -- rozptyl  
+\item {\tt std, sqrt(var)} -- směrodatná odchylka
+\item {\tt mode} -- modus, nejčastěji zastoupená hodnota
+\item {\tt median} -- medián prvků vektoru, sloupců matice 
+\item {\tt prod} -- součin prvků vektoru, sloupců matice
+\item {\tt sum} -- součet prvků vektoru, sloupců matice
+\item {\tt cumsum}, {\tt cumprod} -- celkový součet nebo součin prvků
+\item 
+\stopitemize
+
+\section{Množinové operace}
+
+\startitemize
+\item {\tt union(v1,v2)} -- sjednocení
+\item {\tt intersect(v1,v2)} -- průnik
+\item {\tt setdiff(v1,v2)} -- rozdíl množin
+\item {\tt setxor(v1,v2)} --  doplněk
+\item {\tt ismember} --
+\item {\tt sort(v), sort(v, 'descent')} -- řazení
+\stopitemize
+
+\section{Zpracování zvukových signálů}
+
+\startitemize
+\item {\tt load gong; sound(y, Fs)} -- přehraje zvuk gongu danou vz. f.
+\item {\tt wavread, wavplay, wavwore. wavrecord} -- 
+\item {\tt auread, auwrite} -- 
+% \item {\tt } -- 
+\stopitemize
+
+
+\section{Zpracování obrazů}
+
+\startitemize
+\item {\tt colormap([0 0 0; 1 1 1])} -- nastaví paletu, index = RGB,
+palety: gray, hot, jet, cool, hsv
+\item {\tt image(C)} -- zobrazí matici C jako bitmapu
+\item {\tt p = imread('soubor.png');} -- načtení obrazu do matice p
+\item {\tt image(p)} -- zobrazí snímek
+\item p(y,x,rgb) -- přístup k pixelům, 
+\item {\tt imshow()} -- 
+\stopitemize
+
+\stopcolumns
+\stoptext
