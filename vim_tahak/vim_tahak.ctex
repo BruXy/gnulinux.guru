@@ -181,6 +181,7 @@
 \subsection{Vkládání zvláštních znaků}
 
 \startitemize
+\item Zobrazení netisknutelných znaků:\DF \CS{set list}
 \item Vlož ASCII znak:\DF \CE{\CT+v\,{\em kód}\,\EN}
 \item Zobraz ASCII/UTF-8 znaku pod kurzorem:\DF \CC{ga}\,/\,\CC{g8}
 \item Potlač řídící znak, např. \C{\TT} (\type{^I}):\DF \CE{\CT+v\,\TT} 

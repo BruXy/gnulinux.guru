@@ -25,7 +25,7 @@ vim_cheatsheet_0001.png: vim_cheatsheet.pdf
 
 .SUFFIXES: .ctex
 
-tarball: vim_cheatsheet.tar.bz2
+tarball: veryclean vim_cheatsheet.tar.bz2
 
 vim_cheatsheet.tar.bz2: vim_tahak_style.ctex vim_tahak.ctex vim_cheatsheet.ctex
 	#$(shell cd ..; tar cvjf vim_cheatsheet.tar.bz2 vim_tahak/)

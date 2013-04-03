@@ -180,6 +180,7 @@
 \subsection{Insert special sumbols}
 
 \startitemize
+\item Display unprintable characters:\DF \CS{set list}
 \item Insert ASCII char:\DF \CE{\CT+v\,{\em code}\,\EN}
 \item Show ASCII/UTF-8 of char under cursor:\DF \CC{ga}\,/\,\CC{g8}
 \item Suppress control character, e.g. \C{\TT} (\type{^I}):\DF \CE{\CT+v\,\TT} 
