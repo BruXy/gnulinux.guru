@@ -1,0 +1,105 @@
+\input python_vzhled.ctex
+
+\def\btt#1{{\tt\bf #1}{}}
+\def\stt#1{{\tt\sl #1}{}}
+
+\def\tbs{\textbackslash{}}
+
+\setupTABLE[r][first][align=center]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\starttext
+
+\startcolumns[n=2]
+	
+\title{Python}
+
+\mycopyright
+	
+
+Set of interpreter: \type{#!/usr/bin/python} \qquad Comments: \type{# toto je komentář}
+
+\section{Command line parameters}
+
+\startitemize
+\item {\tt  -v} -- 
+\item {\tt } -- 
+\stopitemize
+
+\section{Control expressions}
+
+\startitemize
+\item 
+\stopitemize
+
+\subsection{Functions}
+
+\startitemize
+\item 
+\stopitemize
+
+\section{Variables}
+
+\startitemize
+\item 
+\item Number formats: 
+\startitemize
+	\item 	{\tt 2006}~-- desítkový int.;
+	\item 	{\tt 0775}~-- osmičkově;
+	\item 	{\tt 0xBABE}~-- hexa;
+	\item 	{\tt 0b101010}~-- dvojkově;
+	\item 	{\tt 3.14, 314e-2}~-- desetinná čísla;
+	\item 	{\tt 0b0101\_1010, 123\_456}~-- oddělovač zlepší čitelnost;
+\stopitemize
+\item 
+\stopitemize
+
+\subsection{Special variables and arrapole}
+
+\startitemize
+\item 
+\stopitemize
+
+\subsection{Arrays}
+
+\startitemize
+\item 
+\stopitemize
+
+\subsection{Hashes}
+
+\startitemize
+\item 
+\stopitemize
+
+\subsection{Strings}
+
+\startitemize
+\item 
+\stopitemize
+
+\section{Work with files}
+
+\startitemize
+\item 
+\stopitemize
+
+\subsection{Zpracování vstupu po řádcích}
+
+\section{Operators}
+
+\startitemize
+	\item 
+\stopitemize
+
+\section{Output}
+
+\startitemize
+\item 
+\stopitemize
+
+\stopcolumns
+\stoptext
+
+
