@@ -212,5 +212,11 @@
 }}
 
 
+\def\symlb{\{}
+\def\symrb{\}}
+\def\symdollar{\$}
+\def\symalpha{$\alpha$}
+\def\symtilda{\type{~}}
+\def\pyind{\strut\hskip1.5em}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

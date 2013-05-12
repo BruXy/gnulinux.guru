@@ -1,5 +1,39 @@
 \input python_vzhled.ctex
 
+% Reserved worlds
+
+and
+as
+assert
+break
+class
+continue
+def
+del
+elif
+else
+except
+exec
+finally
+for
+from
+global
+if
+import
+in
+is
+lambda
+not
+or
+pass
+print
+raise
+return
+try
+while
+with
+yield
+
 \def\btt#1{{\tt\bf #1}{}}
 \def\stt#1{{\tt\sl #1}{}}
 
@@ -17,89 +51,355 @@
 
 \mycopyright
 	
+Set of interpreter: \type{#!/usr/bin/env python} \qquad Comments: \type{# toto je komentář}
 
-Set of interpreter: \type{#!/usr/bin/python} \qquad Comments: \type{# toto je komentář}
+""" more lines comment """
 
 \section{Command line parameters}
 
 \startitemize
-\item {\tt  -v} -- 
-\item {\tt } -- 
+\item {\tt python {\em options} script.py} -- run script filename
+\item {\tt -V} -- print version 
+\item {\tt -c '{\em code}'} -- run code from command line
 \stopitemize
 
-\section{Control expressions}
+\section{Expression statements}
 
 \startitemize
+\item {\tt import {\sl module}}
+\item {\tt from {\sl module} import *} -- import all stuff to local name space
+\item import module as name --
+\item from module import name as othername --
+% \item raise %3.0
+\item break -- exit while or for loop, skip associated else
+\item continue -- perform next iteration of cycle
+\item global name -- reference global value  
+% \item nonlocal name -- %3.0
+\item exec code -- compile and exec code
 \item 
+for identifier in list : \crlf
+\pyind list-processing code
+else :
+\pyind suite
+\item 
+if {\em condition} : \crlf
+\pyind true suite \crlf
+elif {\em condition}: \crlf
+\pyind else if true \crlf
+else : \crlf
+\pyind else suite 
+\item 
+try: \crlf
+\pyind code with possible runtime error \crlf
+except: \crlf
+\pyind error-recovery code \crlf
+else: \crlf
+\pyind  suite \crlf
+finally: \crlf
+suite
+\item with
+\item while {\em condition} \crlf
+\pyind re
+else:
+\pyind suite
+\item pass -- do-nothing placeholder statement 
+\item del name, del name[i], del name[i:j:k], del name.attibute
+\item class 
 \stopitemize
+
+
+
+Class
 
 \subsection{Functions}
 
 \startitemize
-\item 
+\item def function(param1, param2,...) \crlf
+\pyind pass
+\item def func(arg,... arg=value, ... *arg, **arg):
+\startitemize
+	\item arg -- matched by name or position
+	\item arg=value -- default value if arg is not passed
+	\item *arg -- collect extra positional args as a new tuple
+	\item **arg -- collect extra positional args as a new dictionary
 \stopitemize
+\item lambda arg, arg, ... : expression %???
+\item decorator %???
+\item return [expression] -- return from function
+\item yield expression -- suspend function state and return, on next iteration restore prior state
+
+\stopitemize
+
 
 \section{Variables}
 
 \startitemize
-\item 
+\item {\tt variable = 12} -- assign value
+\item {\tt type(variable)} -- return type of variable 
 \item Number formats: 
 \startitemize
-	\item 	{\tt 2006}~-- desítkový int.;
-	\item 	{\tt 0775}~-- osmičkově;
-	\item 	{\tt 0xBABE}~-- hexa;
-	\item 	{\tt 0b101010}~-- dvojkově;
-	\item 	{\tt 3.14, 314e-2}~-- desetinná čísla;
-	\item 	{\tt 0b0101\_1010, 123\_456}~-- oddělovač zlepší čitelnost;
+	\item 	{\tt 2006, 2006l, 2006L}~-- decimal integer, long;
+	\item 	{\tt 0775}~-- octal;
+	\item 	{\tt 0xBABE}~-- hexadecimal;
+	\item 	{\tt 0b101010}~-- binary;
+	\item 	{\tt 3.14, 314e-2}~-- floating point;
+	\item   {\tt 1+2j, 1.0+2.0J, complex(1,2) } -- complex number;
+	\item   {\tt b'Ahoj'} -- sequence of 8-bit values;
 \stopitemize
-\item 
+\item int(x), long(x), float(x), str(n) -- numeric and string type conversions
+\item {\tt c=1+2j; c.conjugate()}, {\tt (1+2j).conjugate()} -- conjugate of complex number $1-2j$
+\item {\tt abs(x)} -- absolute value of $x$
+\item (10.5).as_integer_ratio() -- returns tuple (21, 2)
+\item {\tt X, Y = Y, X} -- swap values of X and Y
+\item a,b,c = range(3) -- read list values into variables
+\item vars() -- return dictionary of variables and values
 \stopitemize
 
-\subsection{Special variables and arrapole}
+\subsection{Constants}
 
 \startitemize
-\item 
+\item {\tt  False}, {\tt True} -- boolean 
+\item {\tt None} -- represents no value
 \stopitemize
 
-\subsection{Arrays}
+
+
+\subsection{Tuples} % N-tice
 
 \startitemize
-\item 
+\item {\tt tuple = (1, 2, 3)} -- like list, but can't change their values
+\item {\tt tuple[1]} -- access second item, returns 2
+\item tuple() --
+\item atuple.index(x [, i [, j]])
+\item atuple.count(x)
 \stopitemize
 
-\subsection{Hashes}
+\subsection{Lists}
 
 \startitemize
-\item 
+\item {\tt l = []} -- empty list
+\item {\tt l = [1, 2, 3]} -- one dimensional array
+\item {\tt l[1]} -- returns 2, indexing: 1\low{0} 2\low{1} 3\low{2}
+\item {\tt l[i:j]} -- slicing from index $i$ to $j$
+\item {\tt l[i:j:k]} -- slicing with step $k$
+\item {\tt l[-1]} -- last item (first from back)
+\item {\tt 0 in [1, 2, 3]} -- False, {\tt 1 in [1, 2, 3]} True
+\item {\tt l = range(5)} -- create list [1, 2, 3, 4, 5]
+\item {\tt l = range(start, stop[, step])} -- given range with step
+\item {\tt l = [x**2 for x in range(9)]} -- list from expression result
+\item {\tt l.index({\sl item})} -- return index of {\em item} in list
+\item {\tt l.count({\sl item})} -- total number of occurrences of {\em item}
+\item {\tt l = ["text", 12, 3, [1, 2]]} -- more types in one list
+\item {\tt l2d = [ [1, 2, 3], [4, 5, 6], [7, 8, 9] ]} -- two-dimensional list
+\item {\tt l2d[1][1]} -- returns 5
+\item {\tt len(l)} -- return length of list  
+% http://docs.python.org/2/tutorial/datastructures.html
+\item {\tt l.append({\sl value})} -- add {\em value} to the list
+\item {\tt l.extend([4,5,6]), list[len(list):]=[4,5,6]}, {\tt list += [4,5,6]} -- append another list
+\item {\tt l.insert(i, value)}, {\tt list[i]=value} -- insert value at given index
+\item {\tt l[:0]=[x,y,z]} -- insert item at front of list
+\item {\tt l.remove(value)} -- remove first occurrence of value
+\item {\tt l.pop({\sl i})}, {\tt list.pop()} -- return and remove value, without index last
+\item {\tt l.index(x [, i[, j]])} -- index of first occurrence of x, between $i$ to $i$
+\item {\tt l.count(x)} -- return number of occurrence of object {\em x}
+\item {\tt l.sort(key=None, reverse=False)} -- sort list in-place 
+\item {\tt l.reverse()} -- reverse list in-place
+\item {\tt sum(l)} -- return sum of numeric list
+\stopitemize
+
+
+\subsection{Dictionaries}
+
+\startitemize
+\item {\tt h = \symlb\symrb} -- initialization of empty dictionary
+\item {\tt h = \symlb "key1": "value", "key2": "another"\symrb} -- definition
+\item {\tt h = dict(key1="value", key2="another")} -- different syntax
+\item {\tt h["key3"] = 333} -- add another value
+\item {\tt h = \symlb{}c: ord(c) for c in 'spam'\symrb} -- comprehension expression
+\item {\tt h.has_key("key")} -- returns {\tt True} if key exist
+\item {\tt h.keys()} -- return list of keys
+\item {\tt h.values()} -- return list of values
+\item {\tt h.clear()} -- remove all items
+\item {\tt g = h.copy()} -- returns a shallow copy of h
+\item {\tt h.get(key [, default])} -- if key is not found return default
+\item h.popitem() -- removes and returns an (key, value) pair
+\item h.pop(key [, default] ) -- 
+\item adict.setdefault(key, [, default]) --
+\item adict.fromkeys(seq [, value]) --
+\item zip
+\stopitemize
+
+\subsection{Sets}
+
+\startitemize
+\item m = set() -- empty set
+\item m = set('Ouagadougou') -- m = set(['a', 'd', 'g', 'o', 'u', 'O']), unordered collection of unique and immutable objects
+\item m = \symlb{}'a', 'd', 'g', 'o', 'u', 'O'\symrb
+\item m = frozenset(range(−5, 5)) -- immutable set of -5...4
+\item value in set --
+\item set1 - set2, set1.difference(set2) -- new set contains difference
+\item set1 \type{|} set2, set1.union(other) --
+\item set1 \type{&} set2, set1.intersection(other) --
+\item set1 <= set2, set1.issubset(other)
+\item set1 >= set2, set1.issubset(other)
+\item set1 < set2, set1 > set2
+\item set1 ^ set2, set1.symmetric_difference(other)
+\item set1 \type{|}= set2, set1.update(other)
+\item set1.add(X), set1.remove(X), set1.discard(X), set1.pop(), set1.clear()
+\item len(aset)
+\item for x in aset:
+\item aset.copy()
 \stopitemize
 
 \subsection{Strings}
 
 \startitemize
-\item 
+\item {\tt s = "Hello"}, {\tt s = 'Hello'} -- definitionm {\tt "} and {\tt '} work same
+\item {\tt """This is multi-line block"""} -- collects into a single string
+\item {\tt s[1]='e'} -- indexing H\low{0}~e\low{1}~l\low{2}~l\low{3}~o\low{4}
+\item {\tt str({\sl n})} -- convert number $n$ to string
+\item {\tt 'Hello ' + 'World'} -- concatenation
+\item {\tt 'Hello' * 3} -- repetition $3\times$
+\item Unicode $\alpha$: \type{u"\03b1"}, \type{U"\U000003B1"}, \type{u"\N{GREEK SMALL LETTER ALPHA}"}
+\item Raw string: \type{r"\n"}, \type{R'\n'} does not interpret escape sequences 
+\item str(), bytes(), bytearray() -- create string from object
+\item \type{\x}{\tt hh}, \type{\o}{\tt oo}, \type{\0} -- hex, octal, null byte
+\item chr(65) -- returns A, ASCII code 65
+\item ord('A') -- returns ASCII code of A
+\item eval(s) -- converts s
+\item repr() --
+\stopitemize
+
+\subsection{Output and formating}
+
+\startitemize
+\item \type{'%s, %s, %.2f' % (13, 'txt', 22/7.0)} -- formats to {\tt '13, txt, 3.14'}
+\item \type{'{0}, {1}, {2:.2f}' % (13, 'txt', 22/7.0)} -- another format def.
+\item \type{"%(n)d %(x)s" % {"n":1, "x":"spam"}} 
+\item \type{%[(keyname)][flags][width][.precision]typecode}
+\startitemize[columns,two,joinedup]
+\item s String (or any object, uses str())
+\item r s, but uses repr(), not str()     
+\item c Character (int or str)            
+\item d Decimal (base 10 integer)         
+\item i Integer                           
+\item u Same as d (obsolete)              
+\item o Octal (base 8 integer)            
+\item x Hex (base 16 integer)             
+\item X x with uppercase
+\item e Floating-point exponent
+\item E e with uppercase
+\item f Floating-point decimal
+\item F f with uppercase
+\item g Floating-point e or f
+\item G Floating-point E or F
+\item \% Literal '\%'
+\item \type{{fieldname!conversionflag:formatspec}}
+\stopitemize
+
+\item {\tt print('Hello World!')}
+\stopitemize
+
+\subsection{String methods}
+
+% 27
+
+\startitemize
+\item s.find(sub, [,start [, end]]) -- index of first occurrence of {\tt sub}
+\item s.count(sub, [,start [, end]]) -- 
+\item s.upper(), s.lower(), s.swapcase() -- converts case
+\item s.split([sep [, maxsplit]) --
+\item sep.join(iterable) -- concatenates list or tuple of strings with separator
+\item ' and '.join(['a', 'b', 'c']) --
+\item s.replace(old, new [, count]) --
+\item s.splitlines([keepends]) --
+\item s.strip([chars]) -- remove leading and trailing whitespaces
+\item s.lstrip, s.rstrip -- just from left or right side
 \stopitemize
 
 \section{Work with files}
 
 \startitemize
-\item 
+\item {\tt file = open('data.txt'), mode} -- open file, mode: r,w,rb,w,r+,w+
+\item {\tt s = file.read()} -- read all file into string s
+\item {\tt file.read(n)} -- read n bytes into string s, empty at EOF
+\item {\tt file.readline()} -- return line of file
+\item {\tt for line in file: } -- process file line by line 
+\item {\tt file.write(s)} -- write string {\em s} into file
+\item {\tt file.writeline(list)} -- write all string in list to file
+\item {\tt print >>file, "Output"} -- write string to file
+\item {\tt file.close()} -- close to free resources
+\item {\tt file.tell()} -- return file position
+\item {\tt file.seek(offset [, whence])} --
+\item {\tt file.isatty()} -- return True if file is terminal
+\item {\tt file.flush()} -- flushes file's buffer
+\item {\tt file.truncate([size])} -- truncate file to  size bytes
+\item {\tt file.fileno()} -- get file descriptor integer 
+\item file.closed, file.mode, file.name -- return attributes
 \stopitemize
 
-\subsection{Zpracování vstupu po řádcích}
 
 \section{Operators}
 
 \startitemize
-	\item 
+\item {\tt or, and, not x} -- boolean operators
+\item \type{|} (or), \type{^} (xor), \type{&} (and), \type{~x} (neg.) -- binary operators
+\item in, not in -- membership tests
+\item {\tt X is Y}, {\tt X is not Y} -- same or different object 
+\item <, <=, >, >=, <>, !=, == -- comparisons
+\item {\tt *, /, //, \%} -- multiply, divide, floor divide, remainder
+\item {\tt x << n}, {\tt x >> n} -- bitwise shifts by $n$ bits
+\item {\tt x**y}, {\tt pow(x,y)} -- power $x^y$
+\item \type{ +=   \&=  -=   |=  *=   ^=  /=   >>= \%=   <<= **=  //= }
 \stopitemize
 
-\section{Output}
 
-\startitemize
-\item 
-\stopitemize
+\section{Build-in functions}
 
-\stopcolumns
-\stoptext
+all
+any
+ascii
+bool
+classmethod
+compile
+dir
+divmod(x,y) -- return tuple (x/y, x\%y)
+enumerate(iterable, start=0)
+filter
+format
+getattr
+globals -- return dictonary of global variables
+hasattr
+hash
+help
+id
+input
+isinstance
+issubclass
+iter
+locals
+map
+max 
+memoryview
+min
+next
+object
+property
+reversed
+round
+setattr
+slice
+sorted
+staticmethod
+super
+
+
+\section{Regular expression}
+
+\section{The sys Module}
+
+
+
+\stopcolumns \stoptext
 
 
