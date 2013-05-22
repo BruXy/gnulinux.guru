@@ -39,7 +39,6 @@ yield
 
 \def\tbs{\textbackslash{}}
 
-\setupTABLE[r][first][align=center]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -65,17 +64,39 @@ Set of interpreter: \type{#!/usr/bin/env python} \qquad Comments: \type{# toto j
 
 \section{Expression statements}
 
+\bTABLE[frame=off,style=tt]
+%\bTABLEbody
+%\setupTABLE[r][each][alig]
+\bTR
+\bTD
+for {\em identifier} in {\em list} : \crlf
+\pyind list-processing code \crlf
+else : \crlf
+\pyind suite 
+\eTD
+\bTD
+while {\em condition} \crlf
+\pyind repeat if condition is true\crlf 
+else: \crlf
+\pyind suite
+\eTD
+
+\eTR
+%\eTABLEbody
+\eTABLE
+
 \startitemize
-\item {\tt import {\sl module}}
+\item {\tt import {\sl module}} -- find and initialize {\em module}
+\item {\sl module.function()} -- use function of imported module
 \item {\tt from {\sl module} import *} -- import all stuff to local name space
-\item import module as name --
-\item from module import name as othername --
+\item {\tt import {\sl module} as {\sl name}} -- rename imported module
+\item {\tt from {\sl module} import {\sl name} as {\sl othername}} --
 % \item raise %3.0
-\item break -- exit while or for loop, skip associated else
-\item continue -- perform next iteration of cycle
-\item global name -- reference global value  
+\item {\tt break} -- exit while or for loop, skip associated else
+\item {\tt continue} -- perform next iteration of cycle
+\item {\tt global {\sl name}} -- reference global value  
 % \item nonlocal name -- %3.0
-\item exec code -- compile and exec code
+\item {\tt exec("print 'Ahoj'")} -- compile and exec code
 \item 
 for identifier in list : \crlf
 \pyind list-processing code
@@ -99,17 +120,13 @@ finally: \crlf
 suite
 \item with
 \item while {\em condition} \crlf
-\pyind re
-else:
+\pyind repeat if condition is true\crlf 
+else: \crlf
 \pyind suite
 \item pass -- do-nothing placeholder statement 
 \item del name, del name[i], del name[i:j:k], del name.attibute
 \item class 
 \stopitemize
-
-
-
-Class
 
 \subsection{Functions}
 
@@ -125,11 +142,9 @@ Class
 \stopitemize
 \item lambda arg, arg, ... : expression %???
 \item decorator %???
-\item return [expression] -- return from function
-\item yield expression -- suspend function state and return, on next iteration restore prior state
-
+\item {\tt return [expression]} -- return from function
+\item {\tt yield expression} -- suspend function state and return, on next iteration restore prior state
 \stopitemize
-
 
 \section{Variables}
 
@@ -139,45 +154,43 @@ Class
 \item Number formats: 
 \startitemize
 	\item 	{\tt 2006, 2006l, 2006L}~-- decimal integer, long;
-	\item 	{\tt 0775}~-- octal;
-	\item 	{\tt 0xBABE}~-- hexadecimal;
-	\item 	{\tt 0b101010}~-- binary;
+	\item 	{\tt 0775}, {\tt oct(0x1fd)}~-- octal;
+	\item 	{\tt 0xBABE}, {\tt hex(47806)}~-- hexadecimal;
+	\item 	{\tt 0b101010}, {\tt bin(42)}~-- binary;
 	\item 	{\tt 3.14, 314e-2}~-- floating point;
 	\item   {\tt 1+2j, 1.0+2.0J, complex(1,2) } -- complex number;
 	\item   {\tt b'Ahoj'} -- sequence of 8-bit values;
 \stopitemize
-\item int(x), long(x), float(x), str(n) -- numeric and string type conversions
+\item {\tt int(x)}, {\tt long(x)}, {\tt float(x)}, {\tt str(n)} -- numeric and string type conversions
 \item {\tt c=1+2j; c.conjugate()}, {\tt (1+2j).conjugate()} -- conjugate of complex number $1-2j$
 \item {\tt abs(x)} -- absolute value of $x$
-\item (10.5).as_integer_ratio() -- returns tuple (21, 2)
+\item {\tt(10.5).as_integer_ratio()} -- returns tuple {\tt (21, 2)}
 \item {\tt X, Y = Y, X} -- swap values of X and Y
-\item a,b,c = range(3) -- read list values into variables
-\item vars() -- return dictionary of variables and values
+\item {\tt a,b,c = range(3)} -- read list values into variables
+\item {\tt vars()} -- return dictionary of variables and values
 \stopitemize
 
 \subsection{Constants}
 
 \startitemize
-\item {\tt  False}, {\tt True} -- boolean 
+\item {\tt False}, {\tt True} -- boolean 
 \item {\tt None} -- represents no value
 \stopitemize
-
-
 
 \subsection{Tuples} % N-tice
 
 \startitemize
-\item {\tt tuple = (1, 2, 3)} -- like list, but can't change their values
-\item {\tt tuple[1]} -- access second item, returns 2
-\item tuple() --
-\item atuple.index(x [, i [, j]])
-\item atuple.count(x)
+\item {\tt t = ()}, {\tt t = tuple()} -- create empty tuple
+\item {\tt t = (1, 2, 3)} -- like list, but can't change their values
+\item {\tt t[1]} -- access second item, returns 2
+\item {\tt t.index(x [, i [, j]])} -- return index of first occurrence of $x$
+\item {\tt t.count({\sl x})} -- return number of item $x$
 \stopitemize
 
 \subsection{Lists}
 
 \startitemize
-\item {\tt l = []} -- empty list
+\item {\tt l = []}, {\tt l = list()} -- empty list
 \item {\tt l = [1, 2, 3]} -- one dimensional array
 \item {\tt l[1]} -- returns 2, indexing: 1\low{0} 2\low{1} 3\low{2}
 \item {\tt l[i:j]} -- slicing from index $i$ to $j$
@@ -190,17 +203,17 @@ Class
 \item {\tt l.index({\sl item})} -- return index of {\em item} in list
 \item {\tt l.count({\sl item})} -- total number of occurrences of {\em item}
 \item {\tt l = ["text", 12, 3, [1, 2]]} -- more types in one list
-\item {\tt l2d = [ [1, 2, 3], [4, 5, 6], [7, 8, 9] ]} -- two-dimensional list
+\item {\tt l2d=[[1, 2, 3], [4, 5, 6], [7, 8, 9]]} -- two-dimensional list
 \item {\tt l2d[1][1]} -- returns 5
 \item {\tt len(l)} -- return length of list  
 % http://docs.python.org/2/tutorial/datastructures.html
 \item {\tt l.append({\sl value})} -- add {\em value} to the list
-\item {\tt l.extend([4,5,6]), list[len(list):]=[4,5,6]}, {\tt list += [4,5,6]} -- append another list
-\item {\tt l.insert(i, value)}, {\tt list[i]=value} -- insert value at given index
+\item {\tt l.extend([4,5])}, {\tt list[len(list):]=[4,5]}, {\tt list += [4,5]} -- append another list
+\item {\tt l.insert(i, {\sl x})}, {\tt list[i]={\sl x}} -- insert $x$ at given index
 \item {\tt l[:0]=[x,y,z]} -- insert item at front of list
 \item {\tt l.remove(value)} -- remove first occurrence of value
-\item {\tt l.pop({\sl i})}, {\tt list.pop()} -- return and remove value, without index last
-\item {\tt l.index(x [, i[, j]])} -- index of first occurrence of x, between $i$ to $i$
+\item {\tt l.pop({\sl i})}, {\tt l.pop()} -- return and remove value, without index last
+\item {\tt l.index(x\,[,\,i[,\,j]])} -- index of first occur. of x, between $i$ to $j$
 \item {\tt l.count(x)} -- return number of occurrence of object {\em x}
 \item {\tt l.sort(key=None, reverse=False)} -- sort list in-place 
 \item {\tt l.reverse()} -- reverse list in-place
@@ -211,7 +224,7 @@ Class
 \subsection{Dictionaries}
 
 \startitemize
-\item {\tt h = \symlb\symrb} -- initialization of empty dictionary
+\item {\tt h = \symlb\symrb}, {\tt h = dict()} -- initialization of empty dictionary
 \item {\tt h = \symlb "key1": "value", "key2": "another"\symrb} -- definition
 \item {\tt h = dict(key1="value", key2="another")} -- different syntax
 \item {\tt h["key3"] = 333} -- add another value
@@ -220,35 +233,38 @@ Class
 \item {\tt h.keys()} -- return list of keys
 \item {\tt h.values()} -- return list of values
 \item {\tt h.clear()} -- remove all items
-\item {\tt g = h.copy()} -- returns a shallow copy of h
-\item {\tt h.get(key [, default])} -- if key is not found return default
-\item h.popitem() -- removes and returns an (key, value) pair
-\item h.pop(key [, default] ) -- 
-\item adict.setdefault(key, [, default]) --
-\item adict.fromkeys(seq [, value]) --
-\item zip
+\item {\tt g = h.copy()} -- returns a shallow copy of {\tt h}
+\item {\tt h.get(key [, {\sl default}])} -- if key is not found return {\em default}
+\item {\tt h.popitem()} -- removes and returns an {\tt (key, value)} pair
+\item {\tt h.pop(k [, {\sl def}])} -- returns and removes $k$ else return {\em def}
+%\item {\tt h.setdefault(key, [, default])} -- 
+\item {\tt h.fromkeys(seq [, value])} -- new dictionary from keys in {\em seq}
+\item {\tt dict(zip(['a','b'], [1,2]))} -- join to {\tt \symlb{}'a': 1, 'b': 2\symrb}
 \stopitemize
 
 \subsection{Sets}
 
 \startitemize
-\item m = set() -- empty set
-\item m = set('Ouagadougou') -- m = set(['a', 'd', 'g', 'o', 'u', 'O']), unordered collection of unique and immutable objects
-\item m = \symlb{}'a', 'd', 'g', 'o', 'u', 'O'\symrb
-\item m = frozenset(range(−5, 5)) -- immutable set of -5...4
-\item value in set --
-\item set1 - set2, set1.difference(set2) -- new set contains difference
-\item set1 \type{|} set2, set1.union(other) --
-\item set1 \type{&} set2, set1.intersection(other) --
-\item set1 <= set2, set1.issubset(other)
-\item set1 >= set2, set1.issubset(other)
-\item set1 < set2, set1 > set2
-\item set1 ^ set2, set1.symmetric_difference(other)
-\item set1 \type{|}= set2, set1.update(other)
-\item set1.add(X), set1.remove(X), set1.discard(X), set1.pop(), set1.clear()
-\item len(aset)
-\item for x in aset:
-\item aset.copy()
+\item {\tt A = set()} -- empty set \hfill $A=\{\emptyset\}$
+\item {\tt A = set('Ouagadougou')} -- {\tt A = set(['a','d','g','o','u','O'])}, unordered collection of unique and immutable objects
+\item {\tt A = \symlb{}'a', 'd', 'g', 'o', 'u', 'O'\symrb} -- set definition
+\item {\tt A = frozenset(range(−5, 5))} -- immutable set of $-5\ldots{}4$
+\item {\tt 'a' in A} -- returns {\tt True} if value is presented \hfill $a\in{}A$
+\item {\tt A - B}, {\tt A.difference(B)} -- new set contains difference\hfill $A∖B$
+\item {\tt A \type{|} B}, {\tt A.union(B)} -- join two sets, no duplicates \hfill $A\cup{}B$
+\item {\tt A \type{&} B}, {\tt A.intersection(B)} -- same items in both sets \hfill $A\cap{}B$
+\item {\tt A <= B}, {\tt A.issubset(B)} -- returns {\tt True} is A is subset of B \hfill $A\subset{}B$
+\item {\tt A >= B}, {\tt A.issuperset(B)} -- is $A$ superset of $B$? \hfill $A\supset{}B$
+\item {\tt A < B}, {\tt A > B} -- true subset, superset \hfill $A\subset{}B$, $A\subset{}B$
+\item {\tt A \type{^} B}, {\tt A.symmetric_difference(B)} -- $A\,\triangle\,B = (A \cup B) ∖ (A \cap B)$ 
+\item {\tt A \type{|}= B}, {\tt  A.update(B)} -- adds item in $B$ to $A$ 
+\item {\tt A.discard(X)} -- remove item if exist
+\item {\tt A.add(X)}, {\tt A.remove(X)} -- add, remove item from set 
+\item {\tt A.clear()} -- remove all items
+\item {\tt A.pop()} -- remove and return arbitrary item
+\item {\tt len(A)} -- get number of items in $A$
+\item {\tt for x in A:} -- all iteration context
+\item {\tt B=A.copy()}, {\tt B=set(A)} -- make copy of set
 \stopitemize
 
 \subsection{Strings}
@@ -258,42 +274,39 @@ Class
 \item {\tt """This is multi-line block"""} -- collects into a single string
 \item {\tt s[1]='e'} -- indexing H\low{0}~e\low{1}~l\low{2}~l\low{3}~o\low{4}
 \item {\tt str({\sl n})} -- convert number $n$ to string
-\item {\tt 'Hello ' + 'World'} -- concatenation
+\item {\tt 'Hello ' + 'World'}, {\tt "Hello" "World"} -- concatenation
 \item {\tt 'Hello' * 3} -- repetition $3\times$
 \item Unicode $\alpha$: \type{u"\03b1"}, \type{U"\U000003B1"}, \type{u"\N{GREEK SMALL LETTER ALPHA}"}
 \item Raw string: \type{r"\n"}, \type{R'\n'} does not interpret escape sequences 
-\item str(), bytes(), bytearray() -- create string from object
+\item {\tt str()}, {\tt bytes()}, {\tt bytearray()} -- create string from object
 \item \type{\x}{\tt hh}, \type{\o}{\tt oo}, \type{\0} -- hex, octal, null byte
-\item chr(65) -- returns A, ASCII code 65
-\item ord('A') -- returns ASCII code of A
+\item {\tt chr(65)}, {\tt ord('A')}  -- returns character, ASCII code
 \item eval(s) -- converts s
-\item repr() --
+\item repr() -- converts any object to string %???
 \stopitemize
 
 \subsection{Output and formating}
 
 \startitemize
 \item \type{'%s, %s, %.2f' % (13, 'txt', 22/7.0)} -- formats to {\tt '13, txt, 3.14'}
-\item \type{'{0}, {1}, {2:.2f}' % (13, 'txt', 22/7.0)} -- another format def.
-\item \type{"%(n)d %(x)s" % {"n":1, "x":"spam"}} 
+\item \type{'{0}, {1}, {2:.2f}'.format(13, 'txt', 22/7.0)} -- another format def.
+\item \type{"%(a)d %(b)s" % {"a":6, "b":"text"}} -- formating dictionary
+\item \type{"{a} {b}".format(**{'a' : 1, 'b' : 2})} -- formating dictionary
 \item \type{%[(keyname)][flags][width][.precision]typecode}
+\item Flags: -/+ left/right justify, 0/' ' zero/space fill
+\item String formating typecodes:
 \startitemize[columns,two,joinedup]
-\item s String (or any object, uses str())
-\item r s, but uses repr(), not str()     
-\item c Character (int or str)            
-\item d Decimal (base 10 integer)         
-\item i Integer                           
-\item u Same as d (obsolete)              
-\item o Octal (base 8 integer)            
-\item x Hex (base 16 integer)             
-\item X x with uppercase
-\item e Floating-point exponent
-\item E e with uppercase
-\item f Floating-point decimal
-\item F f with uppercase
-\item g Floating-point e or f
-\item G Floating-point E or F
-\item \% Literal '\%'
+\item s  -- String (or any object, uses str())
+\item r s, -- but uses repr(), not str()     
+\item c -- Character (int or str)            
+\item d, i, u -- Decimal (base 10 integer)         
+\item o -- Octal (base 8 integer)            
+\item x, X -- Hex (base 16 integer)             
+\item e, E -- Floating-point exponent
+\item f, F -- Floating-point decimal
+\item g, G  -- Floating-point e,f/E,f
+\item {\tt \%} -- Literal '\%'
+\item \type{"%*s" % (10, "text")} -- width given as parameter
 \item \type{{fieldname!conversionflag:formatspec}}
 \stopitemize
 
@@ -306,7 +319,7 @@ Class
 
 \startitemize
 \item s.find(sub, [,start [, end]]) -- index of first occurrence of {\tt sub}
-\item s.count(sub, [,start [, end]]) -- 
+\item s.count(sub, [,start [, end]]) -- get number of substrings 
 \item s.upper(), s.lower(), s.swapcase() -- converts case
 \item s.split([sep [, maxsplit]) --
 \item sep.join(iterable) -- concatenates list or tuple of strings with separator
@@ -315,6 +328,9 @@ Class
 \item s.splitlines([keepends]) --
 \item s.strip([chars]) -- remove leading and trailing whitespaces
 \item s.lstrip, s.rstrip -- just from left or right side
+\item {\tt s.center}/{\tt ljust}/{\tt rjust(width [,fill])} -- justify string
+\item {\tt s.capitalize()} / {\tt s.title()} -- make first/all word(s) uppercase
+\item s.isalnum(), isalpha, isdecimal, isdigit, isidentifier, islower, isnumeric, isprintable, isspace, istitle, isupper -- tests
 \stopitemize
 
 \section{Work with files}
