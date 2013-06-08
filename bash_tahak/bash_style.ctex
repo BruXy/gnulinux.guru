@@ -102,7 +102,6 @@
 % Nastaveni seznamu s odrazkami
 \setupinterlinespace[line=2.525ex] 
 \setupitemize[1][standard,packed,joinedup]
-%\setupitemize[1][standard,packed,joinedup,textdistance=1pt]
 % joinedup -- zadne mezery pred a za
 
 \setuplines[indenting=always,%

@@ -193,7 +193,7 @@ Spustit skript: {\tt bash {\sl volba skript jeho parametry}}
 
 \startitemize
 \item {\tt \symdollar{}0}, {\tt \symdollar{}\symlb0\symrb} -- název skriptu
-\item {\tt \symdollar{}1} až {\tt \symdollar{}}9, {\tt \symdollar{}\symlb1\symrb} až {\tt \symdollar{}\symlb255\symrb} -- poziční parametry zadané na příkazové řádce
+\item {\tt \symdollar{}1} až {\tt \symdollar{}}9, {\tt \symdollar{}\symlb1\symrb} až {\tt \symdollar{}\symlb255\symrb} -- poziční parametry na příkazové řádce
 \item {\tt \symdollar{}}\type{#} -- počet parametrů na příkaz. řádce (argc)
 \item {\tt \symdollar{}*} -- rozvine všechny parametry, \type{"$*"} = {\tt "\symdollar{}1 \symdollar{}2 \symdollar{}3\ldots"}
 \item {\tt \symdollar{}}\type{@} -- rozvine všechny parametry, {\tt "\symdollar{}}\type{@"} = {\tt "\symdollar{}1" "\symdollar{}2" "\symdollar{}3"\ldots}
@@ -235,7 +235,7 @@ shift \symdollar{}((\symdollar{}OPTIND - 1)); echo "Poslední: \symdollar{}1" }
 	\item {\tt eval {\sl parametry}} -- spustí parametry jako příkaz
 	\item {\tt exit {\sl hodnota}} -- ukončení skriptu s návratem
 	\item {\tt . {\sl skript}}, {\tt source {\sl skript}} -- načtení a interpretace jiného skriptu
-	\item {\tt : {\sl argument}} -- nedělá nic, jen rozvine argument nebo provede přesměrování
+	\item {\tt : {\sl argument}} -- nedělá nic, jen rozvine argument nebo přesměřuje
 	\item {\tt alias {\sl jméno='příkazy'}} -- chápe {\sl jméno} jako příkaz
 	\item {\tt unalias {\sl jméno}} -- zruší alias 
 	\item {\tt if [ {\sl podmínka} ]; then {\sl příkazy}; \crlf elif [ {\sl podmínka} ]; then {\sl příkazy}; \crlf else {\sl příkazy}; fi}
