@@ -100,7 +100,7 @@ Nastavení interpretru: \type{#!/bin/bash} \qquad Komentáře: \type{# toto je k
 \item {\tt !!} -- provede poslední zadaný příkaz
 \item {\tt !!:{\sl n}} -- expanduje na {\sl n}-tý parametr předchozího příkazu
 \item {\tt !\symdollar} -- expanduje na poslední parametr předchozího příkazu
-\item {\tt fc} -- spustí zadaný {\tt \symdollar{}EDIOR} s posledním příkazem
+\item {\tt fc} -- spustí zadaný {\tt \symdollar{}EDITOR} s posledním příkazem
 \item {\tt fc -e vim {\sl z k}} -- otevře editor {\tt vim} s příkazy od $z$ do $k$
 \item \type{^old^new} -- nahrazení {\sl old} za {\sl new} v posledním příkazu
 \item {\stt příkaz} {\tt `!!`} -- použije výstup z předchozího příkazu jako vstup
@@ -143,7 +143,7 @@ Spustit skript: {\tt bash {\sl volba skript jeho parametry}}
 \item {\tt \symdollar\symlb{\sl parametr-slovo}\symrb} -- jestliže {\sl parametr} má hodnotu, pak se použije jeho hodnota, jinak se použije hodnota {\sl slovo}.
 \item {\tt \symdollar{}\symlb{\sl parametr=slovo}\symrb} -- jestliže {\sl parametr} nemá přiřazenou hodnotu přiřadí se mu {\sl slovo}. Nefunguje na {\tt \symdollar{}1}, {\tt \symdollar{}2}, atd.
 \item {\tt \symdollar{}\symlb{\sl parametr:-slovo}\symrb} -- funguje na {\tt \symdollar{}1}, {\tt \symdollar{}2}, atd. 
-\item {\tt \symdollar{}\symlb{\sl parametr?slovo}\symrb} --jestliže {\sl parametr} má hodnotu, použije se ta; v opačném případě se zobrazí {\sl slovo} a shell se ukončí.
+\item {\tt \symdollar{}\symlb{\sl parametr?slovo}\symrb} -- jestliže {\sl parametr} má hodnotu, použije se ta; v opačném případě se zobrazí {\sl slovo} a shell se ukončí.
 \item {\tt \symdollar{}\symlb{\sl parametr+slovo}\symrb} -- jestliže {\sl parametr} má hodnotu, použije se {\sl slovo}, jinak prázdný řetězec.
 \item {\tt pole=(a b c); echo \symdollar{}\symlb{}pole[1]\symrb} -- vypíše \quote{b}
 \item \type{pole+=(d e f)} -- přidá nové prvky/pole na konec 
@@ -416,12 +416,12 @@ Nahrazení v jménech souborů: \type{?} znak; \type{*} žádný nebo více znak
 \item {\tt split}, {\tt csplit} -- rozdělí na části podle velikosti, obsahu
 \item {\tt sort} -- řazení, {\tt -n} -- číselné, {\tt -r} reverzní, {\tt -f} ignoruje velikost písmen
 \item {\tt uniq} -- opakující se řádky vypíše pouze jednou, {\tt -d} pouze duplicity
-\item {\tt sed -e 'skript'} -- provede řádkovou editaci, skript {\tt y/ABC/abc/} nahradí znaky A, B, C za a, b, c; {\tt s/regexp/náhrada/}
+\item {\tt sed -e '{\sl skript}'} -- provede řádkovou editaci, skript {\tt y/ABC/abc/} nahradí znaky A, B, C za a, b, c; {\tt s/regexp/náhrada/}
 \item {\tt tr {\sl a b}}  -- náhrada znaku {\sl a} za {\sl b}
 \item {\tt tr '[a-z]' '[A-Z]' < soubor.txt} -- změní malá na velká
 \item {\tt awk '/výraz/ \symlb akce \symrb' {\sl soubor}} -- zpracuje řádky obsahující výraz
 \item {\tt cut -d {\sl oddělovač} -f {\sl pole}} -- vypíše daný sloupec
-\item {\tt cmp {\sl soubor1} {\sl soubor2}} -- porovná soubory a vypíše první rozdíl
+\item {\tt cmp {\sl soubor\low{1}} {\sl soubor\low{2}}} -- porovná soubory a vypíše první rozdíl
 \item {\tt diff, diff3, sdiff, vimdiff} -- porovnání souborů 
 \item {\tt dd if={\sl vst.} of={\sl výst.} bs={\sl k}} count={\sl n} -- přečte $n$ bloků velikosti $k$
 \item {\tt strings} -- vypisuje tisknutelné řetězce souboru
@@ -447,7 +447,7 @@ Nahrazení v jménech souborů: \type{?} znak; \type{*} žádný nebo více znak
 \item {\tt last / lastb} -- historie úspěšných / neúspěšných přihlášení
 \item {\tt logout}, \C{\CT+d} -- odhlášení z shellu
 \item {\tt su jméno} -- změní uživatele
-\item {\tt sudo} -- spustí soubor pod daným uživatelem
+\item {\tt sudo} -- spustí příkaz pod daným uživatelem
 \item {\tt id {\sl jméno}}, {\tt groups {\sl jméno}} --  vypíše identitu, skupiny uživatele
 \item {\tt useradd, userdel, usermod} -- vytvoří, smaže, úpraví uživatele
 \item {\tt groupadd, groupdel, groupmod} --  vytvoří, smaže, úpraví skupinu

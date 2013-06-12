@@ -1,6 +1,6 @@
 TEX=context
 
-all: Makefile bash_tahak.pdf bash_tahak_include.html bash_tahak.html bash_cheatsheet.pdf 
+all: Makefile bash_tahak.pdf bash_tahak_include.html bash_tahak.html bash_cheatsheet.pdf bash_cheatsheet_include.html bash_cheatsheet.html
 		
 bash_tahak.pdf: bash_style.ctex bash_tahak.ctex
 	$(TEX) bash_tahak.ctex
@@ -8,13 +8,13 @@ bash_tahak.pdf: bash_style.ctex bash_tahak.ctex
 bash_cheatsheet.pdf: bash_style.ctex bash_cheatsheet.ctex
 	$(TEX) bash_cheatsheet.ctex
 
-#
-#vim_cheatsheet_include.html: vim_cheatsheet.ctex vim_ctext2html.sed
-#	sed -f vim_ctext2html.sed vim_cheatsheet.ctex > vim_cheatsheet_include.html
-#
-#vim_cheatsheet.html: vim_cheatsheet_include.html html_header.sed
-#	sed -f html_header.sed vim_cheatsheet_include.html > vim_cheatsheet.html
-#
+
+bash_cheatsheet_include.html: bash_cheatsheet.ctex vim_ctext2html.sed
+	sed -f vim_ctext2html.sed bash_cheatsheet.ctex > bash_cheatsheet_include.html
+
+bash_cheatsheet.html: bash_cheatsheet_include.html html_header.sed
+	sed -f html_header.sed bash_cheatsheet_include.html > bash_cheatsheet.html
+
 bash_tahak_include.html: bash_style.ctex bash_tahak.ctex vim_ctext2html.sed
 	sed -f vim_ctext2html.sed bash_tahak.ctex > bash_tahak_include.html
 
