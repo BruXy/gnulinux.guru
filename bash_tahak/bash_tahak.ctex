@@ -140,6 +140,7 @@ Spustit skript: {\tt bash {\sl volba skript jeho parametry}}
 \item {\tt typeset, declare} -- nastavení typu proměnné.
 \item {\tt readonly {\sl proměnná}} -- nastaví pouze pro čtení
 \item {\tt local {\sl proměnná}} -- nastaví lokální proměnou uvnitř funkce
+\item {\tt \symdollar{}\symlb !var\symrb}, {\tt eval \backslash\symdollar\symdollar{}var} -- nepřímá reference
 \item {\tt \symdollar\symlb{\sl parametr-slovo}\symrb} -- jestliže {\sl parametr} má hodnotu, pak se použije jeho hodnota, jinak se použije hodnota {\sl slovo}.
 \item {\tt \symdollar{}\symlb{\sl parametr=slovo}\symrb} -- jestliže {\sl parametr} nemá přiřazenou hodnotu přiřadí se mu {\sl slovo}. Nefunguje na {\tt \symdollar{}1}, {\tt \symdollar{}2}, atd.
 \item {\tt \symdollar{}\symlb{\sl parametr:-slovo}\symrb} -- funguje na {\tt \symdollar{}1}, {\tt \symdollar{}2}, atd. 
@@ -453,7 +454,7 @@ Nahrazení v jménech souborů: \type{?} znak; \type{*} žádný nebo více znak
 \item {\tt groupadd, groupdel, groupmod} --  vytvoří, smaže, úpraví skupinu
 \item {\tt passwd} -- změň heslo
 \item {\tt pwck} -- kontrola integrity {\tt /etc/passwd}
-\item {\tt chowm {\sl vlastník:skupina soubor}} -- změna vlastníka, {\tt -R} rekurze
+\item {\tt chown {\sl vlastník:skupina soubor}} -- změna vlastníka, {\tt -R} rekurze
 \item {\tt chgrp {\sl skupina soubor}} -- změní skupinu souboru
 \item {\tt chmod {\sl práva soubor}} -- změna práv, oktalově vlastník, skupina, ostatní; {\tt 444=-r--r--r--}, {\tt 700=-rwx------}, {\tt 550=-r-xr-x---}
 \item {\tt runuser {\sl login} -c {\sl "příkaz"} } -- spustí příkaz jako uživatel

@@ -2,7 +2,7 @@
 \starttext
 \startcolumns[n=2]
 	
-\title{Bourne-Again SHell a Linux CLI}
+\title{Bourne-Again SHell and Linux CLI}
 
 \mycopyright
 
@@ -106,7 +106,7 @@ Set interpreter: \type{#!/bin/bash} \qquad Remarks: \type{# this is comment}
 \item {\stt program} {\tt `!!`} -- use output of last command as input
 \stopitemize
 
-\subsection{Nápověda}
+\subsection{Help and manuals}
 
 \startitemize
 \item {\tt type -a {\sl command}} -- information about command
@@ -140,6 +140,7 @@ Run a script as: {\tt bash {\sl option script and its parameters}}
 \item {\tt typeset, declare} -- set type of variable
 \item {\tt readonly {\sl variable}} -- set as read only
 \item {\tt local {\sl variable}} -- set local variable inside function
+\item {\tt \symdollar{}\symlb !var\symrb}, {\tt eval \backslash\symdollar\symdollar{}var} -- indirect reference
 \item {\tt \symdollar\symlb{\sl parameter-word}\symrb} -- if {\sl parameter} has value, then it is used, else {\sl word} is used
 \item {\tt \symdollar{}\symlb{\sl parameter=word}\symrb} -- if {\sl parameter} has no value assing {\sl word}. Doesn't work with {\tt \symdollar{}1}, {\tt \symdollar{}2}, ets.
 \item {\tt \symdollar{}\symlb{\sl parameter:-word}\symrb} -- works with {\tt \symdollar{}1}, {\tt \symdollar{}2}, etc. 
@@ -185,7 +186,7 @@ Run a script as: {\tt bash {\sl option script and its parameters}}
 \item {\tt \symdollar{}-} -- display of bash flags 
 \item {\tt \symdollar{}LINENO} -- current line number in executed script
 \item {\tt \symdollar{}PATH} -- list of paths to executable commands
-%\item {\tt \symdollar{}SHELL} -- cesta k interpretu aktuálního shellu
+%\item {\tt \symdollar{}SHELL} -- path to actual shell interpreter
 \item {\tt \symdollar{}IFS} -- Internal field separator. List of chars, that delimiter words from input, usually space, tabulator {\tt \symdollar{}'\backslash{}t'} and new line {\tt \symdollar{}'\backslash{}n'}.
 \stopitemize
 
@@ -448,12 +449,12 @@ File name wildchars: \type{?}  a char; \type{*} zero or more chars;
 \item {\tt logout}, \C{\CT+d} -- exit shell
 \item {\tt su {\sl login}} -- change user to {\sl login}
 \item {\tt sudo} -- run command as other user
-\item {\tt id {\sl jméno}}, {\tt groups {\sl jméno}} --  show user details
+\item {\tt id {\sl login}}, {\tt groups {\sl login}} --  show user details
 \item {\tt useradd, userdel, usermod} -- create, delete, edit user
 \item {\tt groupadd, groupdel, groupmod} -- create, delete, edit group 
 \item {\tt passwd} -- change password
 \item {\tt pwck} -- check integrity of {\tt /etc/passwd}
-\item {\tt chowm {\sl user:group file}} -- change owner, {\tt -R} recursion
+\item {\tt chown {\sl user:group file}} -- change owner, {\tt -R} recursion
 \item {\tt chgrp {\sl group file}} -- change group of file
 \item {\tt chmod {\sl permissions file}} -- change permissions in octal of user, group, others; {\tt 444=-r--r--r--}, {\tt 700=-rwx------}, {\tt 550=-r-xr-x---}
 \item {\tt runuser {\sl login} -c {\sl "command"} } -- run command as user
@@ -469,7 +470,7 @@ File name wildchars: \type{?}  a char; \type{*} zero or more chars;
 \item {\tt sync} -- flush file system buffers
 \item {\tt chroot {\sl dir command}} -- run command with special root directory
 \item {\tt strace,ltrace {\sl program}} -- show used system/library calls
-\item {\tt ldd {\sl binárka}} -- show library dependencies
+\item {\tt ldd {\sl binary}} -- show library dependencies
 \stopitemize
 
 \subsection{Disk partitions}
