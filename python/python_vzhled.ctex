@@ -19,7 +19,7 @@
 %\setupoutput[dvips,acrobat] % dvips, acrobat
 \pdfminorversion=4
 %\setupbodyfont[helvetica,7.9pt]  %
-\setupbodyfont[8.7pt]  %
+\setupbodyfont[8.6pt]  %
 \setuppapersize[A4, portrait][A3, landscape] % A3, A4, A5, A6; landscape
 %\setuppapersize[A4, portrait] % A3, A4, A5, A6; landscape
 \setuparranging[2SIDE] % zmena stranek pro vyrobu knizky, 
@@ -108,7 +108,7 @@
 \setupcolor[rgb]
 
 % Nastaveni seznamu s odrazkami
-\setupitemize[1][standard,packed,joinedup] 
+\setupitemize[1][standard,packed,joinedup][margin=4pt] 
 % joinedup -- zadne mezery pred a za
 
 \setuplines[indenting=always,%
@@ -201,12 +201,11 @@
 
 \def\uv#1{\quotation{#1}}
 
-
 \def\mycopyright{
 \placeintermezzo[here,none]{}{
 \framed[frame=off,bottomframe=on,frameoffset=1mm]{
 	\startalignment[middle]
-	{\tfx \copyright{} \date[][year] Martin Bruchanov, {\tt bruxy@regnet.cz}}
+	{\tfx \copyright{} \date[][year,--,mm,--,dd] Martin Bruchanov, {\tt bruxy@regnet.cz}}
 	\stopalignment
 	}
 }}
