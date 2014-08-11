@@ -167,8 +167,7 @@ except [type [as value]]: \crlf
 \item {\tt (255).bit_length()} -- number of digits of binary 
 \item {\tt X, Y = Y, X} -- swap values of X and Y
 \item {\tt a,b,c = range(3)} -- read list values, {\tt a=0,b=1,c=2}
-\item {\tt vars()} -- return dictionary of variables and values
-\item {\tt globals(), locals()} -- return dictionary of variables
+\item {\tt vars(), globals(), locals()} -- return dictionary of variables
 \item {\tt setattr(obj, 'b', c)} is equivalent {\tt obj.b = c}
 \item {\tt getattr(obj, 'a')} is equivalent {\tt obj.a}
 \item {\tt hasattr(obj, name)} -- True if name is object atribute
@@ -238,13 +237,13 @@ except [type [as value]]: \crlf
 \item {\tt l[i:j:k]} -- slicing with step $k$ $\approx$ {\tt l[slice(i,j[,k])]}
 \item {\tt l[-1]} -- last item (first from back)
 \item {\tt 0 in [1, 2, 3]} -- False, {\tt 1 in [1, 2, 3]} True
-\item {\tt l = range(5)} -- create list [1, 2, 3, 4, 5]
-\item {\tt l = range(start, stop[, step])} -- given range with step
+\item {\tt l = range(5)} -- create list [0, 1, 2, 3, 4]
+\item {\tt l = range({\em start}, {\em stop}[, {\em step}])} -- given range with step
 \item {\tt l = [x**2 for x in range(9)]} -- list from expression result
 \item {\tt l.index({\sl item})} -- return index of {\em item} in list
 \item {\tt l.count({\sl item})} -- total number of occurrences of {\em item}
 \item {\tt l = ["text", 12, 3, [1, 2]]} -- more types in one list
-\item {\tt l2d=[[1, 2, 3], [4, 5, 6], [7, 8, 9]]} -- two-dimensional list
+\item {\tt l2d=[[1,2,3], [4,5,6], [7,8,9]]} -- two-dimensional list
 \item {\tt l2d[1][1]} -- returns 5
 \item {\tt list('abc')} -- returns list of chars {\tt ['a','b','c']}
 \item {\tt len(l)} -- return length of list  
@@ -397,7 +396,7 @@ except [type [as value]]: \crlf
 \item {\tt all(iter), any(iter)} -- True if all/any of elements are/is true.
 \item {\tt hash({\em obj})} -- return hash value of object
 \item {\tt iter(o [,sentinel])} -- return an iterator object
-\item {\tt next(iterator [,default])} -- return next item from the iterator
+\item {\tt next(iterator [,default])} -- return next item from iterator
 \item {\tt map(function, iterable, ...)} -- apply function on every item
 \item {\tt input([{\em prompt}])} -- read line for stdin
 \stopitemize
@@ -405,17 +404,17 @@ except [type [as value]]: \crlf
 \section{Work with files}
 
 \startitemize
-\item {\tt file = open('data.txt'), mode} -- open file, mode: {\tt r,w,rb,w,r+,w+}
+\item {\tt file=open('data.txt'[, '{\em mode}'])} -- open, mode: {\tt r,w,rb,w,r+,w+}
 \item {\tt s = file.read([{\em n}])} -- read file of $n$ bytes into string {\em s}
 \item {\tt file.readline()} -- return line of file, empty at EOF
 \item {\tt file.readlines()} -- read entire file into a list of line strings
 \item {\tt for line in file: } -- process file line by line 
 \item {\tt file.write(s)} -- write string {\em s} into file
-\item {\tt file.writeline(list)} -- write all string in list to file
 \item {\tt print >>file, "Output"} -- write string to file
+\item {\tt file.writeline(list)} -- write all strings in list to file
 \item {\tt file.close()} -- close to free resources
 \item {\tt file.tell()} -- return file position
-\item {\tt file.seek(offset [, whence])} -- set file position
+\item {\tt file.seek({\em offset} [, {\em whence}])} -- set file position
 % \item {\tt file.isatty()} -- return True if file is terminal
 \item {\tt file.flush()} -- flushes file's buffer
 \item {\tt file.truncate([size])} -- truncate file to  size bytes
@@ -467,6 +466,7 @@ except [type [as value]]: \crlf
 \item {\tt subprocess.call(["ls", "-l"])} -- execute system command
 \item {\tt out = subprocess.check_output(['uname', '-a'])} -- store output of command to variable
 \item {\tt filelist = subprocess.Popen("ls *", shell=True, stdout=subprocess.PIPE).communicate()[0]} -- read data from pipe
+\item {\tt os.stat('{\em /path/to/file.txt}')} -- return POSIX stat file info
 \stopitemize
 
 \stopcolumns 
