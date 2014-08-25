@@ -11,14 +11,14 @@ vim_cheatsheet.pdf: vim_tahak_style.ctex vim_cheatsheet.ctex
 vim_cheatsheet_include.html: vim_cheatsheet.ctex vim_ctext2html.sed
 	sed -f vim_ctext2html.sed vim_cheatsheet.ctex > vim_cheatsheet_include.html
 
-vim_cheatsheet.html: vim_cheatsheet_include.html html_header.sed
-	sed -f html_header.sed vim_cheatsheet_include.html > vim_cheatsheet.html
+vim_cheatsheet.html: vim_cheatsheet_include.html ../html_header.sed
+	sed -f ../html_header.sed vim_cheatsheet_include.html > vim_cheatsheet.html
 
 vim_tahak_include.html: vim_tahak_style.ctex vim_tahak.ctex vim_ctext2html.sed
 	sed -f vim_ctext2html.sed vim_tahak.ctex > vim_tahak_include.html
 
-vim_tahak.html: vim_tahak_include.html html_header.sed 
-	sed -f html_header.sed vim_tahak_include.html > vim_tahak.html
+vim_tahak.html: vim_tahak_include.html ../html_header.sed 
+	sed -f ../html_header.sed vim_tahak_include.html > vim_tahak.html
 
 vim_cheatsheet_0001.png: vim_cheatsheet.pdf
 	pdf2png -x 512 vim_cheatsheet.pdf
