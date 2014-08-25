@@ -6,12 +6,6 @@
 %from global if import in is lambda not or pass print raise return try while
 %with yield
 
-\def\btt#1{{\tt\bf #1}{}}
-\def\stt#1{{\tt\sl #1}{}}
-
-\def\tbs{\textbackslash{}}
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \starttext
@@ -42,8 +36,8 @@ Comments: \type{# everything behind hash}\crlf
 
 %%%% FOR cycle ---- WHILE condition
 \bTR[bottomframe=on,align=middle,style=rm]
-	\bTD[rightframe=on] {\bf FOR cycle} \eTD
-	\bTD {\bf WHILE  contition} \eTD
+	\bTD[rightframe=on] {\cbf FOR cycle} \eTD
+	\bTD {\cbf WHILE  contition} \eTD
 \eTR
 \bTR
 \bTD[rightframe=on]
@@ -62,8 +56,8 @@ while {\em condition} \crlf
 
 %%%% IF-THEN-ELSE ---- TRY block
 \bTR[topframe=on,bottomframe=on,align=middle,style=rm]
-	\bTD[rightframe=on] {\bf IF-THEN-ELSE} \eTD
-	\bTD {\bf TRY block} \eTD
+	\bTD[rightframe=on] {\cbf IF-THEN-ELSE} \eTD
+	\bTD {\cbf TRY block} \eTD
 \eTR
 
 \bTR
@@ -105,8 +99,7 @@ except [type [as value]]: \crlf
 \item {\tt global {\sl name}} -- reference global value  
 % \item nonlocal name -- %3.0
 \item {\tt exec("print 'Ahoj'")} -- compile and exec code
-\item {\tt with {\em expression} [as {\em variable}]:\crlf
-\pyind suite} -- block entry actions
+\item {\tt with {\em expression} [as {\em variable}]:\crlf \pyind suite} -- block entry actions
 \item {\tt pass} -- do-nothing placeholder statement 
 \item {\tt del name}, {\tt del name[i]}, {\tt del name[i:j:k]}, {\tt del name.attibute} -- delete variables, items, keys, attributes
 \item {\tt assert {\em expression} [, {\em message}]}
@@ -185,20 +178,20 @@ except [type [as value]]: \crlf
 
 \startitemize
 \item {\tt or, and, not x} -- boolean operators
-\item \type{|} (or), \type{^} (xor), \type{&} (and), \type{~x} (neg.) -- binary operators
+\item \type{|} (or), \type{^} (xor), \type{&} (and), {\tt \symtilda{}x} (neg.) -- binary operators
 \item {\tt X in Y}, {\tt X not in Y} -- membership tests
 \item {\tt X is Y}, {\tt X is not Y} -- same or different object 
 \item {\tt <, <=, >, >=, <>, !=, ==} -- comparisons
 \item {\tt *, /, //, \%} -- multiply, divide, floor divide, remainder
 \item {\tt x << n}, {\tt x >> n} -- bitwise shifts by $n$ bits
-\item {\tt x**y}, {\tt pow(x,y)} -- power $x^y$
-\item \type{+=   \&=  -=   |=  *=   ^=  /=   >>= \%=   <<= **=  //=}
+\item {\tt x**y}, {\tt pow(x,y)} -- power $x\high{y}$
+\item \type{+=   &=  -=   |=  *=   ^=  /=   >>= \%=   <<= **=  //=}
 \item {\tt divmod(x,y)} -- return tuple {\tt (x/y, x\%y)}
 \stopitemize
 
 \section{Data types}
 
-\bTABLE
+\framedTABLE
 \setupTABLE[r][each][align=center,width=17mm,height=2.7ex]
 \bTABLEhead
 \bTR \bTH Function \eTH \bTH Tuple\eTH  \bTH List\eTH  \bTH Dict.\eTH  \bTH String\eTH  \bTH Set\eTH \eTR
@@ -286,19 +279,19 @@ except [type [as value]]: \crlf
 \subsection{Sets}
 
 \startitemize
-\item {\tt A = set()} -- empty set \hfill $A=\{\emptyset\}$
+\item {\tt A = set()} -- empty set \hfill $A=\symlb \emptyset \symrb$
 \item {\tt A = set('Ouagadougou')} -- {\tt A = set(['a','d','g','o','u','O'])}, unordered collection of unique and immutable objects
 \item {\tt A = \symlb{}'a', 'd', 'g', 'o', 'u', 'O'\symrb} -- set definition
 \item {\tt A = frozenset(range(−5, 5))} -- immutable set of $-5\ldots{}4$
 \item {\tt 'a' in A} -- returns {\tt True} if value is presented \hfill $a\in{}A$
-\item {\tt A - B}, {\tt A.difference(B)} -- new set contains difference\hfill $A∖B$
+\item {\tt A - B}, {\tt A.difference(B)} -- new set contains difference\hfill $A\,\tbs\,B$
 \item {\tt A \type{|} B}, {\tt A.union(B)} -- join two sets, no duplicates \hfill $A\cup{}B$
 \item {\tt A \type{&} B}, {\tt A.intersection(B)} -- same items in both sets \hfill $A\cap{}B$
 \item {\tt A <= B}, {\tt A.issubset(B)} -- returns {\tt True} is A is subset of B \hfill $A\subset{}B$
 \item {\tt A >= B}, {\tt A.issuperset(B)} -- is $A$ superset of $B$? \hfill $A\supset{}B$
-\item {\tt A < B}, {\tt A > B} -- true subset, superset \hfill $A\subset{}B$, $A\subset{}B$
-\item {\tt A \type{^} B}, {\tt A.symmetric_difference(B)} -- $A\,\triangle\,B = (A \cup B) ∖ (A \cap B)$ 
-\item {\tt A \type{|}= B}, {\tt  A.update(B)} -- adds item in $B$ to $A$ 
+\item {\tt A < B}, {\tt A > B} -- true subset, superset \hfill $A\subset{}B$, $A\supset{}B$
+\item {\tt A \type{^} B}, {\tt A.symmetric_difference(B)} -- $A\,\triangle\,B = (A \cup B)\,\tbs\,(A \cap B)$ 
+\item {\tt A \type{|}= B}, {\tt  A.update(B)} -- adds items in $B$ to $A$ 
 \item {\tt A.discard(X)} -- remove item if exist
 \item {\tt A.add(X)}, {\tt A.remove(X)} -- add, remove item from set 
 \item {\tt A.clear()} -- remove all items
@@ -317,11 +310,11 @@ except [type [as value]]: \crlf
 \item {\tt str({\sl n})} -- convert number $n$ to string
 \item {\tt 'Hello ' + 'World'}, {\tt "Hello" "World"} -- concatenation
 \item {\tt 'Hello' * 3} -- repetition $3\times$
-\item Unicode $\alpha$: \type{u"\03b1"}, \type{U"\U000003B1"}, \type{u"\N{GREEK SMALL LETTER ALPHA}"}
+\item Unicode \symalpha: \type{u"\03b1"}, \type{U"\U000003B1"}, {\tt u"\tbs{}N\symlb{}GREEK SMALL LETTER ALPHA\symrb{}"}
 \item Raw string: \type{r"\n"}, \type{R'\n'} does not interpret escape sequences 
 \item Unicode raw string: \type{ur"\n"}, \type{UR'\n'}  
 \item {\tt str()}, {\tt bytes()}, {\tt bytearray()} -- create string from object
-\item \type{\x}{\tt\em hh}, \type{\}{\tt\em ooo}, \type{\0} -- hex, octal, null byte
+\item {\tt \tbs{}x{\em hh}}, {\tt \tbs{\em ooo}}, {\tt \tbs0} -- hex, octal, null byte
 \item {\tt chr(65)}, unichr(65), {\tt ord('A')}  -- returns character, ASCII code
 \item {\tt eval(s)} -- convert and execute code given by string 
 \item {\tt execfile({\stt filename})} -- like {\tt eval}, but for whole file
@@ -332,14 +325,14 @@ except [type [as value]]: \crlf
 
 \startitemize
 \item {\tt print(*objects, sep=' ', end=\type{'\n'}, file=sys.stdout)}
-\item \type{'%s, %s, %.2f' % (13, 'txt', 22/7.0)} -- {\tt '13, txt, 3.14'}
-\item \type{'{0}, {1}, {2:.2f}'.format(13,'txt',22/7.0)} -- other def.
-\item \type{"%(a)d %(b)s" % {"a":6, "b":"text"}} -- formating dictionary
-\item \type{"{a} {b}".format(**{'a':1, 'b':2})} -- formating dictionary
-\item \type{"%*s" % (10, "text")} -- width given as parameter
-\item \type{"%#x %#o" % (15,15) } -- prints number base prefixes
-\item \type{"%+.*f" % (5, 22.0/7) } -- {\tt +3.14286}, 5 digits after '.'
-\item \type{%[(keyname)][flags][width][.precision]typecode}
+\item {\tt '\%s, \%s, \%.2f' \% (13, 'txt', 22/7.0)} -- {\tt '13, txt, 3.14'}
+\item {\tt '\symlb0\symrb, \symlb1\symrb, \symlb2:.2f\symrb'.format(13,'txt',22/7.0)} -- other def.
+\item {\tt "\%(a)d \%(b)s" \% \symlb"a":6, "b":"text"\symrb} -- formating dictionary
+\item {\tt "\symlb{}a\symrb{} \symlb{}b\symrb{}".format(**\symlb{}'a':1, 'b':2\symrb{})} -- formating dictionary
+\item {\tt "\%*s" \% (10, "text")} -- width given as parameter
+\item {\tt "\%\#x \%\#o" \% (15,15)} -- prints number base prefixes
+\item {\tt "\%+.*f" \% (5, 22.0/7)} -- {\tt +3.14286}, 5 digits after \uv{.}
+\item {\tt \%[(keyname)][flags][width][.precision]typecode}
 \item Flags: {\tt -}/{\tt +} left/right justify, {\tt 0}/{\tt ' '} zero/space fill
 \item {\bf String formating typecodes:}
 \startitemize[columns,two,joinedup]
@@ -440,21 +433,21 @@ except [type [as value]]: \crlf
 
 \startitemize
 %\item {\tt import re} -- enable regex operations
-\item {\tt ro=re.compile(\stt{pattern}, \stt{flags=0})} -- create {\em RegexObject} \uv{{\stt ro}}
+\item {\tt ro=re.compile({\em pattern}, {\em flags=0})} -- create {\em RegexObject} \uv{{\stt ro}}
 \item Flags: {\tfx {\tt re.DOTALL (S)}, {\tt re.IGNORECASE (I)}, {\tt re.LOCALE (L)}, {\tt re.MULTILINE (M)}, {\tt re.VERBOSE (X)}, {\tt re.UNICODE (U)}}
-\item {\tt re.match(\stt{pattern}, \stt{string}} -- if match return {\em MatchObject}
-\item {\tt re.search(\stt{pattern}, \stt{string}} --  match regex anywhere in string
-%\item {\tt re.split(\stt{pattern},\stt{string}, \stt{maxsplit=0},\stt{flags=0})} -- split pattern
-\item {\tt re.split(\stt{pattern},\stt{string})} -- split pattern
-\item {\tt re.findall(\stt{pattern}, \stt{string})} -- return substrings as list
-\item {\tt re.finditer(\stt{pattern}, \stt{string})} -- return matches as iterator
+\item {\tt re.match({\em pattern}, {\em string})} -- if match return {\em MatchObject}
+\item {\tt re.search({\em pattern}, {\em string})} --  match regex anywhere in string
+%\item {\tt re.split({\em pattern},{\em string}, {\em maxsplit=0},{\em flags=0})} -- split pattern
+\item {\tt re.split({\em pattern},{\em string})} -- split pattern
+\item {\tt re.findall({\em pattern}, {\em string})} -- return substrings as list
+\item {\tt re.finditer({\em pattern}, {\em string})} -- return matches as iterator
 \item {\tt re.sub(pattern, repl, string, count=0, flags=0)} -- return string with replaced pattern
 \item {\tt re.subn($\ldots$)} -- return tuple {\tt (string, num. of replacements)}
-\item re.escape(string) -- string with escaped regex's metacharacters
+\item {\tt re.escape({\em string})} -- string with escaped regex's metacharacters
 \item {\bf RegexObject methods:} {\tt ro.match}, {\tt search}, {\tt split}, {\tt sub}, {\tt subn}, {\tt findall}, {\tt finditer}
 \item {\tt ro.flags}, {\tt ro.pattern} -- used argument for reg. obj. creation
 \item {\tt ro.groups()} -- number of matched groups
-\item {\tt ro.group(\stt{n})} -- return $n$\high{th} string matched by regex
+\item {\tt ro.group({\em n})} -- return $n$\high{th} string matched by regex
 \item {\tt ro.start()}, {\tt ro.end()}, {\tt ro.span()} -- return starting, ending position or tuple
 \stopitemize
 

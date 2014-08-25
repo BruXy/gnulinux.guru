@@ -6,15 +6,15 @@
 %                                                               %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\mainlanguage[cz]
-\language[cz] 
+\mainlanguage[en]
+\language[en] 
 \enableregime[utf] % latin2
 
-\setuplanguage[cz]
-[leftquotation=„,
+\setuplanguage[en]
+[leftquotation=“, 
  rightquotation=“,
- leftquote=‚,
- rightquote=‘]
+ leftquote=‘,
+ rightquote=’]
 
 %\setupoutput[dvips,acrobat] % dvips, acrobat
 \pdfminorversion=4
@@ -199,7 +199,7 @@
 
 % Uvozovky
 
-\def\uv#1{\quotation{#1}}
+\def\uv#1{\quote{#1}}
 
 \def\mycopyright{
 \placeintermezzo[here,none]{}{
@@ -217,5 +217,12 @@
 \def\symalpha{$\alpha$}
 \def\symtilda{\type{~}}
 \def\pyind{\strut\hskip1.5em}
+
+\def\btt#1{{\tt\bf #1}{}}
+\def\stt#1{{\tt\sl #1}{}}
+\def\tbs{\textbackslash{}}
+\def\cbf{\bf{}} % centered bf for HTML
+\def\framedTABLE{\bTABLE}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
