@@ -10,5 +10,5 @@
 1i\\</head>
 1i\\<body>
 $a\\</body></html>
-#s{<!-- mycopyright -->{<p style="border-bottom: 1px solid black;">© 2013 Martin Bruchanov, bruxy@regnet.cz</p>{
-s{<!-- mycopyright -->{<p>© 2013 <a href="http://bruxy.regnet.cz/">Martin Bruchanov</a>, bruxy\&#0064;regnet.cz</p>{
+#s{<!-- mycopyright -->{<p style="border-bottom: 1px solid black;">© 2014 Martin Bruchanov, bruxy@regnet.cz</p>{
+s{<!-- mycopyright -->{<p>© 2014 <a href="http://bruxy.regnet.cz/">Martin Bruchanov</a>, bruxy\&#0064;regnet.cz</p>{

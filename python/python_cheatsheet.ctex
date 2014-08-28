@@ -109,11 +109,9 @@ except [type [as value]]: \crlf
 \subsection{Classes}
 
 \startitemize
-\item {\tt class {\em Name}:} \crlf
-\pyind {\em suite}
+\item {\tt class {\em Name}: \crlf \pyind {\em suite}}
 \item \type{_private} -- underscored named object is private
-\item \type{def __init__(self, ...):}\crlf 
-\pyind {\tt self.data = []} -- constructor
+\item \type{def __init__(self, ...):}\crlf \pyind {\tt self.data = []} -- constructor
 \item {\tt class DerivedClass(BaseClass)} -- inheritance
 \item \type{def __iter__(self):} --  
 \stopitemize
@@ -121,8 +119,7 @@ except [type [as value]]: \crlf
 \subsection{Functions}
 
 \startitemize
-\item {\tt def function(param1, param2,...): \crlf
-\pyind pass}
+\item {\tt def function(param1, param2,...): \crlf \pyind pass}
 \item {\tt def func(arg,... arg=value, ... *arg, **arg):}
 \startitemize
 	\item {\tt arg} -- matched by name or position
@@ -315,7 +312,7 @@ except [type [as value]]: \crlf
 \item Unicode raw string: \type{ur"\n"}, \type{UR'\n'}  
 \item {\tt str()}, {\tt bytes()}, {\tt bytearray()} -- create string from object
 \item {\tt \tbs{}x{\em hh}}, {\tt \tbs{\em ooo}}, {\tt \tbs0} -- hex, octal, null byte
-\item {\tt chr(65)}, unichr(65), {\tt ord('A')}  -- returns character, ASCII code
+\item {\tt chr(65)}, {\tt unichr(65)}, {\tt ord('A')}  -- returns character, ASCII code
 \item {\tt eval(s)} -- convert and execute code given by string 
 \item {\tt execfile({\stt filename})} -- like {\tt eval}, but for whole file
 %\item {\tt repr()} -- converts any object to string
@@ -347,7 +344,7 @@ except [type [as value]]: \crlf
 \item {\tt g, G}  -- Floating-point {\tt e,f/E,f}
 \item {\tt \%\%} -- Literal '{\tt \%}'
 \stopitemize
-\item \type{{fieldname!conversionflag:formatspec}}
+\item {\tt \symlb{}fieldname!conversionflag:formatspec\symrb{}}
 \item \type{[[fill]align][sign][#][0][width][,][.prec][typecode]}
 %\item {\tt print('Hello World!')}
 \stopitemize

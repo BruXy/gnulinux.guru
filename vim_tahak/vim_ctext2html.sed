@@ -4,6 +4,7 @@
 1i\\span.CE { font-family: monospace; background: yellow; border-style:outset; border-color: yellow; }
 1i\\span.CC { font-family: monospace; background: red;    border-style:outset; border-color: red;    }
 1i\\span.CV { font-family: monospace; background: green;  border-style:outset; border-color: green;  }
+1i\\span.C { font-family: monospace; background: #aaa;  border-style:outset; border-color: gray;  }
 1i\\span.CSK { font-family: monospace; background: cyan; border-style:outset; border-color: cyan; }
 #1i\\span.CSK, span.CV, span.CC, span.CE, span.CS { font-size: 1.2em; }
 1i\\sub.low { padding-left:0.25em; color: #888; font-size: 6pt; font-family: sans-serif; }

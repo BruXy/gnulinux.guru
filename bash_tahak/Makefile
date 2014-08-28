@@ -2,8 +2,9 @@ TEX=context
 
 all: Makefile bash_tahak.pdf bash_tahak_include.html \
      bash_tahak.html bash_cheatsheet.pdf bash_cheatsheet_include.html\
-     bash_cheatsheet.html bash_cheatsheet_0001.png
-		
+     bash_cheatsheet.html bash_cheatsheet_0001.png \
+ 	 bash_cheatsheet_thumbnail.png bash_cheatsheet.tar.bz2	
+
 bash_tahak.pdf: bash_style.ctex bash_tahak.ctex
 	$(TEX) bash_tahak.ctex
 
@@ -26,18 +27,22 @@ bash_tahak.html: bash_tahak_include.html ../html_header.sed
 bash_cheatsheet_0001.png: bash_cheatsheet.pdf
 	pdf2png -x 512 bash_cheatsheet.pdf
 
+bash_cheatsheet_thumbnail.png: bash_cheatsheet_0001.png
+	convert -unsharp 1.0 -resize 320x $^ PNG:$@
+
 .SUFFIXES: .ctex
 
 tarball: bash_tahak.tar.bz2
 
-bash_tahak.tar.bz2: 
-	#$(shell cd ..; tar cvjf vim_cheatsheet.tar.bz2 vim_tahak/)
-	cd ..; tar cvjf bash_tahak.tar.bz2 bash_tahak/
-	cp ../bash_tahak.tar.bz2 bash_cheatsheet.tar.bz2
+bash_cheatsheet.tar.bz2: 
+	cd ..; tar cvjf $@ bash_tahak/{*.ctex,Makefile} html_header.sed
+	cp ../$@ . 
 
 clean:
 	rm -f bash*.log bash*.tuc
 
 veryclean: clean
-	rm -f bash_tahak.pdf bash_cheatsheet.{pdf,html} bash_cheatsheet_include.html  bash_cheatsheet_0001.png bash_tahak.html bash_tahak_include.html
+	rm -f bash_tahak.pdf bash_cheatsheet.{pdf,html} bash_cheatsheet_include.html \
+		  bash_cheatsheet_0001.png bash_tahak.html bash_tahak_include.html \
+          bash_cheatsheet_thumbnail.png	bash_cheatsheet.tar.bz2	
 
