@@ -26,8 +26,9 @@
 1i\\h4 { counter-reset: subsection; }
 1i\\h4:before { counter-increment: section; content: counter(chapter) "." counter(section) ". "; }
 1i\\h5:before { counter-increment: subsection; content: counter(chapter) "." counter(section) "." counter(subsection) ". "; }
-1i\\table, th { text-align: center; }
-1i\\td { border: 1px solid black; }
+1i\table, th { text-align: center; border-collapse: collapse; }
+1i\th { background: silver; } 
+1i\td, th { border: 1px solid black; }
 1i\\</style>
 
 /^%/d
@@ -53,7 +54,7 @@ s:\\subsection{\(.*\)}:<h4>\1</h4>:
 s:\\subsubsection{\(.*\)}:<h5>\1</h5>:
 s:\\startitemize:<ul>:
 s:\\stopitemize:</ul>:
-s:\\type{\([^}]*\)}:<tt>\1</tt>:g
+s:\\type{\([^}]*\)}:<code>\1</code>:g
 s:\\quote{\([^}]*\)}:„\1“:g
 s:\\CS{\([^}]*\)}:<span class="CS">\1</span>:g
 s:\\CSK{\([^}]*\)}:<span class="CSK">\1</span>:g
@@ -65,11 +66,11 @@ s:\\C{\([^}]*\)}:<span class="C">\1</span>:g
 s:\\D[Ff]\(.*\)$:</span><span class="DF">\1</span>:1
 #s:\\D[Ff]\(.*\)$:<span class="DF">\1</span>:1
 #s:\\D[Ff]:\&nbsp;:g
-s:{\\stt \([^}]*\)}:<tt><em>\1</em></tt>:g
-s:{\\sl \([^}]*\)}:<tt><em>\1</em></tt>:g
-s:\\sl{\([^}]*\)}:<tt><em>\1</em></tt>:g
+s:{\\stt \([^}]*\)}:<code><em>\1</em></code>:g
+s:{\\sl \([^}]*\)}:<em>\1</em>:g
+s:\\sl{\([^}]*\)}:<em>\1</em>:g
 s:{\\bf\([^}]*\)}:<b>\1</b>:g
-s:{\\tt\s*\([^}]*\)}:<tt>\1</tt>:g
+s:{\\tt\s*\([^}]*\)}:<code>\1</code>:g
 s:{\\ss\([^}]*\)}:<span class="ss">\1</span>:g
 s:\\em{\([^}]*\)}:<em>\1</em>:g
 s:\\,/\\,:\&nbsp;/\&nbsp;:g
@@ -112,6 +113,8 @@ s:\\color\[\(.*\)\]{\(.*\)}:<span class="\1">\2</span>:g
 s:\\CONTEXT:ConTeXt:g
 s:\\item\(.*\):<li>\1:
 /^\s*<li/s:$:</li>:
+s:\\startitem:<li>:
+s:\\stopitem:</li>:
 
 s:\\bTABLEbody:<tbody>:
 s:\\eTABLEbody:<\/tbody>:
@@ -132,6 +135,7 @@ s:\\stoplines:</pre>:
 s:\\startparagraph:<p>:
 s:\\stopparagraph:</p>:
 s:\\qquad:\&nbsp;\&nbsp;:g
+s:&=:\&amp;=:g
 
 # Deletion
 s:\\setupTABLE.*::g

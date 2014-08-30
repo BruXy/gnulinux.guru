@@ -221,12 +221,13 @@ shift \symdollar{}((\symdollar{}OPTIND - 1)); echo "Last: \symdollar{}1" }
 \startitemize
 	\item {\tt ({\sl commands})}, {\tt \symdollar{}({\sl commands})}, \type{`}{\stt commands}\type{`}, {\tt \symlb{\sl commands;}\symrb} -- run in subshell
 	\item {\tt \symdollar{}({\sl program})}, \type{`}{\stt program}\type{`} -- output of program replaces command
-	\item \type{test}, \type{[ ]} -- condition evaluation:
+	\startitem \type{test}, \type{[ ]} -- condition evaluation:
 		\startitemize
 			\item numeric comparison: {\tt {\sl a} -eq {\sl b}}~\dots $a=b$, {\tt  {\sl a} -ge {\sl b}}~\dots $a\ge{}b$, {\tt  {\sl a} -gt {\sl b}}~\dots $a>b$, {\tt  {\sl a} -le {\sl b}}~\dots $a\le{}b$, {\tt  {\sl a} -lt {\sl b}}~\dots $a<b$
 			\item file system: {\tt -d {\sl file}} is directory, {\tt	-f {\sl file}} exists and is not dir., {\tt	-r {\sl file}} exists and is readable, {\tt	-w {\sl file}} exists and is writable, {\tt	-s {\sl file}} is non-zero size, {\tt -a {\sl file}} exists
 			\item logical: {\tt -a} and, {\tt -o} or, {\tt !} negation 		
-		\stopitemize	
+		\stopitemize
+	\stopitem	
 	\item \type{[[ ]]} -- comparison of strings, equal {\tt =}, non-equal {\tt !=}, {\tt -z \sl string} is zero sized, {\tt -n \sl string} is non-zero sized, \type{<}, \type{>} lexical comparison
 	\item \type{[} {\stt condition} \type{] && [} {\stt condition} \type{]} 
 	\item {\tt true} -- returns 0 value
@@ -241,7 +242,7 @@ shift \symdollar{}((\symdollar{}OPTIND - 1)); echo "Last: \symdollar{}1" }
 	\item {\tt unalias {\sl name}} -- cancel alias 
 	\item {\tt if [ {\sl condition} ]; then {\sl commands}; \crlf elif [ {\sl condition} ]; then {\sl commands}; \crlf else {\sl commands}; fi}
 %\stoplines
-\item {\tt for {\sl variable} in {\sl arguments}; do {\sl commands; } done }
+\startitem {\tt for {\sl variable} in {\sl arguments}; do {\sl commands; } done }
 \startitemize
 	\item \type{{a..z}} -- expands to {\tt a b c \dots z}
 	\item {\tt \symlb\sl{i..n..s}\symrb} -- sequence from {\sl i} to {\sl n} with step {\sl s} 
@@ -249,7 +250,7 @@ shift \symdollar{}((\symdollar{}OPTIND - 1)); echo "Last: \symdollar{}1" }
 	\item {\tt \symlb{}1,2\symrb{}\symlb{}a,b\symrb{}} -- expands to {\tt 1a 1b 2a 2b}
 	\item {\tt seq {\sl start step end}} -- number sequence
 \stopitemize
-
+\stopitem
 \item {\tt for((i=1; i<10; i++)); do  {\sl commands; } done}
 \item {\tt while {\sl returns true}; do {\sl commands;} done}
 \item {\tt until [ {\sl test returns true} ]; do {\sl commands;} done}
@@ -276,7 +277,7 @@ shift \symdollar{}((\symdollar{}OPTIND - 1)); echo "Last: \symdollar{}1" }
 	\item \type{exec 3>&-} -- close descriptor
 	\item {\stt command} \type{> /dev/null 2>&1} -- suppress all output
 	\item \type{n> n>}\type{> n>&m} -- operation redirect for descriptors {\sl n, m}
-	\item {\tt mkfifo {\sl name}} --  make a named pipe, that can be written and read as file
+	\item {\tt mkfifo {\sl name}} -- make a named pipe, it can be written and read as file
 	\item {\stt command}\low{1} \type{|} {\stt command}\low{2} -- pipe, connection between processes
 	\item {\tt read {\sl parameters}} -- read input line and separate it into parameters
 \stopitemize
@@ -318,16 +319,17 @@ EOF                         EOF
 \item {\tt stty} -- change and print terminal line settings
 \item {\tt tty} -- print name of terminal connected to stdout
 \item {\tt printf {\sl format values}} -- format output
-\item {\tt printf -v {\sl variable form. val.}} -- form. output into variable
-{\tfx
-\startitemize 
-\item \% [flags][width][.precision][length]specifier
-\item Specifier: \type{%u},\,\type{%d},\,\type{%i} decimal; \type{%E},\,\type{%f} float, \type{%x},\,\type{%X} hex;\,\type{%o} octal,\,\type{%s} string,\,\type{%%} char \%
-\item Width: $n$  prints at least $n$ chars, spaces from right, $0n$ print at least $n$ chars, zeros from left, \type{*} width specified in preceding parameter
-\item Precision: min. number of digits, digits after decimal point, number of printed chars, {\tt *} number of chars given by preceding parameter 
-\item Flags: {\tt -} left-justify, {\tt +} prints number with sign {\tt +/-}
-\stopitemize
-}
+\startitem {\tt printf -v {\sl variable form. val.}} -- form. output into variable
+	{\tfx
+	\startitemize 
+	\item \% [flags][width][.precision][length]specifier
+	\item Specifier: \type{%u},\,\type{%d},\,\type{%i} decimal; \type{%E},\,\type{%f} float, \type{%x},\,\type{%X} hex;\,\type{%o} octal,\,\type{%s} string,\,\type{%%} char \%
+	\item Width: $n$  prints at least $n$ chars, spaces from right, $0n$ print at least $n$ chars, zeros from left, \type{*} width specified in preceding parameter
+	\item Precision: min. number of digits, digits after decimal point, number of printed chars, {\tt *} number of chars given by preceding parameter 
+	\item Flags: {\tt -} left-justify, {\tt +} prints number with sign {\tt +/-}
+	\stopitemize
+	}
+\stopitem
 \item \type{printf "%d" \'A} -- display ASCII code of char “A” (65)
 \item \type{printf \\$(printf '%03o' 65)} -- print char given by ASCII code
 \item {\tt tput {\sl action}} -- terminal dependent action
