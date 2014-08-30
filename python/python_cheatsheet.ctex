@@ -120,13 +120,14 @@ except [type [as value]]: \crlf
 
 \startitemize
 \item {\tt def function(param1, param2,...): \crlf \pyind pass}
-\item {\tt def func(arg,... arg=value, ... *arg, **arg):}
+\startitem {\tt def func(arg,... arg=value, ... *arg, **arg):}
 \startitemize
 	\item {\tt arg} -- matched by name or position
 	\item {\tt arg=value} -- default value if arg is not passed
 	\item {\tt *arg} -- collect extra positional args as a new tuple
 	\item {\tt **arg} -- collect extra positional args as a new dictionary
 \stopitemize
+\stopitem
 \item {\tt lambda {\em args1} : expression} -- anonymous function maker
 % \item {\tt decorator} %???
 \item {\tt return [{\em expression}]} -- return from function
@@ -139,7 +140,7 @@ except [type [as value]]: \crlf
 \item {\tt variable = 12} -- assign value
 \item {\tt type(variable)} -- return type of variable 
 \item {\tt global name [,name]} -- global variable in local context
-\item {\bf Number formats: }
+\startitem {\bf Number formats: }
 \startitemize
 	\item 	{\tt 2006, 2006l, 2006L}~-- decimal integer, long;
 	\item 	{\tt 0775}, {\tt oct(0x1fd)}~-- octal;
@@ -149,6 +150,7 @@ except [type [as value]]: \crlf
 	\item   {\tt 1+2j, 1.0+2.0J, complex(1,2) } -- complex number;
 	\item   {\tt b'Ahoj'} -- sequence of 8-bit values;
 \stopitemize
+\stopitem
 \item {\tt int(x)}, {\tt long(x)}, {\tt float(x)}, {\tt str(n)} -- type conversions
 \item {\tt c=1+2j; c.conjugate()}, {\tt (1+2j).conjugate()} -- conjugate of complex number $1-2j$
 \item {\tt abs(x)} -- absolute value of $x$
@@ -331,19 +333,20 @@ except [type [as value]]: \crlf
 \item {\tt "\%+.*f" \% (5, 22.0/7)} -- {\tt +3.14286}, 5 digits after \uv{.}
 \item {\tt \%[(keyname)][flags][width][.precision]typecode}
 \item Flags: {\tt -}/{\tt +} left/right justify, {\tt 0}/{\tt ' '} zero/space fill
-\item {\bf String formating typecodes:}
-\startitemize[columns,two,joinedup]
-\item {\tt s}  -- String (or any object, uses {\tt str()})
-\item {\tt r}, -- {\tt s}, but uses {\tt repr()}, not {\tt str()}
-\item {\tt c} -- Character (int or str)            
-\item {\tt d, i, u} -- Decimal (base 10 integer)         
-\item {\tt o} -- Octal (base 8 integer)            
-\item {\tt x, X} -- Hex (base 16 integer)             
-\item {\tt e, E} -- Floating-point exponent
-\item {\tt f, F} -- Floating-point decimal
-\item {\tt g, G}  -- Floating-point {\tt e,f/E,f}
-\item {\tt \%\%} -- Literal '{\tt \%}'
-\stopitemize
+\startitem {\bf String formating typecodes:}
+	\startitemize[columns,two,joinedup]
+	\item {\tt s}  -- String (or any object, uses {\tt str()})
+	\item {\tt r}, -- {\tt s}, but uses {\tt repr()}, not {\tt str()}
+	\item {\tt c} -- Character (int or str)            
+	\item {\tt d, i, u} -- Decimal (base 10 integer)         
+	\item {\tt o} -- Octal (base 8 integer)            
+	\item {\tt x, X} -- Hex (base 16 integer)             
+	\item {\tt e, E} -- Floating-point exponent
+	\item {\tt f, F} -- Floating-point decimal
+	\item {\tt g, G}  -- Floating-point {\tt e,f/E,f}
+	\item {\tt \%\%} -- Literal '{\tt \%}'
+	\stopitemize
+\stopitem
 \item {\tt \symlb{}fieldname!conversionflag:formatspec\symrb{}}
 \item \type{[[fill]align][sign][#][0][width][,][.prec][typecode]}
 %\item {\tt print('Hello World!')}
