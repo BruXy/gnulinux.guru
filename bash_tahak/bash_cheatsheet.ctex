@@ -411,6 +411,7 @@ File name wildchars: \type{?}  a char; \type{*} zero or more chars;
 \startitemize
 \item {\tt cat} -- concatenate files and print them to stdout
 \item {\tt cat > file} -- create file, end with \C{\CT+d}
+\item {\tt mapfile A < file} -- store stdin into array {\tt \symdollar{}A}
 \item {\tt tac} -- like {\tt cat}, but from bottom to top line
 \item {\tt more}, {\tt less} -- print by pages, scrollable
 \item {\tt od}, {\tt hexdump -C}, {\tt xxd} -- print in octal, hex dump

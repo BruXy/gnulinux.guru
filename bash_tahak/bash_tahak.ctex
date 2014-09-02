@@ -409,6 +409,7 @@ Nahrazení v jménech souborů: \type{?} znak; \type{*} žádný nebo více znak
 \startitemize
 \item {\tt cat} -- slučuje soubory a vypisuje je na standardní výstup
 \item {\tt cat > soubor} -- vytvoří soubor, ukončení pomocí \C{\CT+d}
+\item {\tt mapfile A < soubor} -- uloží std. vstup do pole {\tt \symdollar{}A}
 \item {\tt tac} -- jako {\tt cat}, ale řádkově pozpátku
 \item {\tt more}, {\tt less} -- výpis po stránkách, skrolovatelně
 \item {\tt od}, {\tt hexdump -C}, {\tt xxd} -- výpis souboru oktalově, výpis hexdumpu
