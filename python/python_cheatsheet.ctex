@@ -15,6 +15,8 @@
 \title{Python 2.7.x}
 
 \mycopyright
+
+\blank[2mm]
 	
 Set of interpreter: \type{#!/usr/bin/env python} \crlf 
 Comments: \type{# everything behind hash}\crlf
@@ -104,6 +106,7 @@ except [type [as value]]: \crlf
 \item {\tt del name}, {\tt del name[i]}, {\tt del name[i:j:k]}, {\tt del name.attibute} -- delete variables, items, keys, attributes
 \item {\tt assert {\em expression} [, {\em message}]}
 \item {\tt exec {\em codestring}}
+\item Generator expression: \crlf {\tt {\em result expr.} for {\em loop var.} in {\em iterable} if {\em filter expr.}}
 \stopitemize
 
 \subsection{Classes}
@@ -152,6 +155,7 @@ except [type [as value]]: \crlf
 \stopitemize
 \stopitem
 \item {\tt int(x)}, {\tt long(x)}, {\tt float(x)}, {\tt str(n)} -- type conversions
+\item {\tt int('GEEK', 21)} -- convert string number with given base
 \item {\tt c=1+2j; c.conjugate()}, {\tt (1+2j).conjugate()} -- conjugate of complex number $1-2j$
 \item {\tt abs(x)} -- absolute value of $x$
 \item {\tt round(x[,n])} -- $x$ rounded to $n$ digits
