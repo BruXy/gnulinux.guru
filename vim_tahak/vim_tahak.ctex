@@ -370,8 +370,9 @@
 \item Skoč na další/předchozí chybu:\DF \CS{\U{cp}revious}\,/\,\CS{\U{cn}ext}
 \item Vypiš všechny chyby:\DF \CS{\U{cl}ist}
 \item Přidej okno se seznamem chyb:\DF \CS{\U{cope}n}
-%\item Zobrazení čísel řádků: \CS{set \U{nu}mber} %number
-%\item Obarvení syntaxe: \CS{set syntax}
+\item Zobrazení čísel řádků:\DF \CS{set \U{nu}mber} %number
+\item Obarvení syntaxe:\DF \CS{syntax on}\,/\,\CS{syntax off}
+\item Obnovení obarvení syntaxe:\DF \CS{syntax sync fromstart}
 \stopitemize
 
 \section{Ostatní}

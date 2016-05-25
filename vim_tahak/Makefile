@@ -3,6 +3,8 @@ TEX=context
 all: Makefile vim_tahak.pdf vim_cheatsheet.pdf vim_cheatsheet_include.html \
 	 vim_cheatsheet.html vim_cheatsheet_0001.png vim_tahak_include.html \
 	 vim_tahak.html vim_cheatsheet_thumbnail.png vim_cheatsheet.tar.bz2
+
+pdf: vim_tahak.pdf vim_cheatsheet.pdf
 		
 vim_tahak.pdf: vim_tahak_style.ctex vim_tahak.ctex
 	$(TEX) vim_tahak.ctex
@@ -35,6 +37,13 @@ tarball: veryclean vim_cheatsheet.tar.bz2
 vim_cheatsheet.tar.bz2: vim_tahak_style.ctex vim_tahak.ctex vim_cheatsheet.ctex Makefile
 	cd ..; tar cvjf $@ vim_tahak/{*.ctex,Makefile} html_header.sed
 	mv ../$@ .
+
+.PHONY: clean upload publish
+
+upload: publish
+
+publish:
+		
 
 clean:
 	rm -f vim*.log

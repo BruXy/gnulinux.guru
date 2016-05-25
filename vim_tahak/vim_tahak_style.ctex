@@ -1,4 +1,4 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+1%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                               %
 %  Rychla reference k nekterym prikazum programu ViM            %
 %                                         http://vim.org        %
@@ -11,7 +11,7 @@
 \mainlanguage[cz]
 \enableregime[utf] % latin2
 \pdfminorversion=4
-\setupbodyfont[9.7pt]  %
+\setupbodyfont[9.6pt]  %
 \setuppapersize[A4, portrait][A3, landscape] % A3, A4, A5, A6; landscape
 \setuparranging[2SIDE] % zmena stranek pro vyrobu knizky, 
 % 2SIDE -- dve stranky na jeden list viz setuppapersize
