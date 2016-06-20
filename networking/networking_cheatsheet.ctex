@@ -1,0 +1,789 @@
+\input networking_style.ctex
+% http://www.tty1.net/blog/2010-04-21-ifconfig-ip-comparison_en.html
+\starttext
+%\startcolumns[n=2]
+\title{Linux Network Administration}
+
+\mycopyright
+\blank[2mm]
+
+%\framed[background=color,backgroundcolor=yellow]{\bf\tfb
+%Cheat-sheet under construction!
+%}
+
+\section{Open Systems Interconnection model (OSI model)}
+
+{
+{\bf 7. Application  }-- [data] -- Data generation (SMTP, NNTP, SSH, Telnet, HTTP)\crlf
+{\bf 6. Presentation }-- [data] -- Encryption and formating (JPEG, ASCII, EBDIC, GIF,...)\crlf
+{\bf 5. Session      }-- [data] -- Sync. \& send to ports (RPC, SQL, NFS, NetBIOS)\crlf
+{\bf 4. Transport    }-- [segments] -- TCP/UDP, message segmentation, message traffic control\crlf
+{\bf 3. Network      }-- [packets] -- Packets, IP addr., routing, subnet traffic (IPv4/6, ICMP)\crlf
+{\bf 2. Data Link    }-- [frames] -- Frame traffic control, sequencing (ARP, MAC)\crlf
+{\bf 1. Physical     }-- [bits] -- cables, hubs, physical medium transmission\crlf
+}
+
+\uv{{\bf P}eople {\bf D}on't {\bf N}eed {\bf T}hose {\bf S}tupid {\bf P}ackets {\bf A}nymore!}
+
+%People Don't Need Those Stupid Packets Anyway
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Internet Protocol (IP) Addresses}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{IPv4 addresses and mask}
+
+\bTABLE
+\bTR\bTD CIDR Notation: \eTD\bTD 192.168.1.130/25 \eTD\bTD \eTD\eTR
+\bTR\bTD IPv4 (32bit):  \eTD\bTD 192.168.1.130     \eTD\bTD {\tt 11000000.10101000.00000001.10000010} \eTD\eTR
+\bTR\bTD Mask:          \eTD\bTD 255.255.255.128   \eTD\bTD {\tt 11111111.11111111.11111111.10000000} \eTD\eTR
+\bTR\bTD Subnet:        \eTD\bTD ( IP and Mask ) \eTD\bTD  {\tt  11000000.10101000.00000001.10000000} \eTD\eTR
+\bTR\bTD Subnet:         \eTD\bTD 192.168.1.128  \eTD\bTD \eTD\eTR
+\bTR\bTD Usable Host Range: \eTD\bTD 192.168.1.129--254 \eTD\bTD \eTD\eTR
+\bTR\bTD Broadcast Address: \eTD\bTD 192.168.1.255  \eTD\bTD \eTD\eTR
+\eTABLE
+
+Use: {\tt ipcalc}, {\tt sipcalc} for IP/net calculations.
+
+\subsection{IPv6 addresses and mask}
+
+%https://knihy.nic.cz/files/nic/edice/pavel_satrapa_ipv6_2012.pdf
+
+\startitemize
+\item IPv6 (128bit) -- {\tt y : y : y : y : y : y : y : y}
+\item IPv6 with IPv4 part -- {\tt y : y : y : y : y : y : x . x . x . x}
+\item Access IPv6 URL -- {\tt http://[2a01:4f8:130:2192::2]}
+\item Zeroes can be ommited:
+\startitemize
+\item Loopback: {\tt 00000:0000:0000:0000:000:0000:0000:0001 $\approx$ 0:0:0:0:0:0:0:1 $\approx$ ::1}
+\item Multiple zero groups \uv{{\tt ::}}: {\tt 2001:0:0:0:0:0:0:ab $\approx$ 2001::ab}
+\item Use only one groups symbol: {\tt 2001:0:0:1:0:0:0:ab $\approx$ 2001:0:0:1::ab $\approx$ 2001::1:0:0:0:ab}
+\stopitemize
+\item IEEE EUI-64 identifier:
+\startitemize[n]
+\item Ethernet (Media Access Control) address: {\tt 38:c9:86:30:63:bf}
+\item Identificator: 0 local, 1 global. 
+\item EUI-64 identifier: ({\tt 38 or identificator = 39}) {\bf 3ac9:86}ff:fe{\bf 30:63bf}
+\item Link-local address: {\tt fe80::3ac9:86ff:fe30:63bf}
+\stopitemize
+\stopitemize
+
+%POZOR
+%/-----network-----\ /-----interface---\
+%abcd:abcd:0000:0001:0000:0000:0000:0001
+%\-----/48 al -/\--/
+%                 \16 for local subnet
+
+%https://en.wikipedia.org/wiki/Reserved_IP_addresses
+\subsection{Reserved IP addresses}
+
+\startitemize
+\item Loopback: {\tt 127.0.0.1/8}; {\tt ::1/128}
+\item Unspecified address: {\tt 0.0.0.0/8}; {\tt ::/128}
+\item Multicast: {\tt 224.0.0.0/4}; {\tt ff00::/8}
+\item Private: {\tt 10.0.0.0/8}, {\tt 172.16.0.0/12}, {\tt 192.168.0.0/16}; {\tt fc00::/7}
+\item Automatic Private IP: {\tt 169.254.0.0/16}
+\item IPv4 mapped addresses: {\tt ::ffff:0:0/96} ({\tt ::ffff:0.0.0.0}~-- {\tt ::ffff:255.255.255.255})
+\item IPv4/IPv6 translation: {\tt 64:ff9b::/96}
+\item For documentation examples: {\tt 192.0.2.0/24}, {\tt 198.51.100.0/24}, {\tt 203.0.113.0/24}; {\tt 2001:db8::/32}
+\stopitemize
+
+\subsection{Most common ports ({\tt /etc/services})}
+
+Privilege port $<$ 1024 can be opened just by root user!
+
+%\bTABLE[frame=off,style=\tfx]
+%\bTR\bTD
+\startitemize[columns,three]
+\item 20, 21 FTP (File Transfer Protocol)  
+\item 22  SSH (Secure Shell) 
+\item 23  Telnet 
+\item 25  SMTP 
+\item 42  WINS 
+\item 53	DNS 
+\item 135-139, 445 Windows shares, login, RPC 
+\item 80, 8080  HTTP  
+\item 88	Kerberos 
+\item 110	POP3 
+\item 111	Portmapper - Linux 
+\item 119 NNTP (Network News) 
+\item 123 NTP (Network Time Protocol) 
+\item 135	RPC-DCOM 
+\item 139	SMB 
+%\eTD\bTD
+\item 143	IMAP 
+\item 161, 162	SNMP 
+\item 389	LDAP 
+\item 443 HTTPS (HTTP Secure) 
+\item 445	CIFS 
+\item 514	Syslog 
+\item 636	Secure LDAP 
+\item 1080 Socks5 
+\item 1194 OpenVPN 
+\item 1241 Nessus Server 
+\item 1433, 1434	SQL Server 
+\item 1494, 2598	Citrix Applications 
+\item 1521 Oracle Listener 
+\item 2512, 2513	Citrix Management 
+\item 3389 RDP 
+\item 5432 PostreSQL 
+\item 6662–6667	IRC 
+\stopitemize
+%\eTD\eTR
+%\eTABLE
+
+\section{Basic network setup}
+
+\startitemize
+\item Manage networking: 
+	\startitemize
+	\item SysV Init script: {\tt service network start/stop/restart}, {\tt /etc/init.d/network start/stop/restart}
+	\item Systemd: {\tt servicectl start/stop/restart NetworkManager.service}
+	\stopitemize
+\item Set hostname:
+	\startitemize
+	\item {\tt hostname {\sl name}}
+	\item {\tt nmcli general hostname {\sl name}}
+	\item edit file {\tt /etc/hostname}
+	\item {\tt hostnamectl set-hostname {\sl name}}
+	\stopitemize
+\item Check hostname: {\tt hostname}, {\tt hostnamectl}
+\item Check if physical link exits: {\tt ethtool eth0}
+\item Loop-back interface: {\tt ifconfig lo 127.0.0.1}
+\item Loop-back route:  {\tt route add 127.0.0.1}
+\item List devices: {\tt cat /proc/net/dev}
+\item Show devices and configuration: {\tt  ifconfig}, {\tt ip addr show}, {\tt ip link show}, {\tt ip link list}
+\item Disable device: {\tt ifconfig eth0 down}; {\tt ip link set eth0 down}; {\tt nmcli connection down eth0}
+\item Rename device (when disabled): {\tt ip link set {\sl enp0s25} name {\sl eth0}}
+\item Enable device: {\tt ifconfig eth0 up}; {\tt ip link set eth0 up}; {\tt nmcli connection up eth0}
+\item Set bigger Maximum transmission unit (MTU) 9000 bytes for {\tt eth1}: {\tt ifconfig eth1 mtu 9000 up}, {\tt ip link set mtu 9000 eth1}
+\item Set IP address:
+\startitemize 
+	\item {\tt ifconfig eth0 192.168.0.1}; {\tt ip addr add 192.168.0.1 dev eth0}
+	\item {\tt ifconfig eth0 192.168.0.1 netmask 255.255.255.0 broadcast 192.168.0.255}
+	\item {\tt ip addr add 192.168.0.1/24 broadcast 192.168.0.255 dev eth0}
+	\item {\tt nmcli con add con-name eno2 type ethernet ifname eno2 ip4 192.168.0.5/24 gw4 192.168.0.254}
+	\item {\tt dhclient -v eth0}
+\stopitemize
+\item Delete IP address: {\tt ip addr del 192.168.0.1/24 dev eth0}
+\item Add alias interface: {\tt ifconfig eth0:1 10.0.0.1/8}; {\tt ip addr add 10.0.0.1/8 dev eth0 label eth0:1}
+\item Set promiscuous mode: {\tt ifconfig eth0 promisc} ({\tt -promisc} to disable); {\tt ip link set eth0 promisc on/off}
+\item Change MAC address: {\tt ifconfig eth0 hw ether AA:BB:CC:DD:EE:FF};
+{\tt ip link set dev eth0 address AA:BB:CC:DD:EE:FF}
+\item Default gateway: 
+\startitemize
+	\item {\tt route add default gw 192.168.1.1 eth0}; 
+	\item {\tt ip route add 192.168.1.0/24 dev eth0}
+	\item {\tt ip route add 192.168.1.0/24 via 192.168.1.1}
+\stopitemize
+\item Kernel network parameters: {\tt sysctl -a \| grep net}
+\stopitemize
+
+\subsection{Wi-Fi Networking}
+
+\startitemize
+\item Scan available networks: {\tt iwlist wlan0 scan}; {\tt nmcli dev wifi}
+\item Display available channels: {\tt iwlist wlan0 freq}
+\item Connect with WEP network: {\tt iwconfig wlan0 essid {\sl "Network SSID"} key {\sl HEX\_KEY}}
+\item Connect with WEP network: {\tt iwconfig wlan0 essid {\sl "Network SSID"} key s:{\sl{}ASCII\_KEY}}
+\item Connect with WEP network: {\tt nmcli dev wifi connect {\sl "Network SSID"} password '123...'}
+\item Connect with WPA: {\tt wpa_supplicant -B -i wlan0 -DWext -c /etc/wpa_supplicant.conf}
+\item Examples of WPA configuration: {\tt man wpa_supplicant.conf}
+\item Watch signal quality: {\tt watch -n 1 cat /proc/net/wireless } (link = SNR, level in dBm)
+\stopitemize
+
+\subsection{Configuration files of network interface settings}
+
+Stored in: {\tt /etc/sysconfig/network-scripts/{\sl{}ifcfg-inteface}}
+
+\bTABLE[style=tt]
+\bTABLEhead
+\bTR
+\bTH Static \eTH \bTH Dynamic \eTH \bTH Either \eTH
+\eTR
+\eTABLEhead
+\bTABLEbody
+\bTR
+\bTD % Static
+BOOTPROTO=none\crlf
+IPADDR=192.168.0.2\crlf
+PREFIX0=24\crlf
+GATEWAY0=192.168.0.1\crlf
+DEFROUTE=yes\crlf
+DNS1=8.8.8.8\crlf
+\eTD
+\bTD % Dynamic
+{\tt BOOTPROTO=dhcp}
+\eTD
+\bTD % Either
+DEVICE=eth0\crlf
+NAME="System eth0"\crlf
+ONBOOT=yes\crlf
+UUID=a1b1c122-2...\crlf
+USERCTL=yes\crlf
+\eTD
+\eTR
+\eTABLEbody
+\eTABLE
+
+\subsection{NetworkManager, nmcli, nmtui}
+
+\startitemize
+\item Text user interface for NetworkManager: {\tt nmtui}
+\item Manage service: {\tt systemctl enable/disable/start/restart/stop NetworkManager.service}
+\item List all devices: {\tt  nmcli dev status}
+\item List all connections: {\tt nmcli connection show}
+\item Show detail about connection: {\tt nmcli con show eth0}
+\item Add connection: {\tt nmcli con add con-name "default" type ethernet ifname eth0}
+\item Set IPv4: {\tt nmcli con add con-name "static" ifname eth0 autoconnect no type ethernet ip4 172.125.X.10/24 gw 172.25.X.254}
+\item Set IPv4: {\tt nmcli connection modify eth0 ipv4.addresses 10.0.0.2/8 ipv4.gateway 10.0.0.1}
+\item Activate/deactivate connection: {\tt nmcli con up/down "static"}
+\item Reload configuration: {\tt nmcli con reload}
+\item Bring down interface and disable autoconnect: {\tt nmcli dev dis \sl DEV} 
+\item Disable all managed interfaces: {\tt nmcli net off}
+\item Add, modify, delete connection: {\tt nmcli con add / mod "ID" / del "ID"}
+\item Set DNS: {\tt nmcli con modify eth0 ipv4.dns "8.8.8.8,8.8.4.4"}
+\item Set routes: {\tt nmcli connection modify eth0 ipv4.routes "192.168.0.0/24 10.0.0.1, 192.168.1.0/24 10.0.0.1"}
+\stopitemize
+
+%\subsection{iproute2 ip}
+%
+%\startitemize
+%ip link list
+%ip address show
+%ip addr add 192.168.0.7/24 dev eth1
+%ip addr del 192.168.0.7/24 dev eth1
+%ip route show -- routing information
+%ip neigh show
+%ip -s link show eth0 -- show statistics
+%netstat -i
+%netstat -an -- otevřené TCP porty
+%\item {\tt netstat -tlnp} -- ukáže programy poslouchající na portech
+%fuser -n tcp port -- zjistí id. procesu na daném portu
+%\stopitemize
+
+\subsection{DHCP (Dynamic Host Configuration Protocol)}
+
+\startitemize
+\item Configure device: {\tt dhclient -v eth0}
+\item Release device configuration: {\tt dhclient -r} 
+\item DHCP client data: {\tt /var/lib/dhclient/dhclient.leases}
+\stopitemize
+
+\section{Network socket of processes}
+
+\startitemize
+\item List active connections: {\tt netstat -plunt}; {\tt lsof -i}; {\tt ss -tua}
+\item List process communication on port: {\tt lsof -i :22} / {\tt lsof -i :ssh}
+\item Check PID binded on local port: {\tt ss -lt}; {\tt fuser -n tcp 22}
+\item Monitor net. communication of single process: {\tt strace -f -e trace=network -s 10000 -p {\sl PID}} 
+\item Color and interactive network monitor: {\tt iptraf-ng}
+\stopitemize
+
+\section{ICMP (Internet Control Message Protocol)}
+
+\startitemize
+\item For IPv6 use: {\tt ping6}, {\tt tracepath6}, {\tt traceroute6}
+\item Ping n-times: {\tt ping -c {\sl n} IP}
+\item Broadcast: {\tt ping -b 10.0.0.255}
+\item Use different interface: {\tt ping -I {\sl eth1}}
+\item Trace route: {\tt traceroute {\sl host}}; {\tt mtr -c 1 -r {\sl host}};  
+\item Use TCP instead: {\tt tcptraceroute}, {\tt tcping {\sl host port}}
+\stopitemize
+
+\section{Ethernet Bridge Manipulation}
+
+\startitemize
+\item Shows all current instances of the ethernet bridge: {\tt brctl show}
+\item Create bridge {\tt{\sl br0}}: {\tt brctl addbr br0}, {\tt nmcli con add type bridge ifname br0}
+\item Add/remove interface: {\tt brctl addif br0 eth1}\,/\,{\tt brctl delif br0 eth1} 
+\item Enable/disable Spanning Tree Protocol (STP): {\tt brctl stp br0 on}\,/\,{\tt off}
+\item Delete bridge: {\tt brctl delbr br0}
+\stopitemize
+
+\section{ARP (Address Resolution Protocol)}
+
+\startitemize
+\item Show ARP table: {\tt arp}; {\tt ip neighbor list}; {\tt cat /proc/net/arp}
+\item Clean ARP table: {\tt ip -s neigh flush all}
+\item Add an entry in your ARP table:
+	\startitemize
+	\item {\tt  arp -i eth0 -s 192.168.0.1 00:11:22:33:44:55}
+	\item {\tt  ip neigh add 192.168.0.1 lladdr 00:11:22:33:44:55 nud permanent dev eth0}
+	\stopitemize
+\item Switch ARP resolution off on one device: {\tt  ifconfig -arp eth0}; {\tt  ip link set dev eth0 arp off}
+\item Delete entry in interface: {\tt arp -i eth1 -d 10.0.0.1}
+\item arpping -I interface -c count destination 
+\stopitemize
+
+\section{Routing}
+
+\startitemize
+\item Display routes: {\tt ip route show}, {\tt ip route list}, {\tt netstat -rn}
+\item Set default gateway: {\tt ip route add default via 192.168.1.1}, {\tt route add default gw 192.168.1.1}
+\item Print host interfaces and routes: {\tt nmap --iflist}
+
+\item Route IP range through eth0: {\tt ip route add 192.168.1.0/24 dev eth0}
+\item Delete route: {\tt ip route delete 192.168.1.0/24 dev eth0}
+
+\item Enable IP forwarding: 
+\startitemize
+	\item {\tt echo "1" > /proc/sys/net/ipv4/ip_forward}
+	\item Save in {\tt /etc/sysctl.conf} option {\tt net.ipv4.ip_forward = 1}
+\stopitemize
+
+\item Static route configuration: {\tt /etc/sysconfig/network-scripts/route-eth0}:
+\startitemize
+\item {\tt default via 10.254.0.1 dev eth0}
+\item {\tt 172.31.0.0/16 via 10.254.0.1 dev eth0}
+\stopitemize
+\stopitemize
+
+\section{Firewall}
+
+\subsection{IPv4/IPv6 packet filtering and NAT -- {\tt iptables}}
+
+%iptables [tabulka] [akce] [řetězec] [pravidla] [cíl]
+
+\startitemize
+\item For IPv6 use: {\tt ip6tables}
+\item Print all rules: {\tt iptables -S }
+\item Print rules: {\tt iptables -L -v}
+\item Clear all configured rules: {\tt iptables -F}
+\item Basic chains: {\tt iptables -L \| grep policy} $\ldots$ INPUT, FORWARD, OUTPUT
+\item Accept connection on port $N$: {\tt iptables -A input -p tcp -dport {\tt N} -j ACCEPT}
+\item Accept connection from IP: {\tt iptables -A input -p tcp -dport N -s IP/mask -j ACCEPT}
+\item Drop connection from {\tt 192.168.10.x}: {\tt iptables -A INPUT -s 192.168.10.0/24 -j DROP}
+\item Enable SSH: {\tt iptables -A INPUT -m tcp -p tcp --dport 22 -j ACCEPT}
+\item Enable SSH, HTTP, HTTPS: {\tt iptables -A INPUT -p tcp -m state --state NEW -m multiport --dports ssh,http,https -j ACCEPT}
+\item Save iptables: {\tt /sbin/iptables-save > /etc/sysconfig/iptables}, {\tt /etc/init.d/iptables save}
+\item Network Address Translation (NAT) / Masquarage:  {\tt iptables -t nat -A POSTROUTING -s 10.200.0.0/24 -o eth0 -j MASQUERADE}
+\stopitemize
+
+\subsection{Dynamic Firewall Manager -- {\tt firewalld}}
+
+\startitemize
+\item Check status: {\tt firewall-cmd --state}, {\tt systemctl status firewalld}  
+\item Print all rules: {\tt firewall-cmd --list-all}
+\item List zones: {\tt firewall-cmd --get-active-zones}, {\tt firewall-cmd --get-zones}
+\item Get or set default zone: {\tt firewall-cmd --get-default-zone}, {\tt --set-default-zone={\sl{}ZONE}}
+\item Set default zone: {\tt firewall-cmd --set-default-zone={\sl{}ZONE}}
+\item Without {\tt --permament} option any changes will not be available after restart.
+\item Open TCP port in zone: {\tt firewall-cmd --permanent --zone={\sl{}ZONE} --add-port=8080/tcp}
+\item Enable services: {\tt firewall-cmd --permanent --add-service={http,https}}
+\item Activate changes in configuration: {\tt firewall-cmd --reload}
+\item Disable: {\tt--remove-port={\sl{}port/protocol}}, {\tt --remove-service={\sl{}service}}, {\tt --remove-source={\sl{}{X.X.X.X/Y}}}
+\item firewall-cmd --zone=external --add-masquerade
+\item Forward packets to other IP and port: {\tt firewall-cmd --zone=external --add-forward-port=port=22:proto=tcp:toport=2055:toaddr=192.0.2.55}
+\item Network Address Translation (NAT) / Masquarage:  {\tt iptables -t nat -A POSTROUTING -s 10.200.0.0/24 -o eth0 -j MASQUERADE}
+\item Rich language examples:
+\startitemize
+\item {\tt firewall-cmd --permanent --add-rich-rule='rule family=ipv4 source address=172.25.X.10/32 service  name="http" log level=notice prefix="NEW HTTP " limit value="3/s" accept '}
+\item {\tt firewall-cmd --permanent --add-rich-rule 'rule family=ipv4 source address=10.0.0.1/32 forward-port port=443 protocol=tcp to-port=22'}
+\stopitemize
+\stopitemize
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Traffic monitoring}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{{\tt tcpdump} -- dump traffic on a network}
+
+\startitemize
+\item Display communication with HTTP: {\tt tcpdump -i eth0 'tcp port 80'} 
+\item Communication with HTTP, print all ASCII, truncate packet content to 1024 bytes: {\tt tcpdump -vvv -s 1024  -l -A 'tcp port http'} 
+\item Display all communication except SSH: {\tt tcpdump -i eth0 'not port ssh'}
+\item Display frames at the data link layer: {\tt tcpdump -e}
+\item Don't convert host addresses / ports to name: {\tt tcpdump -n / -nn}
+\item Hexdump headers and data of each packet: {\tt -X}, and header {\tt -XX}
+\item Monitor source: {\tt tcpdump -i eth0 src 192.168.10.1} 
+\item Monitor destination: {\tt tcpdump -i eth0 dst 192.168.10.1} 
+\item Monitor network: {\tt tcpdump -i eth0 net 192.168.10.1/24}
+\item DNS packets: {\tt tcpdump udp and src port 53}
+\item Capture communication on {\tt eth1} to file: {\tt tcpdump -ni eth1 -w file.cap}
+\item Capture telnet and ssh: {\tt tcpdump -n portrange 22-23}
+%\item {\tt tcpdump -nnvvS src 10.0.0.5 and dst port 3389}
+\item Check packet filter syntax: {\tt man pcap-filter}
+\stopitemize
+
+% dst src tcp udp port X host XXX net XXX
+
+\section{Remote shells}
+
+\subsection{Secure SHell (SSH)}
+
+\startitemize
+\item Connect: {\tt ssh -l {\sl login} -p {\sl port} {\sl hostname}}, {\tt ssh {\sl login}@{\sl hostname}}
+\item Escape character sequences, press Enter, then \uv{\type{~}} followed by a command:
+	\startitemize
+	\item {\tt \~?} -- Display a list of escape characters.
+	\item {\tt \~.} -- Terminate connection.
+	\item {\tt \~Ctrl-z} -- suspend ssh process, use {\tt fg} to enable it again.
+	\item {\tt \~B} -- send a BREAK to the remote system.
+	\item {\tt \~C} -- open a command line (use {\tt help}) for port forwarding options.
+	%{\tt \~R} -- request rekey
+	%~V/v - decrease/increase verbosity (LogLevel)
+	%~\&   - background ssh (when waiting for connections to terminate)
+	%~~   - send the escape character by typing it twice
+	\stopitemize
+\item Local port transfer -- remote port will be available locally:
+	\startitemize
+	\item {\tt ssh -L {\sl LocalPort:RemoteIP:RemotePort host}}
+	\item {\tt ssh -L {\sl LocalIP:Localport:RemoteIP:RemotePort host}}
+	\stopitemize
+\item Remote port transfer -- local port will be available on remote:
+	\startitemize
+	\item {\tt ssh -R {\sl RemotePort:LocalIP:LocalPort host}}
+	\item {\tt ssh -R {\sl RemoteIP:Remoteport:LocalIP:LocalPort host}}
+	\item Bind forwarded port on local address: {\tt GatewayPorts yes} in {\tt /etc/ssh/sshd\_config}
+	\stopitemize
+\item Dynamic port transfer -- creation of SOCKS proxy:
+	\startitemize
+	\item {\tt ssh -D LocalAddress:LocalPort host}
+	\item Use LocalAddress:LocaPort as SOCKS proxy and all request will be forwarded throught host.
+	\item {\tt curl --user-agent "Mozilla" --socks4 localhost:1080 http://www.whatsmyip.org/}
+	\stopitemize
+%\item SSH \uv{netcat} mode --
+%ssh -W host:port server
+\item Remote filesystem: {\tt sshfs -o allow_other,defer_permissions,IdentityFile=\~/.ssh/id_rsa user@xxx.xxx.xxx.xxx:/ /mnt/droplet}
+\item Copy remote stdout to your X11 buffer: {\tt ssh user@host 'cat /path/to/some/file' \| xclip}
+\stopitemize
+
+
+\subsubsection{SSH key handling}
+
+\startitemize 
+\item Genereate 4096bit key with comment: {\tt ssh-keygen -t rsa -b 4096 -C "Top secret key"}
+\item Generate public key from private: {\tt ssh-keygen -y -f private.pem > public.pub}
+\item Permissions: {\tt chmod 700 \~/.ssh}; {\tt chmod 600 \~/.ssh/authorized_keys}
+\item Copy key to host and updates \type{~/.authorized_keys}: {\tt ssh-copy-id {\sl user@host}}; \type{cat ~/.ssh/id_rsa.pub | ssh user@host 'cat >> ~/.ssh/authorized_keys'}
+\item Holds SSH keys in memory for 8 hours: \type{ssh-agent -t $((8*3600))}
+\item Add key to agent: {\tt ssh-add  ~/.ssh/id_rsa} (will ask for passphrase once in time life)
+\item Forward SSH agent: {\tt ssh -A hostname}
+\item Connect to SSH {\sl host} via {\sl server}: {\tt ssh -At {\sl server} 'ssh {\sl host}'}
+\item Scan machine public key, with timeout 1 second: {\tt ssh-keyscan -T 1 -p {\sl port} {\sl host}}
+\stopitemize
+
+\section{Remote desktop}
+
+\startitemize
+\item X11 SSH tunnel: {\tt ssh -X {\sl host}}, {\tt ssh -Y {\sl host}} (trusted)
+\item X11 redirection:
+\startitemize 
+\item on remote, redirect display: {\tt export DISPLAY={\sl{}YOUR_IP}:0.0}
+\item on local, enable connection: {\tt xhost +{\sl{}REMOTE_IP}}
+\stopitemize
+\item Windows remote desktop: {\tt rdesktop -u {\sl USER} -d {\sl DOMAIN} -g 1024x768 -r disk:local=~ {\sl hostname}}
+\item Other options: X2Go, VNC, NoMachine NX.
+\stopitemize
+
+\subsection{TELNET}
+
+\startitemize
+\item Connect: {\tt telnet hostname port}
+\item Set login name: {\tt telnet -l login hostname}
+\item Enter command mode: {\tt Ctlr-]}
+\item Commands: {\tt quit}, {\tt logout}, {\tt user {\sl login}}, {\tt open {\sl host} {\sl port}} 
+\stopitemize
+
+\section{Remote file systems}
+
+\subsection{Common Internet Filesystem (CIFS/SaMBa)}
+
+\startitemize
+\item Mount share: \type{mount -t cifs '\\server\share' /mnt/local -o user={\sl DOMAIN/USER}}
+\item List shares on {\sl host}, {\sl IP}: {\tt smbclient -L {\sl host}}, {\tt smbclient -I {\sl IP}}
+\item Connect to SMB host prompt: \type{smbclient '\\server\share' -U user mypasswd}
+\item {\tt smbclient} commands: {\tt ls, dir, lcd, cd, pwd, get, mget, rm, quit}
+\item Download file over SMB: {\tt smbget}
+\item List the current Samba connections on server: {\tt smbstatus}
+\item Permanent mount in {\tt /etc/fstab}: {\tt //server/share /mnt/local cifs username=USER,password=PASS,rw 0 0 }
+\item Unmount all CIFS filesystems: {\tt umount -a -t cifs -l}
+\stopitemize
+
+\subsection{Network File System (NFS)}
+
+% Check: http://www.tecmint.com/how-to-setup-nfs-server-in-linux/
+
+\startitemize
+\item User mush have same UID and GID on server and localhost.
+\item Server configuration stored in {\tt /etc/export}:
+\startitemize
+\item Share directory with client IP: {\tt /mnt/share 192.168.0.100(rw,sync,no_root_squash)}
+\item {\tt ro} read-only, {\tt rw} read-write, {\tt sync} , {\tt no_root_squash} allow root, {\tt no_subtree_check}
+\stopitemize
+\item List connected clients: \type{netstat | grep nfs} 
+\item Remote check: \type{rpcinfo -s bee | grep -E 'nfs|mountd'}
+\item Show server's export list: {\tt showmount -e}
+\item Mount remote directory: {\tt mount -t nfs 192.168.0.99:/mnt/share /mnt/local}
+\item Permanent mount in {\tt /etc/fstab}: {\tt 192.168.0.99:/mnt/share /mnt/local nfs rsize=8192,wsize=8192,timeo=14,intr,tcp 0 0 }
+\stopitemize
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{File transfer}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{File transfer protocol (FTP)}
+
+\startitemize
+\item Connect: {\tt ftp {\sl hostname}}
+\item Commands: {\tt ascii} (default), {\tt binary} (set transfer mode for binary files), bye, cd, cdup, close, delete, dir, get, lcd, ls, mget, mput, open, proxy, put, pwd, rmdir, verbose
+\item Other linux CLI clients: {\tt lftp}, {\tt ncftp}, {\tt culr}, {\tt wput}
+\stopitemize
+
+%\subsection{Batch FTP transfer}
+
+\subsection{rsync}
+
+\startitemize
+\item Usage: {\tt rsync {\sl source} {\sl destination} }
+\item Tunnel through SSH on port 2222: {\tt rsync -avHPS --rsh="ssh -p 2222" source {\sl user@host:/dest/dir}}
+\item {\tt rsync} CLI options:
+\startitemize
+\item {\tt -v, --verbose} -- increase amount of output information
+\item {\tt -a, --archive} -- archive mode, equals {\tt -rlptgoD}
+\item {\tt -r, --recursive} -- recursive into directories
+\item {\tt -l, --links} -- copy symlinks as symlinks
+\item {\tt -p, --perms} -- preserve permissions
+\item {\tt -t, --times} -- preserve timestamp
+\item {\tt -g, --group; -o, --owner} -- preserve group, owner
+\item {\tt -D} -- synchronize device files
+\item {\tt -H, --hard-links} -- preserve hard links
+\item {\tt -P, --partial --progres} -- keep partial files (good for transfer resuming)
+\item {\tt -S, --sparse} -- handle sparse files efficiently
+\item {\tt --dry-run} -- perform a trial run with no changes made 
+\item {\tt --bwlimit=100} -- limit transferring speed to 100 kB/s
+\item {\tt --delete} -- delete files that are not in source directory
+\item {\tt --remove-source-files} -- delete file after transfer
+\stopitemize
+\stopitemize
+
+\subsection{SCP/SFTP}
+
+\startitemize
+\item Copy to remote, SSH on port 2222: {\tt scp -P 2222 file.txt user@hostname.com:/home/user/} 
+\item Log to SFTP on port 2222: {\tt sftp -P 2222 user@hostname.com}
+\item Run batch on SFTP transfer: {\tt sftp -b batchfile.txt user@hostname.com}
+%\item Content of {\tt batchfile.txt} (using standard {\tt ftp} commands):
+%\starttyping
+%\stoptyping
+\stopitemize
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Network Mapper, net and port scanning}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\startitemize
+\item Scan multiple IP addresses: {\tt nmap 192.168.1.1-254}, {\tt nmap 192.168.1.*}, {\tt nmap 192.168.1.0/24}
+\item Scan IP range for open HTTP port, grepable output to stdout: {\tt nmap -p80 10.0.0.0/24 -oG - }
+\item Scan hosts given in file: {\tt nmap -iL list.txt} (host, network, IP per like)
+\item Scan IPv6 network: {\tt nmap -6 }
+\item Scan ports: {\tt -p 22}, {\tt -p 1-1024}, {\tt -F} (only most common ports), {\tt -p-} (1-65535), -p U:53,111,137,T:21-25,80 (given TCP/UDP ports)
+\item Detect OS and services: {\tt -A}, {\tt -sV} (standard), {\tt -sV --version-intensity 5} (aggresive)
+%\item Display state of port: {\tt --reason} -- syn-ack (), 
+\item Scan a firewall for MAC address spoofing: {\tt nmap -v -sT -PN --spoof-mac 11:22:33:AA:BB:CC 192.168.1.1}
+%POZOR \item Scan for UDP services: {\tt -sU}, 
+\item Give up scan after 1 minute: {\tt --host-timeout 1m}
+\item Wait 5 seconds between probes: {\tt --scan-delay 5s}
+\item Never do DNS resolution\,/\,Always resolve: {\tt -n}\,/\,{\tt -R}
+\item Scan using default safe script: {\tt nmap -sV -sC 10.0.0.1}
+%POZOR \item Host discovery and ping scan: {\tt -sP
+-sT
+-sO  -- IP Protocol scan
+-O
+\item Using Nmap Scripting Engine (NSE):
+\startitemize
+\item List installed scripts: {\tt locate .nse}, {\tt rpm -ql nmap}
+\item Traceroute with geolocation: {\tt nmap --traceroute --script traceroute-geolocation.nse {\sl host}}
+\item Brufe-force find of interesting server files and directories: {\tt nmap --script http-enum www.host.com}
+\item Scan network for HTTP servers: {\tt nmap --script http-title -sV -p 80 192.168.0.0/24}
+\item Find network SMB shares: {\tt nmap -p 445 --script smb-os-discovery 192.168.0.0/24}
+\item Perform all HTTP related scripts: {\tt nmap --script http-* scanme.nmap.org}
+\stopitemize
+\item Generate TCP packets: {\tt nping -c 1 --tcp -p 80,433 scanme.nmap.org}
+\item Save scan to files output.gnmap (grepable), output.nmap (text), output.xml (XML): {\tt nmap -oA output -p- {\sl host}}
+\item Compare two nmap's XML outputs: {\tt ndiff scan1.xml scan2.xml}
+\stopitemize
+
+\subsection{netcat -- Concatenate and redirect sockets}
+
+\startitemize
+\item Connect to port 80: {\tt nc www.google.com 80}
+\item netcat default port, if {\tt -p} it is not specified: 31337
+\item Protocols: {\tt --tcp}, {\tt --udp}, {\tt --sctp}, {\tt --ssl}, {\tt -4}, {\tt -6}
+\item Listen on TCP port 1234: {\tt nc -v -l 1234}, UDP port: {\tt nc -v -ul 1234}
+\item Allow/deny: {\tt --allow 192.168.0.0/24}, {\tt --deny 10.0.0.0/8}
+\item Transfer file: 
+\startitemize
+\item Sender: {\tt cat file.txt \| nc -v -l -p 5555}
+\item Receiver: {\tt nc {\sl host} 5555 > file_copy.txt} 
+\stopitemize
+\item Remote shell: 
+\startitemize
+\item Server: {\tt nc -v -l -e /bin/bash}
+\item Client: {\tt nc {\sl host}}, {\tt telnet {\sl host} 31337} 
+\stopitemize
+\item Reverse telnet: 
+\startitemize
+\item Computer with public IP: {\tt nc -vv -l}  
+\item Computer behind firewall: {\tt nc -v {\sl host} -e /bin/bash}
+\stopitemize
+\stopitemize
+ 
+\section{bash -- network support for shell scripting}
+
+\startitemize
+\item Special filenames: {\tt /dev/tcp/{\sl host}/{\sl port}}, {\tt /dev/udp/{\sl host}/{\sl port}}
+\item Open file descriptor 3 for TCP: {\tt exec 3<>/dev/tcp/www.root.cz/80}
+\item Generate HTTP request: \type{echo -en "GET /unix/ HTTP/1.1\r\nHost: www.root.cz\r\n\r\n" >&3}
+\item Read from file descriptor 3: {\tt cat <&3}
+\item Close descriptor 3: {\tt exec 3>&-}
+\item Check open descriptors for current shell: \type{ls -l /proc/$$/fd}
+\stopitemize
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Domain Name Service (DNS)}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\startitemize
+\item Local names definition: {\tt /etc/hosts}
+\item Sources of name resolution: {\tt /etc/nsswitch.conf}
+\item Resolver configuration file -- {\tt /etc/resolv.conf}:
+\starttyping
+	nameserver 8.8.8.8
+	nameserver 8.8.4.4
+	search .mydomain.com
+\stoptyping
+\item Look up the IP address: {\tt host {\sl name}}, {\tt nslookup {\sl name}}, {\tt dig +short {\sl name}}
+\item Get DNS record: {\tt dig {\sl name}}, {\tt host -a {\sl name}}
+\item Get entries from Name Service Switch libraries: {\tt getent}  
+\item Test resolution with {\tt /etc/hosts}: {\tt getent hosts {\sl name}}
+\item Return hostname for IP: {\tt dig -x 10.32.1.10 +short}
+\item Return IP for {\sl hostname}: {\tt dig {\sl hostname} +short}
+\item Scan network for DNS records: \type{for i in 192.168.10.{1..254}; do echo -e $i \\t $(dig +short -x $i); done}
+\item Get specific DNS record: {\tt dig -t {\sl record} {\sl hostname/domain}}, {\tt host -t {\sl record} {\sl hostname/domain}}
+\startitemize
+\item {\tt A / AAAA} -- return 32/128 bit address for host
+\item {\tt CNAME} -- aliases of hostname, can point to A
+\item {\tt MX} -- mail exchanger record
+\item {\tt NS} -- specify authoritative nameserver for domain
+\item {\tt PTR} -- pointer records for reverse lookup (addr->host)
+\item {\tt SOA} -- Start of Authority, name of the server that supplied the data for the zone
+\stopitemize
+\item User given DNS serveri 8.8.8.8: {\tt dig @8.8.8.8 {\sl hostname}}, {\tt host {\sl hostname} 8.8.8.8}
+\item Ask root name server for record: {\tt dig @a.root-servers.net example.com} (will return authority DNS for domain)
+%dig +dnssec +multi @a.iana-servers.net example.com
+%\item Check record: {\tt dig +cdflag www.root.cz}
+\stopitemize
+
+\section{WHOIS service}
+
+\startitemize
+\item Client to access WHOIS service: {\tt whois}, {\tt jwhois}
+\item Query domain on given WHOIS server: {\tt whois -h whois.nic.cz seznam.cz}
+\item Check who owns current IP address/domain: {\tt whois {\sl IP}}\,/\,{\tt whois {\sl domain}}
+\stopitemize
+
+\section{HTTP(S) (Hypertext Transfer Protocol [SECURE])}
+
+\startitemize
+\item URL format: \type{http://user:password@domain:port/path?query#fragment_id}
+\item Mirror site: {\tt wget -e robots=off -r -L {\sl URL}}, 
+\item Display HTTP header: {\tt curl -I {\sl URL}}, {\tt wget -S {\sl URL}}
+\item Download file: {\tt curl -O {\sl URL/file}}
+\item Write output to file: {\tt curl -o file {\sl URL} }
+\item List directory: {\tt curl -s {\sl URL} --list-only}
+\item Download URL and display it in stdout: {\tt curl {\sl URL}}, {\tt wget -q -O - {\sl URL}}
+\item Change referer and browser id.: {\tt wget --referer {\sl URL} --user-agent "Mozilla/5.0 (compatible; Linux)"}
+\item Set HTTP header: {\tt curl -H "Content-Type: application/xml" {\sl URL}}
+\item Send cookie: {\tt curl -H "Cookie: name1=value; name2=another" {\sl URL}}, {\tt curl --cookie "name1=value; name2=another" {\sl URL}}
+\item POST request: {\tt curl -X POST -d 'name1=value&name2=another' {\sl URL}}
+\item Form upload file: {\tt Z curl --form upload=@{\sl{}localfilename} --form press=OK {\sl URL}}
+\item Enable HTTP proxy in shell: {\tt export http_proxy=http://foo:bar@202.54.1.1:3128/}
+\item Use the same for HTTPS: {\tt export https_proxy=\$http_proxy}
+\item Convert page to text: {\tt elinks -dump {\sl URL}}
+\stopitemize
+
+\section{OpenSSL}
+
+\startitemize
+\item Generate random sequences: {\tt openssl rand -base64 8}
+\item Display server certificate: {\tt openssl s_client -showcerts -connect google.com:443}
+\stopitemize
+
+\section{Network Time Protocol (NTP)}
+
+\startitemize
+\item NTP query program: {\tt  ntpq tik.cesnet.cz}
+\item Get server variables: \type{ntpq -i tik.cesnet.cz <<< "cl"}
+\item Show network time synchronisation status: {\tt ntpstat}
+\item Set date from server: {\tt ntpdate -s time.nist.gov}
+%\item NTP servers: {\tt tik.cesnet.cz}, {\tt tak.cesnet.cz}
+\stopitemize
+
+\section{Remote Procedure Call (RPC)}
+
+\startitemize
+\item Report RPC information: {\tt rpcinfo -p localhost}
+\stopitemize
+
+\section{Internet daemon, TCP wrappers -- inetd, xinetd}
+
+\startitemize
+\item Open port for remote access: {\tt echo "31337 stream tcp nowait {\sl userid} /bin/bash bash -i" >> /tmp/config.conf; /usr/sbin/inetd /tmp/config.conf}
+\item  Host access control file: {\tt /etc/hosts.allow}:
+\startitemize
+\item Format: {\tt {\sl deamon_list} : {\sl client_list}}
+\item Comments starts with: \type{#}
+\item All client from specified domain: {\tt ALL : .domain.com}
+\item Range of IPs for SSH: {\tt sshd : 192.168.122.0/255.255.255.0 EXCEPT 192.168.122.150}
+\item rpc.mountd, in.tftpd : 192.168.100.100
+\item Deamon configuration in additional file: {\tt vsftpd: /etc/myftp.hosts}
+\item Content of {\tt /etc/myftp.hosts}: {\tt 192.168.0.0/255.255.255.0}
+\stopitemize
+\item Deny access control file {\tt /etc/hosts.deny}:
+\startitemize
+\item Deny all services except TFTP for given domain: {\tt ALL EXCEPT in.tftpd : .domain.com}
+\item Only one IP can access SSH: {\tt sshd : ALL EXCEPT 192.168.122.150}
+\item All other services deny for all: {\tt ALL : ALL}
+\stopitemize
+\stopitemize
+
+\section{Security Enhanced Linux (SELinux)}
+
+\startitemize
+\item List port mapping: {\tt semanage port -l}
+\item Use 8000 for http: {\tt semanage port -a -t http_port_t -p tcp 8000}
+\item Check status: {\tt getenforce}
+\item Disable SELinux temporarily: {\tt setenforce 0}
+\item Set directory accessible by httpd: {\tt chcon -R -t httpd_sys_content_t {\sl ./directory}}
+\stopitemize
+
+\section{Show/manipulate traffic control settings}
+
+\startitemize
+\item List existing rules: {\tt tc -s qdisc ls dev eth0}
+\item Slow down traffic by 200 ms: {\tt tc qdisc add dev eth0 root netem delay 200ms}
+\item Delete all rules: {\tt tc qdisc del dev eth0 root}
+\stopitemize
+
+\section{Virtual Private Network (OpenVPN)}
+
+\startitemize
+\item TUN device for IP traffic, TAP device for ethernet frames
+\item Enable UDP port 1194: {\tt iptables -A INPUT -i eth0 -m state --state NEW -p udp --dport 1194 -j ACCEPT}, {\tt firewall-cmd --permanent --add-service openvpn}
+\item Basic server: {\tt openvpn --ifconfig 10.200.0.1 10.200.0.2 --dev tun}
+\item Basic client: {\tt openvpn --ifconfig 10.200.0.2 10.200.0.1 --dev tun --remote your.openvpnserver.net}
+\item Use TCP protocol: {\tt --proto tcp-server} (server), {\tt --proto tcp-client} (client)
+\item Create/use static key: {\tt openvpn --genkey --secret secret.key} and use {\tt --secret secret.key} on client/server.
+\stopitemize
+
+\section{E-mail}
+
+\startitemize
+\item Send email: {\tt curl --mail-from blah@test.com --mail-rcpt foo@test.com smtp://mailserver.com}
+\item Send email: {\tt mail -s "This is subject" foo@test.com}
+\stopitemize
+
+%\stopcolumns
+\stoptext

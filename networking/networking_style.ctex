@@ -1,0 +1,227 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                               %
+%  Rychla reference k Perlu                                     %
+%                                                               %
+%  Martin Bruchanov -- bruxy at regnet dot cz                   %
+%                                                               %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\mainlanguage[en]
+\language[en] 
+\enableregime[utf] % latin2
+
+\setuplanguage[en]
+[leftquotation=“, 
+ rightquotation=“,
+ leftquote=‘,
+ rightquote=’]
+
+%\setupoutput[dvips,acrobat] % dvips, acrobat
+\pdfminorversion=4
+%\setupbodyfont[helvetica,7.9pt]  %
+\setupbodyfont[8.55pt]  %
+\setuppapersize[A4, portrait][A3, landscape] % A3, A4, A5, A6; landscape
+%\setuppapersize[A4, portrait] % A3, A4, A5, A6; landscape
+\setuparranging[2SIDE] % zmena stranek pro vyrobu knizky, 
+% 2SIDE -- dve stranky na jeden list vis setuppapersize
+
+%\pdfinfo{
+%  /Title           (Rychla reference k nekterym prikazum programu ViM)
+%  /Author          (Martin Bruchanov)
+%  /Subject         (ukazka)
+%  /CreationDate    (10.06.2007)
+%  /ModDate         (\currentdate)
+%  /Producer        (ConTeXt)
+%}
+
+% Rozmery stranky
+\setuplayout[%
+	width=200mm,%
+	height=287mm,%
+	header=0mm, %
+	footer=0mm, %
+	topspace=3mm, %
+	leftmargin=0mm, %
+	rightmargin=0mm, %
+	leftedge=0mm,
+	backspace=3mm,
+]
+
+\setuppagenumbering[%
+	alternative=singlesided,  % doublesided
+	location={footer, right}, % header, middle, inleft, inmargin
+	style=bold,               %
+%	conversion=numbers,        % characters Characters romannumerals 
+%	left={--~},               % znak pred
+% 	right={~--},              % znak za
+]
+
+\definefont[TitleFont][RegularBold sa 2.0] 
+
+\def\ShadowOffset{-2.5pt}
+\def\TitleShadow#1{\rlap{%
+	\color[lightgray]{#1}}\kern\ShadowOffset\lower\ShadowOffset\hbox{#1}%
+}
+
+% Nastaevni nadpisu
+\setuphead[title][%before={\blank[2*small]},
+	textcommand=\TitleShadow, %
+	style=\TitleFont, %
+	alternative=middle, %
+	after=\nowhitespace]
+
+\definefont[SectionFont][RegularBold sa 1.15] 
+\def\Cislovani#1{{#1}.} % tecka za cislem kapitoly
+%\def\SectionLook#1{#1~\vline$\rightarrow$}
+\setuphead[section][style=\SectionFont,
+%	textcommand=\SectionLook,
+	numbercommand=\Cislovani,
+	before={\blank[small]},
+%   after={\blank[1*small]}]
+	after=\nowhitespace]
+
+\definefont[SubsectionFont][RegularBold sa 1.05] 
+\setuphead[subsection][   %
+   style=\SubsectionFont, %
+   numbercommand=\Cislovani,%
+   before={\blank[1*small]},%
+%   after={\blank[1*small]}]
+   after=\nowhitespace]
+	
+% mezery mezi odstavci
+\setupwhitespace[none] 
+
+% velikost odsazeni
+\setupindenting[none]  % none, small, medium, bix, next, first, [rozmer]
+
+% vicesloupcova sazba
+%\setupcolumns[n=, ]
+
+% Nastaveni hlavicky
+%\setupheadertexts[][][]
+
+% Nastaveni paticky
+%\setupfootertexts[][][]
+
+% Pouziti barev
+\setupcolors[state=start]
+\setupcolor[rgb]
+
+% Nastaveni seznamu s odrazkami
+\setupitemize[1][standard,packed,joinedup][margin=4pt] 
+% joinedup -- zadne mezery pred a za
+
+\setuplines[indenting=always,%
+	before=\nowhitespace]
+
+%beforehead={\nowhitespace}]
+
+% Vypnuti popisku 
+\setupcaptions[location=none]
+
+% nezery pred a za plovoucimi objekty
+\setupfloats[spacebefore=,spaceafter=]
+
+% vlastnosti verbatim
+\setuptyping[typing][before={\blank[-0.5mm]},after={\blank[0pt]}]
+
+% Nastaveni oramovaneho textu pro zobrazeni klavesy
+\defineframed[keyframe][%
+	strut=yes, %
+	background=color,%
+	backgroundcolor=lightgray, %
+	location=middle,
+	corner=round, %
+	radius=2.5pt, %
+	height=1.1em, %
+%	offset=2pt % odsazeni po stranach
+]
+
+%\def\keyframe#1{%
+%	\inframed{#1}%
+%}
+
+%%%%%%%%%% Prikazy
+
+\def\dd{{\tt ..}}
+\def\bod{{\it bod}}
+
+\def\ods{\hskip2em{}}
+\def\pods{\hskip1em{}}
+
+\def\ES{{\sc Esc}{}}
+\def\IN{{\sc Ins}{}}
+\def\TT{{\sc Tab}{}}
+\def\PD{{\sc PageDown}{}}
+\def\PU{{\sc PageUp}{}}
+\def\EN{{\sc Enter}{}}
+\def\SH{{\sc Shift}{}}
+\def\CT{{\sc Ctrl}{}}
+\def\AT{{\sc Alt}{}}
+
+% v dolnim indexu bude nazev rezimu jako Sans-Serif
+\def\sssymbol#1{\hbox{\switchtoformulabodyfont[ss,script] #1}}
+
+\definehspace[odsaz][0.15em]
+%\definehspace[odsaz][0pt]
+
+% Command
+% #1 keyboard imput
+% #2 editation mode
+\def\mez{\hspace[odsaz]}
+\def\COMMAND#1#2{\keyframe{\mez{\tt #1}\color[darkgray]{$_{\sssymbol{#2}}$}\mez}}
+
+\def\C#1{{}\keyframe{\mez{\tt #1}\mez}}
+
+\def\CC#1{\COMMAND{#1}{C}} % prikazovy
+\def\CV#1{\COMMAND{#1}{V}} % visualni
+\def\CE#1{\COMMAND{#1}{E}} % editacni
+\def\CSK#1{\COMMAND{#1}{ex}} % editacni
+
+
+%\def\CS#1{{\tt :#1}} % 
+
+\defineframed[grayframe][
+%	location=depth, %
+	background=color,%
+	backgroundcolor=lightgray, %
+	frameoffset=0.5pt, %
+	framecolor=lightgray, %
+	height=broad, %
+	strut=yes, %
+%	depth=1pt,
+	offset=none, % odsazeni po stranach
+]
+
+\def\CS#1{\grayframe{\tt :#1}} % 
+
+\def\a{$\approx$ {}}
+
+% Uvozovky
+
+\def\uv#1{\quote{#1}}
+
+\def\mycopyright{
+\placeintermezzo[here,none]{}{
+\framed[frame=off,bottomframe=on,frameoffset=1mm]{
+	\startalignment[middle]
+	{\copyright{} \date[][year,--,mm,--,dd] Martin Bruchanov, {\tt bruchy@gmail.com}}
+	\stopalignment
+	}
+}}
+
+\def\symlb{\{}
+\def\symrb{\}}
+\def\symdollar{\$}
+\def\symalpha{$\alpha$}
+\def\symtilda{\type{~}}
+\def\pyind{\strut\hskip1.5em}
+
+\def\btt#1{{\tt\bf #1}{}}
+\def\stt#1{{\tt\sl #1}{}}
+\def\tbs{\textbackslash{}}
+\def\cbf{\bf{}} % centered bf for HTML
+\def\framedTABLE{\bTABLE}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
