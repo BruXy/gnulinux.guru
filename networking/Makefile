@@ -26,7 +26,7 @@ $(PROJECT)_cheatsheet_include.html: $(PROJECT)_cheatsheet.ctex $(PROJECT)_ctext2
 
 $(PROJECT)_cheatsheet.html: $(PROJECT)_cheatsheet_include.html ../html_header.sed
 	sed -f ../html_header.sed -e 's/HTML_DOC_TITLE/$(HTML_DOC_TITLE)/' $(PROJECT)_cheatsheet_include.html > $(PROJECT)_cheatsheet.html
-	sed -ie 's/HTML_DOC_TITLE/$(HTML_DOC_TITLE)/' $@
+	sed -i -e 's/HTML_DOC_TITLE/$(HTML_DOC_TITLE)/' $@
 
 $(PROJECT)_tahak_include.html: $(PROJECT)_tahak_style.ctex $(PROJECT)_tahak.ctex $(PROJECT)_ctext2html.sed
 	sed -f $(PROJECT)_ctext2html.sed $(PROJECT)_tahak.ctex > $(PROJECT)_tahak_include.html

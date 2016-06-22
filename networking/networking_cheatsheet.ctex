@@ -103,7 +103,7 @@ Privilege port $<$ 1024 can be opened just by root user!
 \item 80, 8080  HTTP  
 \item 88	Kerberos 
 \item 110	POP3 
-\item 111	Portmapper - Linux 
+\item 111	Portmapper~-- Linux 
 \item 119 NNTP (Network News) 
 \item 123 NTP (Network Time Protocol) 
 \item 135	RPC-DCOM 
@@ -123,6 +123,7 @@ Privilege port $<$ 1024 can be opened just by root user!
 \item 1494, 2598	Citrix Applications 
 \item 1521 Oracle Listener 
 \item 2512, 2513	Citrix Management 
+\item 3306 MySQL
 \item 3389 RDP 
 \item 5432 PostreSQL 
 \item 6662–6667	IRC 
@@ -194,7 +195,7 @@ Privilege port $<$ 1024 can be opened just by root user!
 
 Stored in: {\tt /etc/sysconfig/network-scripts/{\sl ifcfg-inteface}}
 
-\bTABLE[style=tt]
+\bTABLE%[style=tt]
 \bTABLEhead
 \bTR
 \bTH Static \eTH \bTH Dynamic \eTH \bTH Either \eTH
@@ -203,22 +204,26 @@ Stored in: {\tt /etc/sysconfig/network-scripts/{\sl ifcfg-inteface}}
 \bTABLEbody
 \bTR
 \bTD % Static
+\bgroup\tt
 BOOTPROTO=none\crlf
 IPADDR=192.168.0.2\crlf
 PREFIX0=24\crlf
 GATEWAY0=192.168.0.1\crlf
 DEFROUTE=yes\crlf
-DNS1=8.8.8.8\crlf
+DNS1=8.8.8.8
+\egroup
 \eTD
 \bTD % Dynamic
 {\tt BOOTPROTO=dhcp}
 \eTD
 \bTD % Either
+\bgroup\tt
 DEVICE=eth0\crlf
 NAME="System eth0"\crlf
 ONBOOT=yes\crlf
 UUID=a1b1c122-2...\crlf
-USERCTL=yes\crlf
+USERCTL=yes
+\egroup
 \eTD
 \eTR
 \eTABLEbody
