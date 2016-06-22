@@ -13,15 +13,13 @@
 
 \section{Open Systems Interconnection model (OSI model)}
 
-{
 {\bf 7. Application  }-- [data] -- Data generation (SMTP, NNTP, SSH, Telnet, HTTP)\crlf
 {\bf 6. Presentation }-- [data] -- Encryption and formating (JPEG, ASCII, EBDIC, GIF,...)\crlf
-{\bf 5. Session      }-- [data] -- Sync. \& send to ports (RPC, SQL, NFS, NetBIOS)\crlf
+{\bf 5. Session      }-- [data] -- Sync. & send to ports (RPC, SQL, NFS, NetBIOS)\crlf
 {\bf 4. Transport    }-- [segments] -- TCP/UDP, message segmentation, message traffic control\crlf
 {\bf 3. Network      }-- [packets] -- Packets, IP addr., routing, subnet traffic (IPv4/6, ICMP)\crlf
 {\bf 2. Data Link    }-- [frames] -- Frame traffic control, sequencing (ARP, MAC)\crlf
 {\bf 1. Physical     }-- [bits] -- cables, hubs, physical medium transmission\crlf
-}
 
 \uv{{\bf P}eople {\bf D}on't {\bf N}eed {\bf T}hose {\bf S}tupid {\bf P}ackets {\bf A}nymore!}
 
@@ -55,17 +53,17 @@ Use: {\tt ipcalc}, {\tt sipcalc} for IP/net calculations.
 \item Access IPv6 URL -- {\tt http://[2a01:4f8:130:2192::2]}
 \item Zeroes can be ommited:
 \startitemize
-\item Loopback: {\tt 00000:0000:0000:0000:000:0000:0000:0001 $\approx$ 0:0:0:0:0:0:0:1 $\approx$ ::1}
-\item Multiple zero groups \uv{{\tt ::}}: {\tt 2001:0:0:0:0:0:0:ab $\approx$ 2001::ab}
-\item Use only one groups symbol: {\tt 2001:0:0:1:0:0:0:ab $\approx$ 2001:0:0:1::ab $\approx$ 2001::1:0:0:0:ab}
+\item Loopback: {\tt 00000:0000:0000:0000:000:0000:0000:0001 \a 0:0:0:0:0:0:0:1 \a ::1}
+\item Multiple zero groups \quotation\bgroup{\tt ::}\egroup: {\tt 2001:0:0:0:0:0:0:ab \a 2001::ab}
+\item Use only one groups symbol: {\tt 2001:0:0:1:0:0:0:ab \a 2001:0:0:1::ab \a 2001::1:0:0:0:ab}
 \stopitemize
 \item IEEE EUI-64 identifier:
-\startitemize[n]
+\startenumerate
 \item Ethernet (Media Access Control) address: {\tt 38:c9:86:30:63:bf}
 \item Identificator: 0 local, 1 global. 
 \item EUI-64 identifier: ({\tt 38 or identificator = 39}) {\bf 3ac9:86}ff:fe{\bf 30:63bf}
 \item Link-local address: {\tt fe80::3ac9:86ff:fe30:63bf}
-\stopitemize
+\stopenumerate
 \stopitemize
 
 %POZOR
@@ -185,7 +183,7 @@ Privilege port $<$ 1024 can be opened just by root user!
 \item Scan available networks: {\tt iwlist wlan0 scan}; {\tt nmcli dev wifi}
 \item Display available channels: {\tt iwlist wlan0 freq}
 \item Connect with WEP network: {\tt iwconfig wlan0 essid {\sl "Network SSID"} key {\sl HEX\_KEY}}
-\item Connect with WEP network: {\tt iwconfig wlan0 essid {\sl "Network SSID"} key s:{\sl{}ASCII\_KEY}}
+\item Connect with WEP network: {\tt iwconfig wlan0 essid {\sl "Network SSID"} key s:{\sl ASCII\_KEY}}
 \item Connect with WEP network: {\tt nmcli dev wifi connect {\sl "Network SSID"} password '123...'}
 \item Connect with WPA: {\tt wpa_supplicant -B -i wlan0 -DWext -c /etc/wpa_supplicant.conf}
 \item Examples of WPA configuration: {\tt man wpa_supplicant.conf}
@@ -194,7 +192,7 @@ Privilege port $<$ 1024 can be opened just by root user!
 
 \subsection{Configuration files of network interface settings}
 
-Stored in: {\tt /etc/sysconfig/network-scripts/{\sl{}ifcfg-inteface}}
+Stored in: {\tt /etc/sysconfig/network-scripts/{\sl ifcfg-inteface}}
 
 \bTABLE[style=tt]
 \bTABLEhead
@@ -239,7 +237,7 @@ USERCTL=yes\crlf
 \item Set IPv4: {\tt nmcli connection modify eth0 ipv4.addresses 10.0.0.2/8 ipv4.gateway 10.0.0.1}
 \item Activate/deactivate connection: {\tt nmcli con up/down "static"}
 \item Reload configuration: {\tt nmcli con reload}
-\item Bring down interface and disable autoconnect: {\tt nmcli dev dis \sl DEV} 
+\item Bring down interface and disable autoconnect: {\tt nmcli dev dis {\sl DEV}} 
 \item Disable all managed interfaces: {\tt nmcli net off}
 \item Add, modify, delete connection: {\tt nmcli con add / mod "ID" / del "ID"}
 \item Set DNS: {\tt nmcli con modify eth0 ipv4.dns "8.8.8.8,8.8.4.4"}
@@ -363,19 +361,18 @@ USERCTL=yes\crlf
 \subsection{Dynamic Firewall Manager -- {\tt firewalld}}
 
 \startitemize
-\item Check status: {\tt firewall-cmd --state}, {\tt systemctl status firewalld}  
+\item Check status: {\tt firewall-cmd -{}-state}, {\tt systemctl status firewalld}  
 \item Print all rules: {\tt firewall-cmd --list-all}
 \item List zones: {\tt firewall-cmd --get-active-zones}, {\tt firewall-cmd --get-zones}
-\item Get or set default zone: {\tt firewall-cmd --get-default-zone}, {\tt --set-default-zone={\sl{}ZONE}}
-\item Set default zone: {\tt firewall-cmd --set-default-zone={\sl{}ZONE}}
+\item Get or set default zone: {\tt firewall-cmd --get-default-zone}, {\tt --set-default-zone={\sl ZONE}}
+\item Set default zone: {\tt firewall-cmd --set-default-zone={\sl ZONE}}
 \item Without {\tt --permament} option any changes will not be available after restart.
-\item Open TCP port in zone: {\tt firewall-cmd --permanent --zone={\sl{}ZONE} --add-port=8080/tcp}
+\item Open TCP port in zone: {\tt firewall-cmd --permanent --zone={\sl ZONE} --add-port=8080/tcp}
 \item Enable services: {\tt firewall-cmd --permanent --add-service={http,https}}
 \item Activate changes in configuration: {\tt firewall-cmd --reload}
-\item Disable: {\tt--remove-port={\sl{}port/protocol}}, {\tt --remove-service={\sl{}service}}, {\tt --remove-source={\sl{}{X.X.X.X/Y}}}
-\item firewall-cmd --zone=external --add-masquerade
+\item Disable: {\tt--remove-port={\sl port/protocol}}, {\tt --remove-service={\sl service}}, {\tt --remove-source={\sl X.X.X.X/Y}}
+\item Network Address Translation (NAT) / Masquarage: {\tt firewall-cmd --zone=external --add-masquerade}
 \item Forward packets to other IP and port: {\tt firewall-cmd --zone=external --add-forward-port=port=22:proto=tcp:toport=2055:toaddr=192.0.2.55}
-\item Network Address Translation (NAT) / Masquarage:  {\tt iptables -t nat -A POSTROUTING -s 10.200.0.0/24 -o eth0 -j MASQUERADE}
 \item Rich language examples:
 \startitemize
 \item {\tt firewall-cmd --permanent --add-rich-rule='rule family=ipv4 source address=172.25.X.10/32 service  name="http" log level=notice prefix="NEW HTTP " limit value="3/s" accept '}
@@ -414,13 +411,13 @@ USERCTL=yes\crlf
 
 \startitemize
 \item Connect: {\tt ssh -l {\sl login} -p {\sl port} {\sl hostname}}, {\tt ssh {\sl login}@{\sl hostname}}
-\item Escape character sequences, press Enter, then \uv{\type{~}} followed by a command:
+\item Escape character sequences, press Enter, then \uv{{\tt \symtilda}} followed by a command:
 	\startitemize
-	\item {\tt \~?} -- Display a list of escape characters.
-	\item {\tt \~.} -- Terminate connection.
-	\item {\tt \~Ctrl-z} -- suspend ssh process, use {\tt fg} to enable it again.
-	\item {\tt \~B} -- send a BREAK to the remote system.
-	\item {\tt \~C} -- open a command line (use {\tt help}) for port forwarding options.
+	\item {\tt \symtilda{}?} -- Display a list of escape characters.
+	\item {\tt \symtilda{}.} -- Terminate connection.
+	\item {\tt \symtilda{}Ctrl-z} -- suspend ssh process, use {\tt fg} to enable it again.
+	\item {\tt \symtilda{}B} -- send a BREAK to the remote system.
+	\item {\tt \symtilda{}C} -- open a command line (use {\tt help}) for port forwarding options.
 	%{\tt \~R} -- request rekey
 	%~V/v - decrease/increase verbosity (LogLevel)
 	%~\&   - background ssh (when waiting for connections to terminate)
@@ -445,7 +442,7 @@ USERCTL=yes\crlf
 	\stopitemize
 %\item SSH \uv{netcat} mode --
 %ssh -W host:port server
-\item Remote filesystem: {\tt sshfs -o allow_other,defer_permissions,IdentityFile=\~/.ssh/id_rsa user@xxx.xxx.xxx.xxx:/ /mnt/droplet}
+\item Remote filesystem: {\tt sshfs -o allow_other,defer_permissions,IdentityFile=\symtilda/.ssh/id_rsa user@xxx.xxx.xxx.xxx:/ /mnt/droplet}
 \item Copy remote stdout to your X11 buffer: {\tt ssh user@host 'cat /path/to/some/file' \| xclip}
 \stopitemize
 
@@ -455,10 +452,10 @@ USERCTL=yes\crlf
 \startitemize 
 \item Genereate 4096bit key with comment: {\tt ssh-keygen -t rsa -b 4096 -C "Top secret key"}
 \item Generate public key from private: {\tt ssh-keygen -y -f private.pem > public.pub}
-\item Permissions: {\tt chmod 700 \~/.ssh}; {\tt chmod 600 \~/.ssh/authorized_keys}
-\item Copy key to host and updates \type{~/.authorized_keys}: {\tt ssh-copy-id {\sl user@host}}; \type{cat ~/.ssh/id_rsa.pub | ssh user@host 'cat >> ~/.ssh/authorized_keys'}
+\item Permissions: {\tt chmod 700 \symtilda/.ssh}; {\tt chmod 600 \symtilda/.ssh/authorized_keys}
+\item Copy key to host and updates {\tt \symtilda/.authorized_keys}: {\tt ssh-copy-id {\sl user@host}}; {\tt cat \symtilda/.ssh/id_rsa.pub \| ssh user@host 'cat >> \symtilda/.ssh/authorized_keys'}
 \item Holds SSH keys in memory for 8 hours: \type{ssh-agent -t $((8*3600))}
-\item Add key to agent: {\tt ssh-add  ~/.ssh/id_rsa} (will ask for passphrase once in time life)
+\item Add key to agent: {\tt ssh-add  \symtilda/.ssh/id_rsa} (will ask for passphrase once in time life)
 \item Forward SSH agent: {\tt ssh -A hostname}
 \item Connect to SSH {\sl host} via {\sl server}: {\tt ssh -At {\sl server} 'ssh {\sl host}'}
 \item Scan machine public key, with timeout 1 second: {\tt ssh-keyscan -T 1 -p {\sl port} {\sl host}}
@@ -470,10 +467,10 @@ USERCTL=yes\crlf
 \item X11 SSH tunnel: {\tt ssh -X {\sl host}}, {\tt ssh -Y {\sl host}} (trusted)
 \item X11 redirection:
 \startitemize 
-\item on remote, redirect display: {\tt export DISPLAY={\sl{}YOUR_IP}:0.0}
-\item on local, enable connection: {\tt xhost +{\sl{}REMOTE_IP}}
+\item on remote, redirect display: {\tt export DISPLAY={\sl YOUR_IP}:0.0}
+\item on local, enable connection: {\tt xhost +{\sl REMOTE_IP}}
 \stopitemize
-\item Windows remote desktop: {\tt rdesktop -u {\sl USER} -d {\sl DOMAIN} -g 1024x768 -r disk:local=~ {\sl hostname}}
+\item Windows remote desktop: {\tt rdesktop -u {\sl USER} -d {\sl DOMAIN} -g 1024x768 -r disk:local=\symtilda {\sl hostname}}
 \item Other options: X2Go, VNC, NoMachine NX.
 \stopitemize
 
@@ -527,8 +524,8 @@ USERCTL=yes\crlf
 
 \startitemize
 \item Connect: {\tt ftp {\sl hostname}}
-\item Commands: {\tt ascii} (default), {\tt binary} (set transfer mode for binary files), bye, cd, cdup, close, delete, dir, get, lcd, ls, mget, mput, open, proxy, put, pwd, rmdir, verbose
-\item Other linux CLI clients: {\tt lftp}, {\tt ncftp}, {\tt culr}, {\tt wput}
+\item Commands: {\tt ascii} (default), {\tt binary} (set transfer mode for binary files), {\tt bye}, {\tt cd}, {\tt cdup}, {\tt close}, {\tt delete}, {\tt dir}, {\tt get}, {\tt lcd}, {\tt ls}, {\tt mget}, {\tt mput}, {\tt open}, {\tt proxy}, {\tt put}, {\tt pwd}, {\tt rmdir}, {\tt verbose}
+\item Other linux CLI clients: {\tt lftp}, {\tt ncftp}, {\tt curl}, {\tt wput}
 \stopitemize
 
 %\subsection{Batch FTP transfer}
@@ -578,7 +575,7 @@ USERCTL=yes\crlf
 \item Scan IP range for open HTTP port, grepable output to stdout: {\tt nmap -p80 10.0.0.0/24 -oG - }
 \item Scan hosts given in file: {\tt nmap -iL list.txt} (host, network, IP per like)
 \item Scan IPv6 network: {\tt nmap -6 }
-\item Scan ports: {\tt -p 22}, {\tt -p 1-1024}, {\tt -F} (only most common ports), {\tt -p-} (1-65535), -p U:53,111,137,T:21-25,80 (given TCP/UDP ports)
+\item Scan ports: {\tt -p 22}, {\tt -p 1-1024}, {\tt -F} (only most common ports), {\tt -p-} (1-65535), {\tt -p U:53,111,137,T:21-25,80} (given TCP/UDP ports)
 \item Detect OS and services: {\tt -A}, {\tt -sV} (standard), {\tt -sV --version-intensity 5} (aggresive)
 %\item Display state of port: {\tt --reason} -- syn-ack (), 
 \item Scan a firewall for MAC address spoofing: {\tt nmap -v -sT -PN --spoof-mac 11:22:33:AA:BB:CC 192.168.1.1}
@@ -588,9 +585,9 @@ USERCTL=yes\crlf
 \item Never do DNS resolution\,/\,Always resolve: {\tt -n}\,/\,{\tt -R}
 \item Scan using default safe script: {\tt nmap -sV -sC 10.0.0.1}
 %POZOR \item Host discovery and ping scan: {\tt -sP
--sT
--sO  -- IP Protocol scan
--O
+%-sT
+%-sO  -- IP Protocol scan
+%-O
 \item Using Nmap Scripting Engine (NSE):
 \startitemize
 \item List installed scripts: {\tt locate .nse}, {\tt rpm -ql nmap}
@@ -638,7 +635,7 @@ USERCTL=yes\crlf
 \item Generate HTTP request: \type{echo -en "GET /unix/ HTTP/1.1\r\nHost: www.root.cz\r\n\r\n" >&3}
 \item Read from file descriptor 3: {\tt cat <&3}
 \item Close descriptor 3: {\tt exec 3>&-}
-\item Check open descriptors for current shell: \type{ls -l /proc/$$/fd}
+\item Check open descriptors for current shell: {\tt ls -l /proc/\symdollar\symdollar/fd}
 \stopitemize
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -670,8 +667,8 @@ USERCTL=yes\crlf
 \item {\tt PTR} -- pointer records for reverse lookup (addr->host)
 \item {\tt SOA} -- Start of Authority, name of the server that supplied the data for the zone
 \stopitemize
-\item User given DNS serveri 8.8.8.8: {\tt dig @8.8.8.8 {\sl hostname}}, {\tt host {\sl hostname} 8.8.8.8}
-\item Ask root name server for record: {\tt dig @a.root-servers.net example.com} (will return authority DNS for domain)
+\item User given DNS server 8.8.8.8: {\tt dig @8.8.8.8 {\sl hostname}}, {\tt host {\sl hostname} 8.8.8.8}
+\item Ask root name server for a record: {\tt dig @a.root-servers.net example.com} (will return authority DNS for domain)
 %dig +dnssec +multi @a.iana-servers.net example.com
 %\item Check record: {\tt dig +cdflag www.root.cz}
 \stopitemize
@@ -698,9 +695,9 @@ USERCTL=yes\crlf
 \item Set HTTP header: {\tt curl -H "Content-Type: application/xml" {\sl URL}}
 \item Send cookie: {\tt curl -H "Cookie: name1=value; name2=another" {\sl URL}}, {\tt curl --cookie "name1=value; name2=another" {\sl URL}}
 \item POST request: {\tt curl -X POST -d 'name1=value&name2=another' {\sl URL}}
-\item Form upload file: {\tt Z curl --form upload=@{\sl{}localfilename} --form press=OK {\sl URL}}
+\item Form upload file: {\tt Z curl --form upload=@{\sl localfilename} --form press=OK {\sl URL}}
 \item Enable HTTP proxy in shell: {\tt export http_proxy=http://foo:bar@202.54.1.1:3128/}
-\item Use the same for HTTPS: {\tt export https_proxy=\$http_proxy}
+\item Use the same for HTTPS: {\tt export https_proxy=\symdollar{}http_proxy}
 \item Convert page to text: {\tt elinks -dump {\sl URL}}
 \stopitemize
 
@@ -737,8 +734,8 @@ USERCTL=yes\crlf
 \item Comments starts with: \type{#}
 \item All client from specified domain: {\tt ALL : .domain.com}
 \item Range of IPs for SSH: {\tt sshd : 192.168.122.0/255.255.255.0 EXCEPT 192.168.122.150}
-\item rpc.mountd, in.tftpd : 192.168.100.100
-\item Deamon configuration in additional file: {\tt vsftpd: /etc/myftp.hosts}
+\item Rule for more services: {\tt rpc.mountd, in.tftpd : 192.168.100.100}
+\item Daemon configuration in additional file: {\tt vsftpd: /etc/myftp.hosts}
 \item Content of {\tt /etc/myftp.hosts}: {\tt 192.168.0.0/255.255.255.0}
 \stopitemize
 \item Deny access control file {\tt /etc/hosts.deny}:
