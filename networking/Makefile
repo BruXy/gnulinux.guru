@@ -58,5 +58,6 @@ clean:
 veryclean: clean
 	rm -f $(PROJECT)_cheatsheet.{pdf,html} $(PROJECT)_cheatsheet_include.html \
 	      $(PROJECT)_cheatsheet_0*.png $(PROJECT)_tahak.html $(PROJECT)_tahak_include.html \
-          $(PROJECT)_cheatsheet_thumbnail.png
+          $(PROJECT)_cheatsheet_thumbnail.png $(PROJECT)_cheatsheet.tar.bz2
+
 

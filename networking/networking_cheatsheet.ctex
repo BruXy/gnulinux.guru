@@ -14,7 +14,7 @@
 \section{Open Systems Interconnection model (OSI model)}
 
 {\bf 7. Application  }-- [data] -- Data generation (SMTP, NNTP, SSH, Telnet, HTTP)\crlf
-{\bf 6. Presentation }-- [data] -- Encryption and formating (JPEG, ASCII, EBDIC, GIF,...)\crlf
+{\bf 6. Presentation }-- [data] -- Encryption and formatting (JPEG, ASCII, EBDIC, GIF,...)\crlf
 {\bf 5. Session      }-- [data] -- Sync. & send to ports (RPC, SQL, NFS, NetBIOS)\crlf
 {\bf 4. Transport    }-- [segments] -- TCP/UDP, message segmentation, message traffic control\crlf
 {\bf 3. Network      }-- [packets] -- Packets, IP addr., routing, subnet traffic (IPv4/6, ICMP)\crlf
@@ -43,7 +43,7 @@
 
 Use: {\tt ipcalc}, {\tt sipcalc} for IP/net calculations.
 
-\subsection{IPv6 addresses and mask}
+\subsection{IPv6 addresses}
 
 %https://knihy.nic.cz/files/nic/edice/pavel_satrapa_ipv6_2012.pdf
 
@@ -51,7 +51,7 @@ Use: {\tt ipcalc}, {\tt sipcalc} for IP/net calculations.
 \item IPv6 (128bit) -- {\tt y : y : y : y : y : y : y : y}
 \item IPv6 with IPv4 part -- {\tt y : y : y : y : y : y : x . x . x . x}
 \item Access IPv6 URL -- {\tt http://[2a01:4f8:130:2192::2]}
-\item Zeroes can be ommited:
+\item Zeroes can be ommitted:
 \startitemize
 \item Loopback: {\tt 00000:0000:0000:0000:000:0000:0000:0001 \a 0:0:0:0:0:0:0:1 \a ::1}
 \item Multiple zero groups \quotation\bgroup{\tt ::}\egroup: {\tt 2001:0:0:0:0:0:0:ab \a 2001::ab}
@@ -88,7 +88,7 @@ Use: {\tt ipcalc}, {\tt sipcalc} for IP/net calculations.
 
 \subsection{Most common ports ({\tt /etc/services})}
 
-Privilege port $<$ 1024 can be opened just by root user!
+Privilege port $<$ 1024 can be opened only by the root user!
 
 %\bTABLE[frame=off,style=\tfx]
 %\bTR\bTD
@@ -242,7 +242,7 @@ USERCTL=yes
 \item Set IPv4: {\tt nmcli connection modify eth0 ipv4.addresses 10.0.0.2/8 ipv4.gateway 10.0.0.1}
 \item Activate/deactivate connection: {\tt nmcli con up/down "static"}
 \item Reload configuration: {\tt nmcli con reload}
-\item Bring down interface and disable autoconnect: {\tt nmcli dev dis {\sl DEV}} 
+\item Disconnect interface and disable autoconnect: {\tt nmcli device disconnect {\sl DEV}} 
 \item Disable all managed interfaces: {\tt nmcli net off}
 \item Add, modify, delete connection: {\tt nmcli con add / mod "ID" / del "ID"}
 \item Set DNS: {\tt nmcli con modify eth0 ipv4.dns "8.8.8.8,8.8.4.4"}
@@ -433,7 +433,7 @@ USERCTL=yes
 	\item {\tt ssh -L {\sl LocalPort:RemoteIP:RemotePort host}}
 	\item {\tt ssh -L {\sl LocalIP:Localport:RemoteIP:RemotePort host}}
 	\stopitemize
-\item Remote port transfer -- local port will be available on remote:
+\item Remote port transfer -- local port will be available on remotely:
 	\startitemize
 	\item {\tt ssh -R {\sl RemotePort:LocalIP:LocalPort host}}
 	\item {\tt ssh -R {\sl RemoteIP:Remoteport:LocalIP:LocalPort host}}
@@ -442,7 +442,7 @@ USERCTL=yes
 \item Dynamic port transfer -- creation of SOCKS proxy:
 	\startitemize
 	\item {\tt ssh -D LocalAddress:LocalPort host}
-	\item Use LocalAddress:LocaPort as SOCKS proxy and all request will be forwarded throught host.
+	\item Use LocalAddress:LocaPort as SOCKS proxy and all request will be forwarded through host.
 	\item {\tt curl --user-agent "Mozilla" --socks4 localhost:1080 http://www.whatsmyip.org/}
 	\stopitemize
 %\item SSH \uv{netcat} mode --
@@ -455,7 +455,7 @@ USERCTL=yes
 \subsubsection{SSH key handling}
 
 \startitemize 
-\item Genereate 4096bit key with comment: {\tt ssh-keygen -t rsa -b 4096 -C "Top secret key"}
+\item Generate 4096bit key with comment: {\tt ssh-keygen -t rsa -b 4096 -C "Top secret key"}
 \item Generate public key from private: {\tt ssh-keygen -y -f private.pem > public.pub}
 \item Permissions: {\tt chmod 700 \symtilda/.ssh}; {\tt chmod 600 \symtilda/.ssh/authorized_keys}
 \item Copy key to host and updates {\tt \symtilda/.authorized_keys}: {\tt ssh-copy-id {\sl user@host}}; {\tt cat \symtilda/.ssh/id_rsa.pub \| ssh user@host 'cat >> \symtilda/.ssh/authorized_keys'}
@@ -508,7 +508,7 @@ USERCTL=yes
 % Check: http://www.tecmint.com/how-to-setup-nfs-server-in-linux/
 
 \startitemize
-\item User mush have same UID and GID on server and localhost.
+\item User must have same UID and GID on server and localhost.
 \item Server configuration stored in {\tt /etc/export}:
 \startitemize
 \item Share directory with client IP: {\tt /mnt/share 192.168.0.100(rw,sync,no_root_squash)}
@@ -551,7 +551,7 @@ USERCTL=yes
 \item {\tt -g, --group; -o, --owner} -- preserve group, owner
 \item {\tt -D} -- synchronize device files
 \item {\tt -H, --hard-links} -- preserve hard links
-\item {\tt -P, --partial --progres} -- keep partial files (good for transfer resuming)
+\item {\tt -P, --partial --progress} -- keep partial files (good for resuming transfer)
 \item {\tt -S, --sparse} -- handle sparse files efficiently
 \item {\tt --dry-run} -- perform a trial run with no changes made 
 \item {\tt --bwlimit=100} -- limit transferring speed to 100 kB/s
