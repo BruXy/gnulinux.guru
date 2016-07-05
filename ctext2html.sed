@@ -125,6 +125,7 @@ s:\\bTABLE.*:<table>:
 s:\\eTABLE.*:<\/table>:
 s:\\bTR:<tr>:g
 s:\\eTR:<\/tr>:g
+s:\\bTD\[nr=\([0-9]\+\)\]:<td rowspan="\1">:g
 s:\\bTD:<td>:g
 s:\\eTD:<\/td>:g
 s:\\bTH:<th>:g
