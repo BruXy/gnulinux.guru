@@ -42,7 +42,7 @@ $(PROJECT)_cheatsheet_thumbnail.png: $(PROJECT)_cheatsheet_0001.png
 tarball: veryclean $(PROJECT)_cheatsheet.tar.bz2
 
 $(PROJECT)_cheatsheet.tar.bz2: $(PROJECT)_style.ctex $(PROJECT)_cheatsheet.ctex Makefile $(PROJECT)_ctext2html.sed 
-	cd ..; tar cvjf $@ $(PROJECT)/{*.ctex,*.sed,Makefile} html_header.sed
+	cd ..; tar cvjf $@ $(PROJECT)/{*.ctex,*.sed,Makefile} *.sed
 	mv ../$@ .
 
 .PHONY: all pdf html clean upload publish

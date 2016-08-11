@@ -11,15 +11,63 @@
 %Cheat-sheet under construction!
 %}
 
-\section{Open Systems Interconnection model (OSI model)}
+\section{Open Systems Interconnection model vs. TCP/IP model}
 
-{\bf 7. Application  }-- [data] -- Data generation (SMTP, NNTP, SSH, Telnet, HTTP)\crlf
-{\bf 6. Presentation }-- [data] -- Encryption and formatting (JPEG, ASCII, EBDIC, GIF,...)\crlf
-{\bf 5. Session      }-- [data] -- Sync. & send to ports (RPC, SQL, NFS, NetBIOS)\crlf
-{\bf 4. Transport    }-- [segments] -- TCP/UDP, message segmentation, message traffic control\crlf
-{\bf 3. Network      }-- [packets] -- Packets, IP addr., routing, subnet traffic (IPv4/6, ICMP)\crlf
-{\bf 2. Data Link    }-- [frames] -- Frame traffic control, sequencing (ARP, MAC)\crlf
-{\bf 1. Physical     }-- [bits] -- cables, hubs, physical medium transmission\crlf
+\bTABLEOSI
+\bTABLEhead
+\bTR
+	\bTH OSI Layer \eTH
+	\bTH Data \eTH
+	\bTH Protocols \eTH
+	\bTH TCP/IP Layer \eTH
+\eTR
+\eTABLEhead
+\bTABLEbody
+\bTR
+	\bTD {\bf 7. Application  } \eTD
+	\bTD Data\eTD
+	\bTD Data generation (SMTP, NNTP, SSH, Telnet, HTTP) \eTD
+	\bTD[nr=3] Application\eTD
+\eTR
+\bTR
+	\bTD {\bf 6. Presentation } \eTD
+	\bTD Data\eTD
+	\bTD Encryption and formatting (JPEG, ASCII, EBDIC, GIF,\ldots) \eTD
+%	\bTD[nr=3] Application\eTD
+\eTR
+\bTR
+	\bTD {\bf 5. Session } \eTD
+	\bTD Data\eTD
+	\bTD Sync. & send to ports (RPC, SQL, NFS, NetBIOS) \eTD
+%	\bTD[nr=3] Application\eTD
+\eTR
+\bTR
+	\bTD {\bf 4. Transport } \eTD
+	\bTD Segments\eTD
+	\bTD TCP/UDP, message segmentation, message traffic control\eTD
+	\bTD Transport \eTD
+\eTR
+\bTR
+	\bTD {\bf 3. Network } \eTD
+	\bTD Packets\eTD
+	\bTD Packets, IP addr., routing, subnet traffic (IPv4/6, ICMP) \eTD
+	\bTD Network \eTD
+\eTR
+\bTR
+	\bTD {\bf 2. Data Link } \eTD
+	\bTD Frames \eTD
+	\bTD Frame traffic control, sequencing (ARP, MAC) \eTD
+	\bTD[nr=2] Network Access \eTD
+\eTR
+\bTR
+	\bTD {\bf 1. Physical } \eTD
+	\bTD bits \eTD
+	\bTD Cables, hubs, physical medium transmission \eTD
+%	\bTD[nr=2] Network Access \eTD
+\eTR
+\eTABLEbody
+\eTABLE
+
 
 \uv{{\bf P}eople {\bf D}on't {\bf N}eed {\bf T}hose {\bf S}tupid {\bf P}ackets {\bf A}nymore!}
 
@@ -695,6 +743,9 @@ USERCTL=yes
 \item Download file: {\tt curl -O {\sl URL/file}}
 \item Write output to file: {\tt curl -o file {\sl URL} }
 \item List directory: {\tt curl -s {\sl URL} --list-only}
+\item Save cookies to file: {\tt wget -q --cookies=on --keep-session-cookies --save-cookies=cookie.txt {\sl URL}}
+\item Use saved cookies: {\tt wget -nv --content-disposition --referer= --cookies=on {\sl URL}}
+%POZOR https://gist.github.com/3-n/3307405
 \item Download URL and display it in stdout: {\tt curl {\sl URL}}, {\tt wget -q -O - {\sl URL}}
 \item Change referer and browser id.: {\tt wget --referer {\sl URL} --user-agent "Mozilla/5.0 (compatible; Linux)"}
 \item Set HTTP header: {\tt curl -H "Content-Type: application/xml" {\sl URL}}

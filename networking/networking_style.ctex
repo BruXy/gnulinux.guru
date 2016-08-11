@@ -1,8 +1,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                                                               %
-%  Networking                                                   %
-%                                                               %
-%  Martin Bruchanov -- bruxy at regnet dot cz                   %
+%                                  @                @           %
+%  Networking                      |                |           %
+%                                  V                V           %
+%  Author: Martin Bruchanov (bruchy gmail.com, bruxy regnet.cz) %
 %                                                               %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -19,11 +19,16 @@
 %\setupoutput[dvips,acrobat] % dvips, acrobat
 \pdfminorversion=4
 %\setupbodyfont[helvetica,7.9pt]  %
-\setupbodyfont[8.55pt]  %
+\setupbodyfont[8.45pt]  %
 \setuppapersize[A4, portrait][A3, landscape] % A3, A4, A5, A6; landscape
 %\setuppapersize[A4, portrait] % A3, A4, A5, A6; landscape
 \setuparranging[2SIDE] % zmena stranek pro vyrobu knizky, 
 % 2SIDE -- dve stranky na jeden list vis setuppapersize
+
+%\definepapersize[ansid][width=559mm,height=864mm]
+%\setuppapersize[ansid,portrait]
+%\setuppapersize[ansic, portrait][ansid, landscape] % A3, A4, A5, A6; landscape
+%\definepapersize[ansic][width=432mm,height=559mm]
 
 %\pdfinfo{
 %  /Title           (Rychla reference k nekterym prikazum programu ViM)
@@ -68,6 +73,7 @@
 	textcommand=\TitleShadow, %
 	style=\TitleFont, %
 	alternative=middle, %
+	before=\nowhitespace,
 	after=\nowhitespace]
 
 \definefont[SectionFont][RegularBold sa 1.15] 
@@ -227,5 +233,11 @@
 \def\cbf{\bf{}} % centered bf for HTML
 \def\framedTABLE{\bTABLE}
 
+\def\bTABLEOSI{
+	\bTABLE
+	\setupTABLE[column][2][align=center]
+	\setupTABLE[column][4][align={center,middle,lohi}]
+	\setupTABLE[header][background=color,backgroundcolor=gray,align=center]
+}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
