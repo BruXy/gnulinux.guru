@@ -198,7 +198,7 @@ Privilege port $<$ 1024 can be opened only by the root user!
 \item Check if physical link exits: {\tt ethtool eth0}
 \item Loop-back interface: {\tt ifconfig lo 127.0.0.1}
 \item Loop-back route:  {\tt route add 127.0.0.1}
-\item List devices: {\tt cat /proc/net/dev}
+\item List devices: {\tt cat /proc/net/dev}, {\tt netstat -ie}
 \item Show devices and configuration: {\tt  ifconfig}, {\tt ip addr show}, {\tt ip link show}, {\tt ip link list}
 \item Disable device: {\tt ifconfig eth0 down}; {\tt ip link set eth0 down}; {\tt nmcli connection down eth0}
 \item Rename device (when disabled): {\tt ip link set {\sl enp0s25} name {\sl eth0}}
@@ -224,6 +224,7 @@ Privilege port $<$ 1024 can be opened only by the root user!
 	\item {\tt ip route add 192.168.1.0/24 via 192.168.1.1}
 \stopitemize
 \item Kernel network parameters: {\tt sysctl -a \| grep net}
+\item Displaying RAW Network Statistics: {\tt netstat --statistics --raw}
 \stopitemize
 
 \subsection{Wi-Fi Networking}
@@ -321,10 +322,12 @@ USERCTL=yes
 \item DHCP client data: {\tt /var/lib/dhclient/dhclient.leases}
 \stopitemize
 
-\section{Network socket of processes}
+\section{Network sockets of processes}
 
 \startitemize
 \item List active connections: {\tt netstat -plunt}; {\tt lsof -i}; {\tt ss -tua}
+\item List all UNIX listening ports: {\tt netstat -lx}
+\item Display all active network connection: {\tt netstat -na}
 \item List process communication on port: {\tt lsof -i :22} / {\tt lsof -i :ssh}
 \item Check PID binded on local port: {\tt ss -lt}; {\tt fuser -n tcp 22}
 \item Monitor net. communication of single process: {\tt strace -f -e trace=network -s 10000 -p {\sl PID}} 
@@ -398,8 +401,7 @@ USERCTL=yes
 
 \startitemize
 \item For IPv6 use: {\tt ip6tables}
-\item Print all rules: {\tt iptables -S }
-\item Print rules: {\tt iptables -L -v}
+\item Print all rules: {\tt iptables -S }, {\tt iptables -L -v}
 \item Clear all configured rules: {\tt iptables -F}
 \item Basic chains: {\tt iptables -L \| grep policy} $\ldots$ INPUT, FORWARD, OUTPUT
 \item Accept connection on port $N$: {\tt iptables -A input -p tcp -dport {\tt N} -j ACCEPT}
@@ -409,6 +411,7 @@ USERCTL=yes
 \item Enable SSH, HTTP, HTTPS: {\tt iptables -A INPUT -p tcp -m state --state NEW -m multiport --dports ssh,http,https -j ACCEPT}
 \item Save iptables: {\tt /sbin/iptables-save > /etc/sysconfig/iptables}, {\tt /etc/init.d/iptables save}
 \item Network Address Translation (NAT) / Masquarage:  {\tt iptables -t nat -A POSTROUTING -s 10.200.0.0/24 -o eth0 -j MASQUERADE}
+\item Delete rule: {\tt iptables -t nat --line-numbers -L} (list in table); {\tt iptables -t nat -D PREROUTING 2} (delete 2nd line)
 \stopitemize
 
 \subsection{Dynamic Firewall Manager -- {\tt firewalld}}
@@ -464,6 +467,7 @@ USERCTL=yes
 
 \startitemize
 \item Connect: {\tt ssh -l {\sl login} -p {\sl port} {\sl hostname}}, {\tt ssh {\sl login}@{\sl hostname}}
+\item Use only password authenication: {\tt ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no  {\sl login}@{\sl hostname}}
 \item Escape character sequences, press Enter, then \uv{{\tt \symtilda}} followed by a command:
 	\startitemize
 	\item {\tt \symtilda{}?} -- Display a list of escape characters.
@@ -661,7 +665,7 @@ USERCTL=yes
 \item Connect to port 80: {\tt nc www.google.com 80}
 \item netcat default port, if {\tt -p} it is not specified: 31337
 \item Protocols: {\tt --tcp}, {\tt --udp}, {\tt --sctp}, {\tt --ssl}, {\tt -4}, {\tt -6}
-\item Listen on TCP port 1234: {\tt nc -v -l 1234}, UDP port: {\tt nc -v -ul 1234}
+\item Listen on TCP port 1234: {\tt nc -v -k -l 1234}, UDP port: {\tt nc -v -k -ul 1234}
 \item Allow/deny: {\tt --allow 192.168.0.0/24}, {\tt --deny 10.0.0.0/8}
 \item Transfer file: 
 \startitemize
@@ -747,6 +751,7 @@ USERCTL=yes
 \item Use saved cookies: {\tt wget -nv --content-disposition --referer= --cookies=on {\sl URL}}
 %POZOR https://gist.github.com/3-n/3307405
 \item Download URL and display it in stdout: {\tt curl {\sl URL}}, {\tt wget -q -O - {\sl URL}}
+\item Resume broken download: {wget -c {\sl URL}}, {\tt curl -L -O -C - {\sl URL}}
 \item Change referer and browser id.: {\tt wget --referer {\sl URL} --user-agent "Mozilla/5.0 (compatible; Linux)"}
 \item Set HTTP header: {\tt curl -H "Content-Type: application/xml" {\sl URL}}
 \item Send cookie: {\tt curl -H "Cookie: name1=value; name2=another" {\sl URL}}, {\tt curl --cookie "name1=value; name2=another" {\sl URL}}
@@ -762,6 +767,9 @@ USERCTL=yes
 \startitemize
 \item Generate random sequences: {\tt openssl rand -base64 8}
 \item Display server certificate: {\tt openssl s_client -showcerts -connect google.com:443}
+\item Generate certificate: {\tt openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout server.key -out server.crt}
+\item Check SSL key MD5: {\tt openssl rsa -noout -modulus -in server.key | openssl md5}
+\item Check expiration date: {\tt echo | openssl s_client -showcerts -connect google.com:443 2>&1 | openssl x509 -noout -dates}
 \stopitemize
 
 \section{Network Time Protocol (NTP)}
