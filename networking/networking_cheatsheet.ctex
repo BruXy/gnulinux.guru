@@ -236,6 +236,7 @@ Privilege port $<$ 1024 can be opened only by the root user!
 \item Connect with WEP network: {\tt iwconfig wlan0 essid {\sl "Network SSID"} key s:{\sl ASCII\_KEY}}
 \item Connect with WEP network: {\tt nmcli dev wifi connect {\sl "Network SSID"} password '123...'}
 \item Connect with WPA: {\tt wpa_supplicant -B -i wlan0 -DWext -c /etc/wpa_supplicant.conf}
+\item GUI configuration for WPA: {\tt wpa_gui}
 \item Examples of WPA configuration: {\tt man wpa_supplicant.conf}
 \item Watch signal quality: {\tt watch -n 1 cat /proc/net/wireless } (link = SNR, level in dBm)
 \stopitemize
