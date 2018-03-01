@@ -30,6 +30,15 @@ Comments: \type{# everything behind hash}\crlf
 \item {\tt -c '{\em code}'} -- run code from command line
 \stopitemize
 
+\section{Create virtual environment}
+
+\startitemize
+\item {\tt python -m virtualenv /path/to/dir} or {\tt python3 -m venv}
+\item Make current shell to use it: {\tt source /path/to/dir/bin/activate}
+\item Check if virtual env. is used: {\tt pip --version}
+\item Quit virtual env.: {\tt deactivate}
+\stopitemize
+
 \section{Expression statements}
 
 \bTABLE[frame=off,style=tt]
@@ -98,6 +107,7 @@ except [type [as value]]: \crlf
 % \item raise %3.0
 \item {\tt break} -- exit while or for loop, skip associated else
 \item {\tt continue} -- perform next iteration of cycle
+\item {\tt quit([code={\sl exit code}])} -- exit script and set return value
 \item {\tt global {\sl name}} -- reference global value  
 % \item nonlocal name -- %3.0
 \item {\tt exec("print 'Ahoj'")} -- compile and exec code
@@ -364,7 +374,7 @@ except [type [as value]]: \crlf
 %\item s.format zfill translate
 \item {\tt s.find/rfind(sub, [,s [,e]])} -- index of first occur. of {\tt sub}, 
 \item {\tt s.index/rindex(sub [,s [,e]])} -- {\tt ValueError} if not found
-\item {\tt s.endswith/startwith(sub [,s [,e]])} -- true if starts/ends
+\item {\tt s.endswith/startswith(sub [,s [,e]])} -- true if starts/ends
 \item {\tt s.count(sub, [,s [,e]])} -- get number of substrings 
 \item {\tt s.upper()}, {\tt s.lower()}, {\tt s.swapcase()} -- converts case
 \item {\tt s.split([sep [, maxsplit])} -- return list of words 

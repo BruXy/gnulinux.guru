@@ -150,6 +150,7 @@ s:\\input.*::
 s:\\mycopyright.*:<!-- mycopyright -->:
 s:{\\tfx::g
 s:{\\tt::g
+s:\\blank.*::
 
 # Python cheatsheet related commands
 s:\\pyind *:␣␣␣␣:g      
