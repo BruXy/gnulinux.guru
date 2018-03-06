@@ -569,6 +569,7 @@ USERCTL=yes
 \stopitemize
 \item List connected clients: \type{netstat | grep nfs} 
 \item Remote check: \type{rpcinfo -s bee | grep -E 'nfs|mountd'}
+\item Show network statistics: {\tt nfsstat}
 \item Show server's export list: {\tt showmount -e}
 \item Mount remote directory: {\tt mount -t nfs 192.168.0.99:/mnt/share /mnt/local}
 \item Permanent mount in {\tt /etc/fstab}: {\tt 192.168.0.99:/mnt/share /mnt/local nfs rsize=8192,wsize=8192,timeo=14,intr,tcp 0 0 }
@@ -769,8 +770,8 @@ USERCTL=yes
 \item Generate random sequences: {\tt openssl rand -base64 8}
 \item Display server certificate: {\tt openssl s_client -showcerts -connect google.com:443}
 \item Generate certificate: {\tt openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout server.key -out server.crt}
-\item Check SSL key MD5: {\tt openssl rsa -noout -modulus -in server.key | openssl md5}
-\item Check expiration date: {\tt echo | openssl s_client -showcerts -connect google.com:443 2>&1 | openssl x509 -noout -dates}
+\item Check SSL key MD5: {\tt openssl rsa -noout -modulus -in server.key \| openssl md5}
+\item Check expiration date: {\tt echo \| openssl s_client -showcerts -connect google.com:443 2>&1 \| openssl x509 -noout -dates}
 \stopitemize
 
 \section{Network Time Protocol (NTP)}

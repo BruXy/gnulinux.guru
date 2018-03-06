@@ -7,11 +7,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \mainlanguage[en]
-\language[en] 
+\language[en]
 \enableregime[utf] % latin2
 
 \setuplanguage[en]
-[leftquotation=“,  
+[leftquotation=“,
  rightquotation=”,
  leftquote=‘,
  rightquote=’]
@@ -19,10 +19,10 @@
 %\setupoutput[dvips,acrobat] % dvips, acrobat
 \pdfminorversion=4
 %\setupbodyfont[helvetica,7.9pt]  %
-\setupbodyfont[8.45pt]  %
+\setupbodyfont[8.3pt]  %
 \setuppapersize[A4, portrait][A3, landscape] % A3, A4, A5, A6; landscape
 %\setuppapersize[A4, portrait] % A3, A4, A5, A6; landscape
-\setuparranging[2SIDE] % zmena stranek pro vyrobu knizky, 
+\setuparranging[2SIDE] % zmena stranek pro vyrobu knizky,
 % 2SIDE -- dve stranky na jeden list vis setuppapersize
 
 %\definepapersize[ansid][width=559mm,height=864mm]
@@ -56,12 +56,12 @@
 	alternative=singlesided,  % doublesided
 	location={footer, right}, % header, middle, inleft, inmargin
 	style=bold,               %
-%	conversion=numbers,        % characters Characters romannumerals 
+%	conversion=numbers,        % characters Characters romannumerals
 %	left={--~},               % znak pred
 % 	right={~--},              % znak za
 ]
 
-\definefont[TitleFont][RegularBold sa 2.0] 
+\definefont[TitleFont][RegularBold sa 2.0]
 
 \def\ShadowOffset{-2.5pt}
 \def\TitleShadow#1{\rlap{%
@@ -76,7 +76,7 @@
 	before=\nowhitespace,
 	after=\nowhitespace]
 
-\definefont[SectionFont][RegularBold sa 1.15] 
+\definefont[SectionFont][RegularBold sa 1.15]
 \def\Cislovani#1{{#1}.} % tecka za cislem kapitoly
 %\def\SectionLook#1{#1~\vline$\rightarrow$}
 \setuphead[section][style=\SectionFont,
@@ -86,7 +86,7 @@
 %   after={\blank[1*small]}]
 	after=\nowhitespace]
 
-\definefont[SubsectionFont][RegularBold sa 1.05] 
+\definefont[SubsectionFont][RegularBold sa 1.05]
 \setuphead[subsection][   %
    style=\SubsectionFont, %
    numbercommand=\Cislovani,%
@@ -95,7 +95,7 @@
    after=\nowhitespace]
 	
 % mezery mezi odstavci
-\setupwhitespace[none] 
+\setupwhitespace[none]
 
 % velikost odsazeni
 \setupindenting[none]  % none, small, medium, bix, next, first, [rozmer]
@@ -114,7 +114,7 @@
 \setupcolor[rgb]
 
 % Nastaveni seznamu s odrazkami
-\setupitemize[1][standard,packed,joinedup][margin=4pt] 
+\setupitemize[1][standard,packed,joinedup][margin=4pt]
 % joinedup -- zadne mezery pred a za
 
 \defineitemgroup[enumerate]
@@ -126,7 +126,7 @@
 
 %beforehead={\nowhitespace}]
 
-% Vypnuti popisku 
+% Vypnuti popisku
 \setupcaptions[location=none]
 
 % nezery pred a za plovoucimi objekty
@@ -189,7 +189,7 @@
 \def\CSK#1{\COMMAND{#1}{ex}} % editacni
 
 
-%\def\CS#1{{\tt :#1}} % 
+%\def\CS#1{{\tt :#1}} %
 
 \defineframed[grayframe][
 %	location=depth, %
@@ -203,7 +203,7 @@
 	offset=none, % odsazeni po stranach
 ]
 
-\def\CS#1{\grayframe{\tt :#1}} % 
+\def\CS#1{\grayframe{\tt :#1}} %
 
 \def\a{$\approx$ {}}
 
