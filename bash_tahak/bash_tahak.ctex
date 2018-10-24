@@ -260,7 +260,7 @@ shift \symdollar{}((\symdollar{}OPTIND - 1)); echo "Poslední: \symdollar{}1" }
 \item {\tt declare -f {\sl funkce}} -- vypíše deklaraci funkce
 \stopitemize
 
-\section{Přesměrování}
+\section{Přesměrování a roury}
 
 \startitemize
 	\item {\tt 0} stdin/vstup, {\tt 1} stdout/výstup, {\tt 2} stderr/chybový výstup
@@ -279,6 +279,7 @@ shift \symdollar{}((\symdollar{}OPTIND - 1)); echo "Poslední: \symdollar{}1" }
 	\item \type{n> n>}\type{> n>&m} -- operace přesměrování pro deskriptory {\sl n, m}
 	\item {\tt mkfifo {\sl název}} --  vytvoří pojmenovanou rouru, soubor do kterého jeden proces zapisuje, další čte.
 	\item {\stt příkaz}\low{1} \type{|} {\stt příkaz}\low{2} -- roura, propojování příkazů
+    \item {\stt příkaz} \type{2>&1} \type{|} \periods[3] -- lze zkrátit na {\stt příkaz} \type{|&} \periods[3]
 	\item {\tt read {\sl parametry}} -- čte řádek vstupu a rozloží ho na parametry
 \stopitemize
 

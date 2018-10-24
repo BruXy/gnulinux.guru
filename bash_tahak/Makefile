@@ -38,7 +38,7 @@ tarball: bash_tahak.tar.bz2
 
 bash_cheatsheet.tar.bz2: bash_style.ctex bash_cheatsheet.ctex Makefile bash_ctext2html.sed 
 	cd ..; tar cvjf $@ bash_tahak/{*.ctex,Makefile,bash_ctext2html.sed} html_header.sed
-	cp ../$@ . 
+	cp ../$@ .
 
 clean:
 	rm -f bash*.log bash*.tuc

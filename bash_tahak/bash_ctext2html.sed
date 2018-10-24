@@ -136,6 +136,7 @@ s:\\startparagraph:<p>:
 s:\\stopparagraph:</p>:
 s:\\qquad:\&nbsp;\&nbsp;:g
 s:&=:\&amp;=:g
+s:\\periods\[3\]:\&hellip;:g
 
 # Deletion
 s:\\setupTABLE.*::g
