@@ -11,14 +11,14 @@
 \starttext
 
 \startcolumns[n=2]
-	
-\title{Python 2.7.x}
+
+\title{Python}
 
 \mycopyright
 
 \blank[2mm]
-	
-Set of interpreter: \type{#!/usr/bin/env python} \crlf 
+
+Set of interpreter: \type{#!/usr/bin/env python} \crlf
 Comments: \type{# everything behind hash}\crlf
 \type{""" more lines comment """}
 
@@ -26,8 +26,10 @@ Comments: \type{# everything behind hash}\crlf
 
 \startitemize
 \item {\tt python {\em options} script.py} -- run script filename
-\item {\tt -V} -- print version 
+\item {\tt -V} -- print version
 \item {\tt -c '{\em code}'} -- run code from command line
+\item {\tt python -m py_compile {\em script.py}} -- test syntax of script
+\item {\tt python3 -c 'import keyword; print(keyword.kwlist)'} -- keywords
 \stopitemize
 
 \section{Create virtual environment}
@@ -47,8 +49,8 @@ Comments: \type{# everything behind hash}\crlf
 
 %%%% FOR cycle ---- WHILE condition
 \bTR[bottomframe=on,align=middle,style=rm]
-	\bTD[rightframe=on] {\cbf FOR cycle} \eTD
-	\bTD {\cbf WHILE  contition} \eTD
+    \bTD[rightframe=on] {\cbf FOR cycle} \eTD
+    \bTD {\cbf WHILE  contition} \eTD
 \eTR
 \bTR
 \bTD[rightframe=on]
@@ -59,7 +61,7 @@ for {\em identifier} in {\em list} : \crlf
 \eTD
 \bTD
 while {\em condition} \crlf
-\pyind repeat if condition is true\crlf 
+\pyind repeat if condition is true\crlf
 [ else: \crlf
 \pyind suite ]
 \eTD
@@ -67,8 +69,8 @@ while {\em condition} \crlf
 
 %%%% IF-THEN-ELSE ---- TRY block
 \bTR[topframe=on,bottomframe=on,align=middle,style=rm]
-	\bTD[rightframe=on] {\cbf IF-THEN-ELSE} \eTD
-	\bTD {\cbf TRY block} \eTD
+    \bTD[rightframe=on] {\cbf IF-THEN-ELSE} \eTD
+    \bTD {\cbf TRY block} \eTD
 \eTR
 
 \bTR
@@ -103,20 +105,21 @@ except [type [as value]]: \crlf
 \item {\sl module.function()} -- use function of imported module
 \item {\tt from {\sl module} import *} -- import all stuff to local name space
 \item {\tt import {\sl module} as {\sl name}} -- rename imported module
-\item {\tt from {\sl module} import {\sl name} as {\sl othername}} 
+\item {\tt from {\sl module} import {\sl name} as {\sl othername}}
 % \item raise %3.0
 \item {\tt break} -- exit while or for loop, skip associated else
 \item {\tt continue} -- perform next iteration of cycle
 \item {\tt quit([code={\sl exit code}])} -- exit script and set return value
-\item {\tt global {\sl name}} -- reference global value  
+\item {\tt global {\sl name}} -- reference global value
 % \item nonlocal name -- %3.0
-\item {\tt exec("print 'Ahoj'")} -- compile and exec code
+\item {\tt exec("print('Ahoj')")} -- compile and exec code
 \item {\tt with {\em expression} [as {\em variable}]:\crlf \pyind suite} -- block entry actions
-\item {\tt pass} -- do-nothing placeholder statement 
+\item {\tt pass} -- do-nothing placeholder statement
 \item {\tt del name}, {\tt del name[i]}, {\tt del name[i:j:k]}, {\tt del name.attibute} -- delete variables, items, keys, attributes
 \item {\tt assert {\em expression} [, {\em message}]}
 \item {\tt exec {\em codestring}}
 \item Generator expression: \crlf {\tt {\em result expr.} for {\em loop var.} in {\em iterable} if {\em filter expr.}}
+\item {\tt def noop(*args, **kws): return None} -- no-operation function
 \stopitemize
 
 \subsection{Classes}
@@ -126,7 +129,7 @@ except [type [as value]]: \crlf
 \item \type{_private} -- underscored named object is private
 \item \type{def __init__(self, ...):}\crlf \pyind {\tt self.data = []} -- constructor
 \item {\tt class DerivedClass(BaseClass)} -- inheritance
-\item \type{def __iter__(self):} --  
+\item \type{def __iter__(self):} --
 \stopitemize
 
 \subsection{Functions}
@@ -135,10 +138,10 @@ except [type [as value]]: \crlf
 \item {\tt def function(param1, param2,...): \crlf \pyind pass}
 \startitem {\tt def func(arg,... arg=value, ... *arg, **arg):}
 \startitemize
-	\item {\tt arg} -- matched by name or position
-	\item {\tt arg=value} -- default value if arg is not passed
-	\item {\tt *arg} -- collect extra positional args as a new tuple
-	\item {\tt **arg} -- collect extra positional args as a new dictionary
+    \item {\tt arg} -- matched by name or position
+    \item {\tt arg=value} -- default value if arg is not passed
+    \item {\tt *arg} -- collect extra positional args as a new tuple
+    \item {\tt **arg} -- collect extra positional args as a new dictionary
 \stopitemize
 \stopitem
 \item {\tt lambda {\em args1} : expression} -- anonymous function maker
@@ -151,17 +154,17 @@ except [type [as value]]: \crlf
 
 \startitemize
 \item {\tt variable = 12} -- assign value
-\item {\tt type(variable)} -- return type of variable 
+\item {\tt type(variable)} -- return type of variable
 \item {\tt global name [,name]} -- global variable in local context
 \startitem {\bf Number formats: }
 \startitemize
-	\item 	{\tt 2006, 2006l, 2006L}~-- decimal integer, long;
-	\item 	{\tt 0775}, {\tt oct(0x1fd)}~-- octal;
-	\item 	{\tt 0xBABE}, {\tt hex(47806)}~-- hexadecimal;
-	\item 	{\tt 0b101010}, {\tt bin(42)}~-- binary;
-	\item 	{\tt 3.14, 314e-2}~-- floating point;
-	\item   {\tt 1+2j, 1.0+2.0J, complex(1,2) } -- complex number;
-	\item   {\tt b'Ahoj'} -- sequence of 8-bit values;
+    \item     {\tt 2006, 2006l, 2006L}~-- decimal integer, long;
+    \item     {\tt 0775}, {\tt oct(0x1fd)}~-- octal;
+    \item     {\tt 0xBABE}, {\tt hex(47806)}~-- hexadecimal;
+    \item     {\tt 0b101010}, {\tt bin(42)}~-- binary;
+    \item     {\tt 3.14, 314e-2}~-- floating point;
+    \item   {\tt 1+2j, 1.0+2.0J, complex(1,2) } -- complex number;
+    \item   {\tt b'Ahoj'} -- sequence of 8-bit values;
 \stopitemize
 \stopitem
 \item {\tt int(x)}, {\tt long(x)}, {\tt float(x)}, {\tt str(n)} -- type conversions
@@ -170,7 +173,7 @@ except [type [as value]]: \crlf
 \item {\tt abs(x)} -- absolute value of $x$
 \item {\tt round(x[,n])} -- $x$ rounded to $n$ digits
 \item {\tt (10.5).as_integer_ratio()} -- returns tuple {\tt (21, 2)}
-\item {\tt (255).bit_length()} -- number of digits of binary 
+\item {\tt (255).bit_length()} -- number of digits of binary
 \item {\tt X, Y = Y, X} -- swap values of X and Y
 \item {\tt a,b,c = range(3)} -- read list values, {\tt a=0,b=1,c=2}
 \item {\tt vars(), globals(), locals()} -- return dictionary of variables
@@ -182,7 +185,7 @@ except [type [as value]]: \crlf
 \subsection{Constants}
 
 \startitemize
-\item {\tt False}, {\tt True} -- boolean 
+\item {\tt False}, {\tt True} -- boolean
 \item {\tt None} -- represents no value
 \item bool([{\em X}]) -- returns boolean value of object {\em X}.
 \stopitemize
@@ -193,7 +196,7 @@ except [type [as value]]: \crlf
 \item {\tt or, and, not x} -- boolean operators
 \item \type{|} (or), \type{^} (xor), \type{&} (and), {\tt \symtilda{}x} (neg.) -- binary operators
 \item {\tt X in Y}, {\tt X not in Y} -- membership tests
-\item {\tt X is Y}, {\tt X is not Y} -- same or different object 
+\item {\tt X is Y}, {\tt X is not Y} -- same or different object
 \item {\tt <, <=, >, >=, <>, !=, ==} -- comparisons
 \item {\tt *, /, //, \%} -- multiply, divide, floor divide, remainder
 \item {\tt x << n}, {\tt x >> n} -- bitwise shifts by $n$ bits
@@ -252,7 +255,7 @@ except [type [as value]]: \crlf
 \item {\tt l2d=[[1,2,3], [4,5,6], [7,8,9]]} -- two-dimensional list
 \item {\tt l2d[1][1]} -- returns 5
 \item {\tt list('abc')} -- returns list of chars {\tt ['a','b','c']}
-\item {\tt len(l)} -- return length of list  
+\item {\tt len(l)} -- return length of list
 % http://docs.python.org/2/tutorial/datastructures.html
 \item {\tt l.append({\sl value})} -- add {\em value} to the list
 \item {\tt l.extend([4,5])}, {\tt list[len(list):]=[4,5]}, {\tt list += [4,5]} -- append another list
@@ -262,7 +265,7 @@ except [type [as value]]: \crlf
 \item {\tt l.pop({\sl i})}, {\tt l.pop()} -- return and remove value, without index last
 \item {\tt l.index(x\,[,\,i[,\,j]])} -- index of first occur. of x, between $i$ to $j$
 \item {\tt l.count(x)} -- return number of occurrence of object {\em x}
-\item {\tt l.sort(key=None, reverse=False)} -- sort list in-place 
+\item {\tt l.sort(key=None, reverse=False)} -- sort list in-place
 \item {\tt l.reverse()} -- reverse list in-place
 \item {\tt sum(l)} -- return sum of numeric list
 \stopitemize
@@ -284,7 +287,7 @@ except [type [as value]]: \crlf
 \item {\tt h.get(key [, {\sl default}])} -- if key is not found return {\em default}
 \item {\tt h.popitem()} -- removes and returns an {\tt (key, value)} pair
 \item {\tt h.pop(k [, {\sl def}])} -- returns and removes $k$ else return {\em def}
-%\item {\tt h.setdefault(key, [, default])} -- 
+%\item {\tt h.setdefault(key, [, default])} --
 \item {\tt h.fromkeys(seq [, value])} -- new dictionary from keys in {\em seq}
 \item {\tt dict(zip(['a','b'], [1,2]))} -- join to {\tt \symlb{}'a': 1, 'b': 2\symrb}
 \stopitemize
@@ -303,10 +306,10 @@ except [type [as value]]: \crlf
 \item {\tt A <= B}, {\tt A.issubset(B)} -- returns {\tt True} is A is subset of B \hfill $A\subset{}B$
 \item {\tt A >= B}, {\tt A.issuperset(B)} -- is $A$ superset of $B$? \hfill $A\supset{}B$
 \item {\tt A < B}, {\tt A > B} -- true subset, superset \hfill $A\subset{}B$, $A\supset{}B$
-\item {\tt A \type{^} B}, {\tt A.symmetric_difference(B)} -- $A\,\triangle\,B = (A \cup B)\,\tbs\,(A \cap B)$ 
-\item {\tt A \type{|}= B}, {\tt  A.update(B)} -- adds items in $B$ to $A$ 
+\item {\tt A \type{^} B}, {\tt A.symmetric_difference(B)} -- $A\,\triangle\,B = (A \cup B)\,\tbs\,(A \cap B)$
+\item {\tt A \type{|}= B}, {\tt  A.update(B)} -- adds items in $B$ to $A$
 \item {\tt A.discard(X)} -- remove item if exist
-\item {\tt A.add(X)}, {\tt A.remove(X)} -- add, remove item from set 
+\item {\tt A.add(X)}, {\tt A.remove(X)} -- add, remove item from set
 \item {\tt A.clear()} -- remove all items
 \item {\tt A.pop()} -- remove and return arbitrary item
 \item {\tt len(A)} -- get number of items in $A$
@@ -324,12 +327,12 @@ except [type [as value]]: \crlf
 \item {\tt 'Hello ' + 'World'}, {\tt "Hello" "World"} -- concatenation
 \item {\tt 'Hello' * 3} -- repetition $3\times$
 \item Unicode \symalpha: \type{u"\03b1"}, \type{U"\U000003B1"}, {\tt u"\tbs{}N\symlb{}GREEK SMALL LETTER ALPHA\symrb{}"}
-\item Raw string: \type{r"\n"}, \type{R'\n'} does not interpret escape sequences 
-\item Unicode raw string: \type{ur"\n"}, \type{UR'\n'}  
+\item Raw string: \type{r"\n"}, \type{R'\n'} does not interpret escape sequences
+\item Unicode raw string: \type{ur"\n"}, \type{UR'\n'}
 \item {\tt str()}, {\tt bytes()}, {\tt bytearray()} -- create string from object
 \item {\tt \tbs{}x{\em hh}}, {\tt \tbs{\em ooo}}, {\tt \tbs0} -- hex, octal, null byte
 \item {\tt chr(65)}, {\tt unichr(65)}, {\tt ord('A')}  -- returns character, ASCII code
-\item {\tt eval(s)} -- convert and execute code given by string 
+\item {\tt eval(s)} -- convert and execute code given by string
 \item {\tt execfile({\stt filename})} -- like {\tt eval}, but for whole file
 %\item {\tt repr()} -- converts any object to string
 \stopitemize
@@ -348,22 +351,23 @@ except [type [as value]]: \crlf
 \item {\tt \%[(keyname)][flags][width][.precision]typecode}
 \item Flags: {\tt -}/{\tt +} left/right justify, {\tt 0}/{\tt ' '} zero/space fill
 \startitem {\bf String formating typecodes:}
-	\startitemize[columns,two,joinedup]
-	\item {\tt s}  -- String (or any object, uses {\tt str()})
-	\item {\tt r}, -- {\tt s}, but uses {\tt repr()}, not {\tt str()}
-	\item {\tt c} -- Character (int or str)            
-	\item {\tt d, i, u} -- Decimal (base 10 integer)         
-	\item {\tt o} -- Octal (base 8 integer)            
-	\item {\tt x, X} -- Hex (base 16 integer)             
-	\item {\tt e, E} -- Floating-point exponent
-	\item {\tt f, F} -- Floating-point decimal
-	\item {\tt g, G}  -- Floating-point {\tt e,f/E,f}
-	\item {\tt \%\%} -- Literal '{\tt \%}'
-	\stopitemize
+    \startitemize[columns,two,joinedup]
+    \item {\tt s}  -- String (or any object, uses {\tt str()})
+    \item {\tt r}, -- {\tt s}, but uses {\tt repr()}, not {\tt str()}
+    \item {\tt c} -- Character (int or str)
+    \item {\tt d, i, u} -- Decimal (base 10 integer)
+    \item {\tt o} -- Octal (base 8 integer)
+    \item {\tt x, X} -- Hex (base 16 integer)
+    \item {\tt e, E} -- Floating-point exponent
+    \item {\tt f, F} -- Floating-point decimal
+    \item {\tt g, G}  -- Floating-point {\tt e,f/E,f}
+    \item {\tt \%\%} -- Literal '{\tt \%}'
+    \stopitemize
 \stopitem
 \item {\tt \symlb{}fieldname!conversionflag:formatspec\symrb{}}
 \item \type{[[fill]align][sign][#][0][width][,][.prec][typecode]}
 %\item {\tt print('Hello World!')}
+\item {\tt vprint = print if VERBOSE else lambda *a, **k: None} -- verbose prints
 \stopitemize
 
 \section{String methods}
@@ -372,16 +376,16 @@ except [type [as value]]: \crlf
 
 \startitemize
 %\item s.format zfill translate
-\item {\tt s.find/rfind(sub, [,s [,e]])} -- index of first occur. of {\tt sub}, 
+\item {\tt s.find/rfind(sub, [,s [,e]])} -- index of first occur. of {\tt sub},
 \item {\tt s.index/rindex(sub [,s [,e]])} -- {\tt ValueError} if not found
 \item {\tt s.endswith/startswith(sub [,s [,e]])} -- true if starts/ends
-\item {\tt s.count(sub, [,s [,e]])} -- get number of substrings 
+\item {\tt s.count(sub, [,s [,e]])} -- get number of substrings
 \item {\tt s.upper()}, {\tt s.lower()}, {\tt s.swapcase()} -- converts case
-\item {\tt s.split([sep [, maxsplit])} -- return list of words 
+\item {\tt s.split([sep [, maxsplit])} -- return list of words
 \item {\tt {\em sep}.join(iterable)} -- concatenates with separator
 \item {\tt ' and '.join(['a', 'b', 'c'])} -- returns {\tt 'a and b and c'}
 \item {\tt s.replace(old, new [, count])} -- replace {\em old} by {\em new}
-\item {\tt s.splitlines(0/1)} -- split by '\type{\n}', 1 -- keeps end char 
+\item {\tt s.splitlines(0/1)} -- split by '\type{\n}', 1 -- keeps end char
 \item {\tt s.strip([chars])} -- remove leading and trailing white spaces
 \item {\tt s.lstrip}, {\tt s.rstrip} -- just from left or right side
 \item {\tt s.center}/{\tt ljust}/{\tt rjust(width [,fill])} -- justify string
@@ -415,7 +419,7 @@ except [type [as value]]: \crlf
 \item {\tt s = file.read([{\em n}])} -- read file of $n$ bytes into string {\em s}
 \item {\tt file.readline()} -- return line of file, empty at EOF
 \item {\tt file.readlines()} -- read entire file into a list of line strings
-\item {\tt for line in file: } -- process file line by line 
+\item {\tt for line in file: } -- process file line by line
 \item {\tt file.write(s)} -- write string {\em s} into file
 \item {\tt print >>file, "Output"} -- write string to file
 \item {\tt file.writeline(list)} -- write all strings in list to file
@@ -425,7 +429,7 @@ except [type [as value]]: \crlf
 % \item {\tt file.isatty()} -- return True if file is terminal
 \item {\tt file.flush()} -- flushes file's buffer
 \item {\tt file.truncate([size])} -- truncate file to  size bytes
-\item {\tt file.fileno()} -- get file descriptor integer 
+\item {\tt file.fileno()} -- get file descriptor integer
 \item {\tt file.closed}, {\tt file.mode}, {\tt file.name} -- return attributes
 \stopitemize
 
@@ -468,7 +472,7 @@ except [type [as value]]: \crlf
 \section{System specific functions and parameters}
 
 \startitemize
-\item {\tt sys.argv} -- CLI parameters, {\tt argv[0]} name of script 
+\item {\tt sys.argv} -- CLI parameters, {\tt argv[0]} name of script
 \item {\tt sys.stdin.readline()} -- read line from standard input
 \item {\tt subprocess.call(["ls", "-l"])} -- execute system command
 \item {\tt out = subprocess.check_output(['uname', '-a'])} -- store output of command to variable
@@ -476,6 +480,6 @@ except [type [as value]]: \crlf
 \item {\tt os.stat('{\em /path/to/file.txt}')} -- return POSIX stat file info
 \stopitemize
 
-\stopcolumns 
+\stopcolumns
 \stoptext
 
