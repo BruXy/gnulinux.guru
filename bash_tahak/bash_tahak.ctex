@@ -1,7 +1,7 @@
 \input bash_style.ctex
 \starttext
 \startcolumns[n=2]
-	
+
 \title{Bourne-Again SHell a Linux CLI}
 
 \mycopyright
@@ -195,6 +195,7 @@ Spustit skript: {\tt bash {\sl volba skript jeho parametry}}
 \startitemize
 \item {\tt \symdollar{}0}, {\tt \symdollar{}\symlb0\symrb} -- název skriptu/spouštěcího souboru
 \item {\tt \symdollar{}1} až {\tt \symdollar{}}9, {\tt \symdollar{}\symlb1\symrb} až {\tt \symdollar{}\symlb255\symrb} -- poziční parametry na příkazové řádce
+\item {\tt PAR=\symdollar{}\symlb1:?"Missing parameter"\symrb} -- chyba když {\tt \symdollar{}\symlb1\symrb} není uveden
 \item {\tt \symdollar{}}\type{#} -- počet parametrů na příkaz. řádce (argc)
 \item {\tt \symdollar{}\symlb!\type{#}\symrb} -- poslední parametr na řádce 
 \item {\tt \symdollar{}*} -- rozvine všechny parametry, \type{"$*"} = {\tt "\symdollar{}1 \symdollar{}2 \symdollar{}3\ldots"}

@@ -1,4 +1,5 @@
 TEX=context
+PROJECT=bash
 
 all: Makefile bash_tahak.pdf bash_tahak_include.html \
      bash_tahak.html bash_cheatsheet.pdf bash_cheatsheet_include.html\
@@ -31,6 +32,9 @@ bash_cheatsheet_0001.png: bash_cheatsheet.pdf
 
 bash_cheatsheet_thumbnail.png: bash_cheatsheet_0001.png
 	convert -unsharp 1.0 -resize 320x $^ PNG:$@
+
+publish: $(PROJECT)_cheatsheet.pdf $(PROJECT)_cheatsheet.html $(PROJECT)_cheatsheet_include.html $(PROJECT)_cheatsheet_thumbnail.png $(PROJECT)_cheatsheet.tar.bz2
+	cp $^ ~/HOME_DESK/Documents/html/gnulinux/
 
 .SUFFIXES: .ctex
 

@@ -1,7 +1,7 @@
 \input bash_style.ctex
 \starttext
 \startcolumns[n=2]
-	
+
 \title{Bourne-Again SHell and Linux CLI}
 
 \mycopyright
@@ -195,6 +195,7 @@ Run a script as: {\tt bash {\sl option script and its parameters}}
 \startitemize
 \item {\tt \symdollar{}0}, {\tt \symdollar{}\symlb0\symrb} -- name of script/executable
 \item {\tt \symdollar{}1} to {\tt \symdollar{}}9, {\tt \symdollar{}\symlb1\symrb} to {\tt \symdollar{}\symlb255\symrb} -- positional command line parameters
+\item {\tt PAR=\symdollar{}\symlb1:?"Missing parameter"\symrb} -- error when {\tt \symdollar{}\symlb1\symrb} is not set
 \item {\tt \symdollar{}}\type{#} -- number of command line parameters (argc)
 \item {\tt \symdollar{}\symlb!\type{#}\symrb} -- the last command line parameter
 \item {\tt \symdollar{}*} -- expand all parameters, \type{"$*"} = {\tt "\symdollar{}1 \symdollar{}2 \symdollar{}3\ldots"}
@@ -281,6 +282,7 @@ shift \symdollar{}((\symdollar{}OPTIND - 1)); echo "Last: \symdollar{}1" }
 	\item {\tt mkfifo {\sl name}} -- make a named pipe, it can be written and read as file
 	\item {\stt command}\low{1} \type{|} {\stt command}\low{2} -- pipe, connection between processes
     \item {\stt command} \type{2>&1} \type{|} \periods[3] -- can be shortened to {\stt command} \type{|&} \periods[3]
+    \item \type{${PIPESTATUS[0]}}, \type{${PIPESTATUS[1]}} -- retvals before and after pipe
 	\item {\tt read {\sl parameters}} -- read input line and separate it into parameters
 \stopitemize
 
@@ -322,15 +324,15 @@ EOF                         EOF
 \item {\tt tty} -- print name of terminal connected to stdout
 \item {\tt printf {\sl format values}} -- format output
 \startitem {\tt printf -v {\sl variable form. val.}} -- form. output into variable
-	{\tfx
-	\startitemize 
-	\item \% [flags][width][.precision][length]specifier
-	\item Specifier: \type{%u},\,\type{%d},\,\type{%i} decimal; \type{%E},\,\type{%f} float, \type{%x},\,\type{%X} hex;\,\type{%o} octal,\,\type{%s} string,\,\type{%%} char \%
-	\item Width: $n$  prints at least $n$ chars, spaces from right, $0n$ print at least $n$ chars, zeros from left, \type{*} width specified in preceding parameter
-	\item Precision: min. number of digits, digits after decimal point, number of printed chars, {\tt *} number of chars given by preceding parameter 
-	\item Flags: {\tt -} left-justify, {\tt +} prints number with sign {\tt +/-}
-	\stopitemize
-	}
+   {\tfx
+   \startitemize 
+   \item \% [flags][width][.precision][length]specifier
+   \item Specifier: \type{%u},\,\type{%d},\,\type{%i} decimal; \type{%E},\,\type{%f} float, \type{%x},\,\type{%X} hex;\,\type{%o} octal,\,\type{%s} string,\,\type{%%} char \%
+   \item Width: $n$  prints at least $n$ chars, spaces from right, $0n$ print at least $n$ chars, zeros from left, \type{*} width specified in preceding parameter
+   \item Precision: min. number of digits, digits after decimal point, number of printed chars, {\tt *} number of chars given by preceding parameter 
+   \item Flags: {\tt -} left-justify, {\tt +} prints number with sign {\tt +/-}
+   \stopitemize
+   }
 \stopitem
 \item \type{printf "%d" \'A} -- display ASCII code of char “A” (65)
 \item \type{printf \\$(printf '%03o' 65)} -- print char given by ASCII code
