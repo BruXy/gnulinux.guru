@@ -9,13 +9,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \starttext
-
 \startcolumns[n=2]
-
 \title{Python}
-
 \mycopyright
-
 \blank[2mm]
 
 Set of interpreter: \type{#!/usr/bin/env python} \crlf
@@ -431,6 +427,7 @@ except [type [as value]]: \crlf
 \item {\tt file.truncate([size])} -- truncate file to  size bytes
 \item {\tt file.fileno()} -- get file descriptor integer
 \item {\tt file.closed}, {\tt file.mode}, {\tt file.name} -- return attributes
+\item {\tt with open('file.txt', 'r') as f:} --  block with file manipulations
 \stopitemize
 
 %classmethod
