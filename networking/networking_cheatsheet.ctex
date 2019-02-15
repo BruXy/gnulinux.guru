@@ -230,6 +230,7 @@ Privilege port $<$ 1024 can be opened only by the root user!
 \subsection{Wi-Fi Networking}
 
 \startitemize
+\item List available devices: \type{lspci | grep -E -i --color 'wifi|wlan|wireless'}
 \item Scan available networks: {\tt iwlist wlan0 scan}; {\tt nmcli dev wifi}
 \item Display available channels: {\tt iwlist wlan0 freq}
 \item Connect with WEP network: {\tt iwconfig wlan0 essid {\sl "Network SSID"} key {\sl HEX\_KEY}}
@@ -730,6 +731,8 @@ USERCTL=yes
 \item Ask root name server for a record: {\tt dig @a.root-servers.net example.com} (will return authority DNS for domain)
 %dig +dnssec +multi @a.iana-servers.net example.com
 %\item Check record: {\tt dig +cdflag www.root.cz}
+\item Get DNSSEC root keys: \type{dig . DNSKEY | grep -Ev '^($|;)' > root.keys}
+\item Verify DNSSEC of {\em root.cz} A record: \type{dig +sigchase +trusted-key=./root.keys www.root.cz A}
 \stopitemize
 
 \section{WHOIS service}
