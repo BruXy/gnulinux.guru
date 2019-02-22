@@ -232,8 +232,8 @@ shift \symdollar{}((\symdollar{}OPTIND - 1)); echo "Last: \symdollar{}1" }
 			\item logical: {\tt -a} and, {\tt -o} or, {\tt !} negation 		
 		\stopitemize
 	\stopitem	
-	\item \type{[[ ]]} -- comparison of strings, equal {\tt =}, non-equal {\tt !=}, {\tt -z \sl string} is zero sized, {\tt -n \sl string} is non-zero sized, \type{<}, \type{>} lexical comparison
-	\item \type{[} {\stt condition} \type{] && [} {\stt condition} \type{]} 
+	\item \type{[[ ]]} -- comparison of strings, equal {\tt =}, non-equal {\tt !=}, {\tt -z }{\stt string} is zero sized, {\tt -n }{\stt string} is non-zero sized, \type{<}, \type{>} lexical comparison
+	\item \type{[} {\stt condition} \type{] && [} {\stt condition} \type{]}
 	\item {\tt true} -- returns 0 value
 	\item {\tt false} -- returns 1 value
 	\item {\tt break} -- terminates executed cycle
