@@ -218,6 +218,8 @@ esac; done
 shift \symdollar{}((\symdollar{}OPTIND - 1)); echo "Last: \symdollar{}1" }
 \stoplines}
 
+\vskip -2mm
+
 \section{Control expressions}
 
 \startitemize
@@ -369,7 +371,7 @@ EOF                         EOF
 \section{Time and process planning}
 
 \startitemize
-\item {\tt date} -- print date, {\tt date --date=@\sl unix\_time}
+\item {\tt date} -- print date, {\tt date --date=@}{\stt unix\_time}
 \item \type{date +"%Y%m%d} \type{%H:%M:%S} \type{%Z"} -- format to {\tt 20130610 13:39:02 CEST} %POZOR
 \item {\tt cal} -- display calendar
 \item {\tt crontab -e} -- edit crontab, {\tt -l} list, format {\stt min hour date month day command}, {\tt * * * * * command} run every minute, {\tt 1 * * * * command} 1\high{st} min of every hour

@@ -1,54 +1,57 @@
 TEX=context
 PROJECT=bash
+WEB_ROOT=~/HOME_DESK/Documents/html/gnulinux/
 
-all: Makefile bash_tahak.pdf bash_tahak_include.html \
-     bash_tahak.html bash_cheatsheet.pdf bash_cheatsheet_include.html\
-     bash_cheatsheet.html bash_cheatsheet_0001.png \
- 	 bash_cheatsheet_thumbnail.png bash_cheatsheet.tar.bz2	
+all: Makefile $(PROJECT)_tahak.pdf $(PROJECT)_tahak_include.html \
+     $(PROJECT)_tahak.html $(PROJECT)_cheatsheet.pdf \
+     $(PROJECT)_cheatsheet_include.html $(PROJECT)_cheatsheet.html \
+     $(PROJECT)_cheatsheet_0001.png $(PROJECT)_cheatsheet_thumbnail.png \
+     $(PROJECT)_cheatsheet.tar.bz2
 
-bash_tahak.pdf: bash_style.ctex bash_tahak.ctex
-	$(TEX) bash_tahak.ctex
+$(PROJECT)_tahak.pdf: $(PROJECT)_style.ctex $(PROJECT)_tahak.ctex
+	$(TEX) $(PROJECT)_tahak.ctex
 
-bash_cheatsheet.pdf: bash_style.ctex bash_cheatsheet.ctex
-	$(TEX) bash_cheatsheet.ctex
+$(PROJECT)_cheatsheet.pdf: $(PROJECT)_style.ctex $(PROJECT)_cheatsheet.ctex
+	$(TEX) $(PROJECT)_cheatsheet.ctex
 
-bash_cheatsheet_include.html: bash_cheatsheet.ctex bash_ctext2html.sed
-	sed -f bash_ctext2html.sed bash_cheatsheet.ctex > bash_cheatsheet_include.html
+$(PROJECT)_cheatsheet_include.html: $(PROJECT)_cheatsheet.ctex $(PROJECT)_ctext2html.sed
+	sed -f $(PROJECT)_ctext2html.sed $(PROJECT)_cheatsheet.ctex > $(PROJECT)_cheatsheet_include.html
 #   Put <style> to different file, must be inside <head>
-#	sed -ne '/<style.*/,/.*style>/{/<.*style.*>/d;p}' bash_cheatsheet_include.html > bash_cheatsheet.css	
-#	sed -ie '/<style.*/,/.*style>/d' bash_cheatsheet_include.html
+#	sed -ne '/<style.*/,/.*style>/{/<.*style.*>/d;p}' $(PROJECT)_cheatsheet_include.html > $(PROJECT)_cheatsheet.css	
+#	sed -ie '/<style.*/,/.*style>/d' $(PROJECT)_cheatsheet_include.html
 
-bash_cheatsheet.html: bash_cheatsheet_include.html ../html_header.sed
-	sed -f ../html_header.sed bash_cheatsheet_include.html > bash_cheatsheet.html
+$(PROJECT)_cheatsheet.html: $(PROJECT)_cheatsheet_include.html ../html_header.sed
+	sed -f ../html_header.sed $(PROJECT)_cheatsheet_include.html > $(PROJECT)_cheatsheet.html
 
-bash_tahak_include.html: bash_style.ctex bash_tahak.ctex bash_ctext2html.sed
-	sed -f bash_ctext2html.sed bash_tahak.ctex > bash_tahak_include.html
+$(PROJECT)_tahak_include.html: $(PROJECT)_style.ctex $(PROJECT)_tahak.ctex $(PROJECT)_ctext2html.sed
+	sed -f $(PROJECT)_ctext2html.sed $(PROJECT)_tahak.ctex > $(PROJECT)_tahak_include.html
 
-bash_tahak.html: bash_tahak_include.html ../html_header.sed
-	sed -f ../html_header.sed bash_tahak_include.html > bash_tahak.html
+$(PROJECT)_tahak.html: $(PROJECT)_tahak_include.html ../html_header.sed
+	sed -f ../html_header.sed $(PROJECT)_tahak_include.html > $(PROJECT)_tahak.html
 
-bash_cheatsheet_0001.png: bash_cheatsheet.pdf
-	pdf2png -x 512 bash_cheatsheet.pdf
+$(PROJECT)_cheatsheet_0001.png: $(PROJECT)_cheatsheet.pdf
+	pdf2png -x 512 $(PROJECT)_cheatsheet.pdf
 
-bash_cheatsheet_thumbnail.png: bash_cheatsheet_0001.png
+$(PROJECT)_cheatsheet_thumbnail.png: $(PROJECT)_cheatsheet_0001.png
 	convert -unsharp 1.0 -resize 320x $^ PNG:$@
 
 publish: $(PROJECT)_cheatsheet.pdf $(PROJECT)_cheatsheet.html $(PROJECT)_cheatsheet_include.html $(PROJECT)_cheatsheet_thumbnail.png $(PROJECT)_cheatsheet.tar.bz2
-	cp $^ ~/HOME_DESK/Documents/html/gnulinux/
+	cp $^ $(WEB_ROOT)
+	make -C $(WEB_ROOT)
 
 .SUFFIXES: .ctex
 
-tarball: bash_tahak.tar.bz2
+tarball: $(PROJECT)_tahak.tar.bz2
 
-bash_cheatsheet.tar.bz2: bash_style.ctex bash_cheatsheet.ctex Makefile bash_ctext2html.sed 
-	cd ..; tar cvjf $@ bash_tahak/{*.ctex,Makefile,bash_ctext2html.sed} html_header.sed
+$(PROJECT)_cheatsheet.tar.bz2: $(PROJECT)_style.ctex $(PROJECT)_cheatsheet.ctex Makefile $(PROJECT)_ctext2html.sed 
+	cd ..; tar cvjf $@ $(PROJECT)_tahak/{*.ctex,Makefile,$(PROJECT)_ctext2html.sed} html_header.sed
 	cp ../$@ .
 
 clean:
-	rm -f bash*.log bash*.tuc
+	rm -f $(PROJECT)*.log $(PROJECT)*.tuc
 
 veryclean: clean
-	rm -f bash_tahak.pdf bash_cheatsheet.{pdf,html} bash_cheatsheet_include.html \
-		  bash_cheatsheet_0001.png bash_tahak.html bash_tahak_include.html \
-          bash_cheatsheet_thumbnail.png	bash_cheatsheet.tar.bz2	
+	rm -f $(PROJECT)_tahak.pdf $(PROJECT)_cheatsheet.{pdf,html} $(PROJECT)_cheatsheet_include.html \
+		  $(PROJECT)_cheatsheet_0001.png $(PROJECT)_tahak.html $(PROJECT)_tahak_include.html \
+          $(PROJECT)_cheatsheet_thumbnail.png	$(PROJECT)_cheatsheet.tar.bz2	
 

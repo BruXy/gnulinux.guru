@@ -7,81 +7,80 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \mainlanguage[cz]
-\language[cz] 
+\language[cz]
 \enableregime[utf]
 \pdfminorversion=4
 %\setupbodyfont[helvetica,7.9pt]  %
-\setupbodyfont[8pt]  %
+\setupbodyfont[7.95pt]  %
 \setuppapersize[A4, portrait][A3, landscape] % A3, A4, A5, A6; landscape
 %\setuppapersize[A4, portrait] % A3, A4, A5, A6; landscape
-\setuparranging[2SIDE] % zmena stranek pro vyrobu knizky, 
+\setuparranging[2SIDE] % zmena stranek pro vyrobu knizky,
 % 2SIDE -- dve stranky na jeden list vis setuppapersize
 
 % Rozmery stranky
 \setuplayout[%
-	width=200mm,%
-	height=293mm,%
-	header=0mm, %
-	footer=0mm, %
-	topspace=2mm, %
-	leftmargin=0mm, %
-	rightmargin=0mm, %
-	leftedge=0mm,
-	backspace=3mm,
+    width=200mm,%
+    height=293mm,%
+    header=0mm, %
+    footer=0mm, %
+    topspace=2mm, %
+    leftmargin=0mm, %
+    rightmargin=0mm, %
+    leftedge=0mm,
+    backspace=3mm,
 ]
 
 %\showframe
 
 \setuppagenumbering[%
-	alternative=singlesided,  % doublesided
-	location={footer, right}, % header, middle, inleft, inmargin
-	style=bold,               %
-%	conversion=numbers,        % characters Characters romannumerals 
-%	left={--~},               % znak pred
-% 	right={~--},              % znak za
+    alternative=singlesided,  % doublesided
+    location={footer, right}, % header, middle, inleft, inmargin
+    style=bold,               %
+%    conversion=numbers,        % characters Characters romannumerals
+%    left={--~},               % znak pred
+%     right={~--},              % znak za
 ]
 
-\definefont[TitleFont][RegularBold sa 2.0] 
+\definefont[TitleFont][RegularBold sa 2.0]
 
 \def\ShadowOffset{-2.5pt}
 \define[1]\TitleShadow{\rlap{%
-	\color[lightgray]{#1}}\kern\ShadowOffset\lower\ShadowOffset\hbox{#1}%
+    \color[lightgray]{#1}}\kern\ShadowOffset\lower\ShadowOffset\hbox{#1}%
 }
 
 % Nastaevni nadpisu
 \setuphead[title][
-	before={\blank[2*small]},
-	textcommand=\TitleShadow, %
-	style=\TitleFont, %
-	align=center,
-	after=\nowhitespace,
+    before={\blank[2*small]},
+    textcommand=\TitleShadow, %
+    style=\TitleFont, %
+    align=center,
+    after={\blank[-10pt]},
 ]
 
-\definefont[SectionFont][RegularBold sa 1.3] 
+\definefont[SectionFont][RegularBold sa 1.3]
 \def\Cislovani#1{{#1}.} % tecka za cislem kapitoly
 
-\setuphead[section][
-	style=\SectionFont,
-%	textcommand=\SectionLook,
-	numbercommand=\Cislovani,
-%	before={\blank[1pt]},
-	before=\nowhitespace,
-%    after={\blank[1*small]},
-%    after={\blank[1pt]},
-	after=\nowhitespace,
-%	background=
+\setuphead[section][style=\SectionFont,
+%X %    textcommand=\SectionLook,
+    numbercommand=\Cislovani,
+    before={\blank[-5pt]},
+%     before=\nowhitespace,
+%X %    after={\blank[1*small]},
+    after={\blank[-7.5pt]},
+%     after=\nowhitespace,
+%X %    background=
 ]
 
-\definefont[SubsectionFont][RegularBold sa 1.07] 
+\definefont[SubsectionFont][RegularBold sa 1.07]
 \setuphead[subsection][   %
    style=\SubsectionFont, %
    numbercommand=\Cislovani,%
-   before={\blank[1*small]},%
-   after=\nowhitespace,
+   before={\blank[-5pt]},%
+   after={\blank[-7.5pt]},
 ]
-	
+
 % mezery mezi odstavci
-\setupwhitespace[none] 
+\setupwhitespace[none]
 
 % velikost odsazeni
 \setupindenting[none]  % none, small, medium, bix, next, first, [rozmer]
@@ -100,16 +99,16 @@
 \setupcolor[rgb]
 
 % Nastaveni seznamu s odrazkami
-\setupinterlinespace[line=2.525ex] 
-\setupitemize[1][standard,packed,joinedup]
+\setupinterlinespace[line=2.52ex]
+\setupitemize[1][standard,packed,joinedup,nowhite][margin=0pt]
 % joinedup -- zadne mezery pred a za
 
 \setuplines[indenting=always,%
-	before=\nowhitespace]
+    before=\nowhitespace]
 
 %beforehead={\nowhitespace}]
 
-% Vypnuti popisku 
+% Vypnuti popisku
 \setupcaptions[location=none]
 
 % nezery pred a za plovoucimi objekty
@@ -130,14 +129,14 @@ setbounds currentpicture to OverlayBox ;
 
 % macro #1 = color of key
 \def\key{\inframed[frame=on,
-	corner=round,
+    corner=round,
     background=shadow,
-	backgroundcolor=lightgray,
-	bottomframe=on,
-	radius=1.5pt, %
-	offset=-0.8pt,
-%	height=1.1em, %
-%	height=\lineheight, %
+    backgroundcolor=lightgray,
+    bottomframe=on,
+    radius=1.5pt, %
+    offset=-0.8pt,
+%    height=1.1em, %
+%    height=\lineheight, %
     backgroundoffset=0pt]}
 
 %%%%%%%%%% Prikazy
@@ -181,21 +180,21 @@ setbounds currentpicture to OverlayBox ;
 \def\CSK#1{\COMMAND{#1}{ex}} % editacni
 
 
-%\def\CS#1{{\tt :#1}} % 
+%\def\CS#1{{\tt :#1}} %
 
 \defineframed[grayframe][
-%	location=depth, %
-	background=color,%
-	backgroundcolor=lightgray, %
-	frameoffset=0.5pt, %
-	framecolor=lightgray, %
-	height=broad, %
-	strut=yes, %
-%	depth=1pt,
-	offset=none, % odsazeni po stranach
+%    location=depth, %
+    background=color,%
+    backgroundcolor=lightgray, %
+    frameoffset=0.5pt, %
+    framecolor=lightgray, %
+    height=broad, %
+    strut=yes, %
+%    depth=1pt,
+    offset=none, % odsazeni po stranach
 ]
 
-\def\CS#1{\grayframe{\tt :#1}} % 
+\def\CS#1{\grayframe{\tt :#1}} %
 
 \def\a{$\approx$ {}}
 
@@ -206,10 +205,10 @@ setbounds currentpicture to OverlayBox ;
 \def\mycopyright{
 \placeintermezzo[here,none]{}{
 \framed[frame=off,bottomframe=on,frameoffset=1mm]{
-	\startalignment[middle]
-	{\tfx \copyright{} \date[][year] Martin Bruchanov, {\tt bruxy@regnet.cz}}
-	\stopalignment
-	}
+    \startalignment[middle]
+    {\tfx \copyright{} \date[][year] Martin Bruchanov, {\tt bruxy@regnet.cz}}
+    \stopalignment
+    }
 }}
 
 \def\symlb{\{}
