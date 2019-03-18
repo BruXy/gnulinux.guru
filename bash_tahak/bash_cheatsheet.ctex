@@ -458,6 +458,7 @@ File name wildchars: \type{?}  a char; \type{*} zero or more chars;
 \item {\tt logout}, \C{\CT+d} -- exit shell
 \item {\tt su {\sl login}} -- change user to {\sl login}
 \item {\tt sudo} -- run command as other user
+\item {\tt su - {\sl login} -c '{\sl command}' } -- run one command as {\sl login}
 \item {\tt id {\sl login}}, {\tt groups {\sl login}} --  show user details
 \item {\tt useradd, userdel, usermod} -- create, delete, edit user
 \item {\tt groupadd, groupdel, groupmod} -- create, delete, edit group 
@@ -540,7 +541,6 @@ File name wildchars: \type{?}  a char; \type{*} zero or more chars;
 
 % Zvýraznění
 %sed s/$STRING/${tput smso} $STRING ${tput rmso}/g
-
 \stoptext
 
 

@@ -11,11 +11,12 @@
 \enableregime[utf]
 \pdfminorversion=4
 %\setupbodyfont[helvetica,7.9pt]  %
-\setupbodyfont[7.95pt]  %
+\setupbodyfont[8.1pt]  %
 \setuppapersize[A4, portrait][A3, landscape] % A3, A4, A5, A6; landscape
 %\setuppapersize[A4, portrait] % A3, A4, A5, A6; landscape
 \setuparranging[2SIDE] % zmena stranek pro vyrobu knizky,
 % 2SIDE -- dve stranky na jeden list vis setuppapersize
+\usemodule[old-multicolumns]
 
 % Rozmery stranky
 \setuplayout[%
@@ -63,11 +64,9 @@
 \setuphead[section][style=\SectionFont,
 %X %    textcommand=\SectionLook,
     numbercommand=\Cislovani,
-    before={\blank[-5pt]},
-%     before=\nowhitespace,
-%X %    after={\blank[1*small]},
-    after={\blank[-7.5pt]},
-%     after=\nowhitespace,
+    before={\blank[1*small]},
+%    before=\nowhitespace,
+    after=\nowhitespace,
 %X %    background=
 ]
 
@@ -75,8 +74,6 @@
 \setuphead[subsection][   %
    style=\SubsectionFont, %
    numbercommand=\Cislovani,%
-   before={\blank[-5pt]},%
-   after={\blank[-7.5pt]},
 ]
 
 % mezery mezi odstavci
