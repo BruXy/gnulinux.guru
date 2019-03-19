@@ -196,6 +196,7 @@ Run a script as: {\tt bash {\sl option script and its parameters}}
 \item {\tt \symdollar{}0}, {\tt \symdollar{}\symlb0\symrb} -- name of script/executable
 \item {\tt \symdollar{}1} to {\tt \symdollar{}}9, {\tt \symdollar{}\symlb1\symrb} to {\tt \symdollar{}\symlb255\symrb} -- positional command line parameters
 \item {\tt PAR=\symdollar{}\symlb1:?"Missing parameter"\symrb} -- error when {\tt \symdollar{}\symlb1\symrb} is not set
+\item {\tt PAR=\symdollar{}\symlb1:-default\symrb} -- when {\tt \symdollar{}\symlb1\symrb} is not set, use {\em default} value
 \item {\tt \symdollar{}}\type{#} -- number of command line parameters (argc)
 \item {\tt \symdollar{}\symlb!\type{#}\symrb} -- the last command line parameter
 \item {\tt \symdollar{}*} -- expand all parameters, \type{"$*"} = {\tt "\symdollar{}1 \symdollar{}2 \symdollar{}3\ldots"}
