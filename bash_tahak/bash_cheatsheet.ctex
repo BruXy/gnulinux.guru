@@ -285,7 +285,7 @@ shift \symdollar{}((\symdollar{}OPTIND - 1)); echo "Last: \symdollar{}1" }
 	\item {\tt mkfifo {\sl name}} -- make a named pipe, it can be written and read as file
 	\item {\stt command}\low{1} \type{|} {\stt command}\low{2} -- pipe, connection between processes
     \item {\stt command} \type{2>&1} \type{|} \periods[3] -- can be shortened to {\stt command} \type{|&} \periods[3]
-    \item \type{${PIPESTATUS[0]}}, \type{${PIPESTATUS[1]}} -- retvals before and after pipe
+    \item {\tt \symdollar{}\symlb{}PIPESTATUS[0]\symrb}, {\tt \symdollar{}\symlb{}PIPESTATUS[1]\symrb{}} -- retvals before and after pipe
 	\item {\tt read {\sl parameters}} -- read input line and separate it into parameters
 \stopitemize
 
