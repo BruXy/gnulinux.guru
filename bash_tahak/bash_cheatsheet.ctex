@@ -454,7 +454,7 @@ File name wildchars: \type{?}  a char; \type{*} zero or more chars;
 
 \startitemize
 \item {\tt whoami, who am i} -- tell who I am :)
-\item {\tt w, who, users, finger} -- list connected users
+\item {\tt w, who, users, pinky, finger} -- list connected users
 \item {\tt last / lastb} -- history successful / unsuccessful logins
 \item {\tt logout}, \C{\CT+d} -- exit shell
 \item {\tt su {\sl login}} -- change user to {\sl login}
