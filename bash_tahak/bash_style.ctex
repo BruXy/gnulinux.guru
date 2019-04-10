@@ -11,7 +11,7 @@
 \enableregime[utf]
 \pdfminorversion=4
 %\setupbodyfont[helvetica,7.9pt]  %
-\setupbodyfont[8.05pt]  %
+\setupbodyfont[7.9pt]  %
 \setuppapersize[A4, portrait][A3, landscape] % A3, A4, A5, A6; landscape
 %\setuppapersize[A4, portrait] % A3, A4, A5, A6; landscape
 \setuparranging[2SIDE] % zmena stranek pro vyrobu knizky,
@@ -21,7 +21,7 @@
 % Rozmery stranky
 \setuplayout[%
     width=200mm,%
-    height=290mm,% 293
+    height=288mm,% 293
     header=0mm, %
     footer=0mm, %
     topspace=2mm, %

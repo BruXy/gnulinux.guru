@@ -367,6 +367,7 @@ EOF                         EOF
 \item {\tt time {\sl command}} -- print time of process execution
 \item {\tt times} -- print user and system time utilization in current shell
 \item {\tt watch -n {\sl s command}} -- every {\sl s} seconds run command
+\item {\tt timeout {\sl N command}} -- quit {\sl command} after {\sl N} seconds
 \stopitemize
 
 \section{Time and process planning}
