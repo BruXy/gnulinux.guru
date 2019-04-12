@@ -336,14 +336,17 @@ USERCTL=yes
 \item Color and interactive network monitor: {\tt iptraf-ng}
 \stopitemize
 
-\section{ICMP (Internet Control Message Protocol)}
+\section{Pinging with ICMP (Internet Control Message Protocol) and TCP}
 
 \startitemize
 \item For IPv6 use: {\tt ping6}, {\tt tracepath6}, {\tt traceroute6}
-\item Ping n-times: {\tt ping -c {\sl n} IP}
+\item Ping n-times: {\tt ping -c {\sl n} {\sl host}}, {\tt hping3 -1 -c {\sl n} {\sl host}}
 \item Broadcast: {\tt ping -b 10.0.0.255}
 \item Use different interface: {\tt ping -I {\sl eth1}}
-\item Trace route: {\tt traceroute {\sl host}}; {\tt mtr -c 1 -r {\sl host}};  
+\item Trace route: {\tt traceroute {\sl host}}; {\tt mtr -c 1 -r {\sl host}}
+\item TCP ping 3$\times$ existing port: {\tt hping3 -c 3 -p 443}
+\item Flood with SYN packets with spoofed source IP: {\tt hping3 -S -P -U --flood -V --rand-source {\sl host}}
+\item Smurf attack: {\tt hping3 -1 --flood -a {\sl host}}
 \item Use TCP instead: {\tt tcptraceroute}, {\tt tcping {\sl host port}}
 \stopitemize
 
@@ -512,7 +515,7 @@ USERCTL=yes
 \item Generate 4096bit key with comment: {\tt ssh-keygen -t rsa -b 4096 -C "Top secret key"}
 \item Generate public key from private: {\tt ssh-keygen -y -f private.pem > public.pub}
 \item Permissions: {\tt chmod 700 \symtilda/.ssh}; {\tt chmod 600 \symtilda/.ssh/authorized_keys}
-\item Copy key to host and updates {\tt \symtilda/.authorized_keys}: {\tt ssh-copy-id {\sl user@host}}; {\tt cat \symtilda/.ssh/id_rsa.pub \| ssh user@host 'cat >> \symtilda/.ssh/authorized_keys'}
+\item Copy key to host and update {\tt \symtilda/.authorized_keys}: {\tt ssh-copy-id {\sl user@host}}; {\tt cat \symtilda/.ssh/id_rsa.pub \| ssh user@host 'cat >> \symtilda/.ssh/authorized_keys'}
 \item Holds SSH keys in memory for 8 hours: \type{ssh-agent -t $((8*3600))}
 \item Add key to agent: {\tt ssh-add  \symtilda/.ssh/id_rsa} (will ask for passphrase once in time life)
 \item Forward SSH agent: {\tt ssh -A hostname}
@@ -660,6 +663,8 @@ USERCTL=yes
 \item Generate TCP packets: {\tt nping -c 1 --tcp -p 80,433 scanme.nmap.org}
 \item Save scan to files output.gnmap (grepable), output.nmap (text), output.xml (XML): {\tt nmap -oA output -p- {\sl host}}
 \item Compare two nmap's XML outputs: {\tt ndiff scan1.xml scan2.xml}
+\item Check uptime of remote host (TCP timestamp): {\tt hping3 --tcp-timestamp -S google.com -p 80 -c 3}
+\item Scan open services on port range 1--1024: {\tt hping3 --scan 1-1024 -S {\sl host}}
 \stopitemize
 
 \subsection{netcat -- Concatenate and redirect sockets}
@@ -775,6 +780,7 @@ USERCTL=yes
 \item Generate certificate: {\tt openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout server.key -out server.crt}
 \item Check SSL key MD5: {\tt openssl rsa -noout -modulus -in server.key \| openssl md5}
 \item Check expiration date: {\tt echo \| openssl s_client -showcerts -connect google.com:443 2>&1 \| openssl x509 -noout -dates}
+\item Set 3 second timeout to previous command: {\tt echo \| timeout 3 openssl s_client...}
 \stopitemize
 
 \section{Network Time Protocol (NTP)}
