@@ -19,7 +19,7 @@
 %\setupoutput[dvips,acrobat] % dvips, acrobat
 \pdfminorversion=4
 %\setupbodyfont[helvetica,7.9pt]  %
-\setupbodyfont[8.2pt]  %
+\setupbodyfont[8.1pt]  %
 \setuppapersize[A4, portrait][A3, landscape] % A3, A4, A5, A6; landscape
 %\setuppapersize[A4, portrait] % A3, A4, A5, A6; landscape
 \setuparranging[2SIDE] % zmena stranek pro vyrobu knizky,
@@ -41,50 +41,50 @@
 
 % Rozmery stranky
 \setuplayout[%
-	width=200mm,%
-	height=287mm,%
-	header=0mm, %
-	footer=0mm, %
-	topspace=3mm, %
-	leftmargin=0mm, %
-	rightmargin=0mm, %
-	leftedge=0mm,
-	backspace=3mm,
+    width=200mm,%
+    height=287mm,%
+    header=0mm, %
+    footer=0mm, %
+    topspace=3mm, %
+    leftmargin=0mm, %
+    rightmargin=0mm, %
+    leftedge=0mm,
+    backspace=3mm,
 ]
 
 \setuppagenumbering[%
-	alternative=singlesided,  % doublesided
-	location={footer, right}, % header, middle, inleft, inmargin
-	style=bold,               %
-%	conversion=numbers,        % characters Characters romannumerals
-%	left={--~},               % znak pred
-% 	right={~--},              % znak za
+    alternative=singlesided,  % doublesided
+    location={footer, right}, % header, middle, inleft, inmargin
+    style=bold,               %
+%    conversion=numbers,        % characters Characters romannumerals
+%    left={--~},               % znak pred
+%     right={~--},              % znak za
 ]
 
 \definefont[TitleFont][RegularBold sa 2.0]
 
 \def\ShadowOffset{-2.5pt}
 \def\TitleShadow#1{\rlap{%
-	\color[lightgray]{#1}}\kern\ShadowOffset\lower\ShadowOffset\hbox{#1}%
+    \color[lightgray]{#1}}\kern\ShadowOffset\lower\ShadowOffset\hbox{#1}%
 }
 
 % Nastaevni nadpisu
 \setuphead[title][%before={\blank[2*small]},
-	textcommand=\TitleShadow, %
-	style=\TitleFont, %
-	alternative=middle, %
-	before=\nowhitespace,
-	after=\nowhitespace]
+    textcommand=\TitleShadow, %
+    style=\TitleFont, %
+    alternative=middle, %
+    before=\nowhitespace,
+    after=\nowhitespace]
 
 \definefont[SectionFont][RegularBold sa 1.15]
 \def\Cislovani#1{{#1}.} % tecka za cislem kapitoly
 %\def\SectionLook#1{#1~\vline$\rightarrow$}
 \setuphead[section][style=\SectionFont,
-%	textcommand=\SectionLook,
-	numbercommand=\Cislovani,
-	before={\blank[small]},
+%    textcommand=\SectionLook,
+    numbercommand=\Cislovani,
+    before={\blank[small]},
 %   after={\blank[1*small]}]
-	after=\nowhitespace]
+    after=\nowhitespace]
 
 \definefont[SubsectionFont][RegularBold sa 1.05]
 \setuphead[subsection][   %
@@ -93,7 +93,7 @@
    before={\blank[1*small]},%
 %   after={\blank[1*small]}]
    after=\nowhitespace]
-	
+    
 % mezery mezi odstavci
 \setupwhitespace[none]
 
@@ -122,7 +122,7 @@
 \setupitemgroup[enumerate][2][n]
 
 \setuplines[indenting=always,%
-	before=\nowhitespace]
+    before=\nowhitespace]
 
 %beforehead={\nowhitespace}]
 
@@ -137,18 +137,18 @@
 
 % Nastaveni oramovaneho textu pro zobrazeni klavesy
 \defineframed[keyframe][%
-	strut=yes, %
-	background=color,%
-	backgroundcolor=lightgray, %
-	location=middle,
-	corner=round, %
-	radius=2.5pt, %
-	height=1.1em, %
-%	offset=2pt % odsazeni po stranach
+    strut=yes, %
+    background=color,%
+    backgroundcolor=lightgray, %
+    location=middle,
+    corner=round, %
+    radius=2.5pt, %
+    height=1.1em, %
+%    offset=2pt % odsazeni po stranach
 ]
 
 %\def\keyframe#1{%
-%	\inframed{#1}%
+%    \inframed{#1}%
 %}
 
 %%%%%%%%%% Prikazy
@@ -192,15 +192,15 @@
 %\def\CS#1{{\tt :#1}} %
 
 \defineframed[grayframe][
-%	location=depth, %
-	background=color,%
-	backgroundcolor=lightgray, %
-	frameoffset=0.5pt, %
-	framecolor=lightgray, %
-	height=broad, %
-	strut=yes, %
-%	depth=1pt,
-	offset=none, % odsazeni po stranach
+%    location=depth, %
+    background=color,%
+    backgroundcolor=lightgray, %
+    frameoffset=0.5pt, %
+    framecolor=lightgray, %
+    height=broad, %
+    strut=yes, %
+%    depth=1pt,
+    offset=none, % odsazeni po stranach
 ]
 
 \def\CS#1{\grayframe{\tt :#1}} %
@@ -214,10 +214,10 @@
 \def\mycopyright{
 \placeintermezzo[here,none]{}{
 \framed[frame=off,bottomframe=on,frameoffset=1mm]{
-	\startalignment[middle]
-	{\copyright{} \date[][year,--,mm,--,dd] Martin Bruchanov, {\tt bruchy@gmail.com}}
-	\stopalignment
-	}
+    \startalignment[middle]
+    {\copyright{} \date[][year,--,mm,--,dd] Martin Bruchanov, {\tt bruchy@gmail.com}}
+    \stopalignment
+    }
 }}
 
 \def\symlb{\{}
@@ -234,10 +234,10 @@
 \def\framedTABLE{\bTABLE}
 
 \def\bTABLEOSI{
-	\bTABLE
-	\setupTABLE[column][2][align=center]
-	\setupTABLE[column][4][align={center,middle,lohi}]
-	\setupTABLE[header][background=color,backgroundcolor=gray,align=center]
+    \bTABLE
+    \setupTABLE[column][2][align=center]
+    \setupTABLE[column][4][align={center,middle,lohi}]
+    \setupTABLE[header][background=color,backgroundcolor=gray,align=center]
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

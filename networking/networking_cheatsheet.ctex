@@ -781,6 +781,9 @@ USERCTL=yes
 \item Check SSL key MD5: {\tt openssl rsa -noout -modulus -in server.key \| openssl md5}
 \item Check expiration date: {\tt echo \| openssl s_client -showcerts -connect google.com:443 2>&1 \| openssl x509 -noout -dates}
 \item Set 3 second timeout to previous command: {\tt echo \| timeout 3 openssl s_client...}
+\item Get information about certificate file: {\tt openssl x509 -in certificate.crt -noout -text}
+\item Export certificate from PKCS\#12 (password 123456): {\tt openssl pkcs12 -in file.p12 -out crt.pem -clcerts -nokeys -passin 'pass:123456'}
+\item Export key from PKCS\#12: {\tt openssl pkcs12 -in file.p12 -out key.pem -nocerts -nodes  -passin 'pass:123456'}
 \stopitemize
 
 \section{Network Time Protocol (NTP)}
