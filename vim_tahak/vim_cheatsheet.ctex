@@ -110,19 +110,20 @@
 \subsection{Deleting, moving and copying of text}
 
 \startitemize
-\item Deletion automaticly stores text in register (for moving)
+\item Deletion automatically stores text in register (for moving)
 \item Delete:\Df char  \CC{x} \a \CC{\DEL}; previous char \CC{X} \a \CC{d$\leftarrow$} \a \CC{dh}, \CE{\CT+h} \a \CE{\BS}; word \CC{dw} \a\CE{\CT+w}; line \CC{dd}  
 \item Delete up to pair bracket:\DF \CC{d\%}
 \item Delete to end/beginning of sentence:\DF \CC{d)}\,/\,\CC{d(}
 \item Delete the rest of line/file:\DF \CC{D} \a \CC{d\symdollar} \,/\,\CC{dG}
 \item Delete from cursor position to beginning:\DF \CC{d0} \a\CC{d^}
+\item Delete all empty lines (or regex): \DF \CS{\U{g}lobal/^\symdollar/\U{d}elete} %g/^$/d
 \item Join lines: \DF \CC{J} add space,\DF \CC{gJ} without space
-%\item Spoj s následujícím řádkem, bez mezery:\DF \CC{gJ}
 \item Copy to register:\DF line \CC{Y} \a \CC{yy}, word \CC{yw}
 \item Copy to the beginning/end of line:\DF \CC{y0}\,/\,\CC{y\symdollar}
 \item More registers: press \CC{"{\em k}\ldots} before command will save text to register {\em k}. E.g. \CC{"kyy} copies line into \type{k}
 \item Paste content of last used register or last deleted text: after \CC{p}, before \CC{P} cursor, \CC{"kpp} pastes register \type{k}
-\item Special register: \type{"%} -- current file name, \type{"/} -- last search,\ldots
+\item Special register: \type{"%} -- current file name, \type{"/} -- last search, \type{"+} -- system clipboard \ldots
+\item Copy all file to a system clipboard: \CC{gg}\CC{"+y}\CC{G}
 \item Show content of registers:\DF \CS{\U{reg}ister {\em a}} %register
 \item Swaps the next two chars/lines:\DF \CC{xp}\,/\,\CC{ddp}
 \item {\em ex}-mode:\DF delete \CS{d}, move \CS{m}, copy \CS{co} \a \CS{t}

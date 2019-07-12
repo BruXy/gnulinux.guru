@@ -118,12 +118,12 @@
 \item Vymaž zbytek řádku/souboru:\DF \CC{D} \a \CC{d\symdollar}\,/\,\CC{dG}
 \item Vymaž od pozice kurzoru na začátek:\DF \CC{d0} \a\CC{d^}
 \item Spojení řádků: \DF \CC{J} přidá mezeru,\DF \CC{gJ} bez mezery
-%\item Spoj s následujícím řádkem, bez mezery:\DF \CC{gJ}
 \item Kopíruj do schránky:\DF celý řádek \CC{Y} \a \CC{yy}, slovo \CC{yw}
 \item Kopíruj do začátku/konce řádku:\DF \CC{y0}\,/\,\CC{y\symdollar}
 \item Více schránek: stisk \CC{"{\em k}\ldots} před příkazem uloží text do schránky {\em k}. Např. \CC{"kyy} uloží řádek do \type{k}
 \item Vlož obsah poslední použité schránky nebo poslední vymazaný text: za \CC{p}, před \CC{P} kurzor, \CC{"kpp} vloží schránku \type{k}
-\item Speciální schránky: \type{"%} -- právě editovaný soubor, \type{"/} -- poslední hledaný text,\ldots
+\item Speciální schránky: \type{"%} -- právě editovaný soubor, \type{"/} -- poslední hledaný text, \type{"+} -- systémová schránka\ldots
+\item Kopíruj celý soubor do systémové schránky: \CC{gg}\CC{"+y}\CC{G}
 \item Zobraz obsah schránek:\DF \CS{\U{reg}ister {\em schránka}} %register
 \item Prohoď dva následující znaky/řádky:\DF \CC{xp}\,/\,\CC{ddp}
 \item {\em ex}-režim: mazání \CS{d}, přesun \CS{m}, kopírování \CS{co} \a \CS{t}

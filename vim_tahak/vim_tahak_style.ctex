@@ -1,4 +1,4 @@
-1%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                               %
 %  Rychla reference k nekterym prikazum programu ViM            %
 %                                         http://vim.org        %
@@ -10,20 +10,23 @@
 \language[cz] 
 \mainlanguage[cz]
 \enableregime[utf] % latin2
-\pdfminorversion=4
+%\pdfminorversion=4
+\pdfvariable minorversion 4
 \setupbodyfont[9.6pt]  %
 \setuppapersize[A4, portrait][A3, landscape] % A3, A4, A5, A6; landscape
 \setuparranging[2SIDE] % zmena stranek pro vyrobu knizky, 
 % 2SIDE -- dve stranky na jeden list viz setuppapersize
 
-\pdfinfo{
-  /Title           (Rychla reference k nekterym prikazum programu ViM)
-  /Author          (Martin Bruchanov)
-  /Subject         (ukazka)
-  /CreationDate    (10.06.2007)
-  /ModDate         (\currentdate)
-  /Producer        (ConTeXt)
-}
+\usemodule[old-multicolumns]
+
+%\pdfinfo{
+%  /Title           (Rychla reference k nekterym prikazum programu ViM)
+%  /Author          (Martin Bruchanov)
+%  /Subject         (ukazka)
+%  /CreationDate    (10.06.2007)
+%  /ModDate         (\currentdate)
+%  /Producer        (ConTeXt)
+%}
 
 % Rozmery stranky
 \setuplayout[%
