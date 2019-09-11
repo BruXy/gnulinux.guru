@@ -11,4 +11,4 @@
 1i\\<body>
 $a\\</body></html>
 #s{<!-- mycopyright -->{<p style="border-bottom: 1px solid black;">© 2016 Martin Bruchanov, bruchy@gmail.com</p>{
-s{<!-- mycopyright -->{<p>© 2016 <a href="http://bruxy.regnet.cz/">Martin Bruchanov</a>, bruchy\&#0064;gmail.com</p>{
+s{<!-- mycopyright -->{<p>© 2019 <a href="http://bruxy.regnet.cz/">Martin Bruchanov</a>, bruchy\&#0064;gmail.com</p>{

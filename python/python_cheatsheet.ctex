@@ -141,6 +141,7 @@ except [type [as value]]: \crlf
 \stopitemize
 \stopitem
 \item {\tt lambda {\em args1} : expression} -- anonymous function maker
+\item \type{map(lambda x: x.capitalize(), ['abc','def'])} -- example
 % \item {\tt decorator} %???
 \item {\tt return [{\em expression}]} -- return from function
 \item {\tt yield {\em expression}} -- suspend function state and return, on next iteration restore prior state
@@ -275,7 +276,7 @@ except [type [as value]]: \crlf
 \item {\tt h = dict(key1="value", key2="another")} -- different syntax
 \item {\tt h["key3"] = 333} -- add another value
 \item {\tt h = \symlb{}c: ord(c) for c in 'spam'\symrb} -- comprehension expression
-\item {\tt h.has_key("key")} -- returns {\tt True} if key exist
+\item {\tt {\em key in h}} -- returns {\tt True} if key exist (was {\tt h.has_key("key")}
 \item {\tt h.keys()} -- return list of keys
 \item {\tt h.values()} -- return list of values
 \item {\tt h.clear()} -- remove all items
@@ -473,7 +474,7 @@ except [type [as value]]: \crlf
 \item {\tt sys.stdin.readline()} -- read line from standard input
 \item {\tt subprocess.call(["ls", "-l"])} -- execute system command
 \item {\tt out = subprocess.check_output(['uname', '-a'])} -- store output of command to variable
-\item {\tt filelist = subprocess.Popen("ls *", shell=True, stdout=subprocess.PIPE).communicate()[0]} -- read data from pipe
+\item {\tt filelist = subprocess.Popen("ls *", shell=True,\crlf stdout=subprocess.PIPE).communicate()[0]} -- read data from pipe
 \item {\tt os.stat('{\em /path/to/file.txt}')} -- return POSIX stat file info
 \stopitemize
 
