@@ -17,7 +17,7 @@
  rightquote=’]
 
 %\setupoutput[dvips,acrobat] % dvips, acrobat
-\pdfminorversion=4
+\directlua{pdf.setminorversion(4)}
 %\setupbodyfont[helvetica,7.9pt]  %
 \setupbodyfont[8.1pt]  %
 \setuppapersize[A4, portrait][A3, landscape] % A3, A4, A5, A6; landscape

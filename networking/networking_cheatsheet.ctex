@@ -757,6 +757,7 @@ USERCTL=yes
 \item Download file: {\tt curl -O {\sl URL/file}}
 \item Write output to file: {\tt curl -o file {\sl URL} }
 \item List directory: {\tt curl -s {\sl URL} --list-only}
+\item Authenticate: {\tt curl -u {\sl user}:{\sl password} {\sl URL}}, {\tt wget --user {\sl user} --password {\sl pass} {\sl URL}}
 \item Save cookies to file: {\tt wget -q --cookies=on --keep-session-cookies --save-cookies=cookie.txt {\sl URL}}
 \item Use saved cookies: {\tt wget -nv --content-disposition --referer= --cookies=on {\sl URL}}
 %POZOR https://gist.github.com/3-n/3307405

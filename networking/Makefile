@@ -17,7 +17,7 @@ html: $(PROJECT)_cheatsheet_include.html $(PROJECT)_cheatsheet.html
 thumb: thumbnail
 
 thumbnail: $(PROJECT)_cheatsheet_thumbnail.png
-		
+
 $(PROJECT)_cheatsheet.pdf: $(PROJECT)_style.ctex $(PROJECT)_cheatsheet.ctex
 	$(TEX) $(PROJECT)_cheatsheet.ctex
 
@@ -51,13 +51,13 @@ upload: publish
 
 publish: $(PROJECT)_cheatsheet.pdf $(PROJECT)_cheatsheet.html $(PROJECT)_cheatsheet_include.html $(PROJECT)_cheatsheet_thumbnail.png $(PROJECT)_cheatsheet.tar.bz2
 	cp $^ ~/HOME_DESK/Documents/html/gnulinux/
-		
+
 clean:
 	rm -f $(PROJECT)*.log
 
 veryclean: clean
 	rm -f $(PROJECT)_cheatsheet.{pdf,html} $(PROJECT)_cheatsheet_include.html \
-	      $(PROJECT)_cheatsheet_0*.png $(PROJECT)_tahak.html $(PROJECT)_tahak_include.html \
+          $(PROJECT)_cheatsheet_0*.png $(PROJECT)_tahak.html $(PROJECT)_tahak_include.html \
           $(PROJECT)_cheatsheet_thumbnail.png $(PROJECT)_cheatsheet.tar.bz2
 
 
