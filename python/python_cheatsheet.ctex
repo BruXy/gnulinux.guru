@@ -400,6 +400,7 @@ except [type [as value]]: \crlf
 \item {\tt max(iterable)}, {\tt min(iterable)} -- return max/min value
 \item {\tt reversed(iterable)} -- return a reverse iterator
 \item {\tt sorted(iterable, key=None, reverse=False)} -- return sorted
+\item {\tt sorted(lt, key=lambda x: x[1])} -- sort list of tuples by 2\high{nd} element
 \item {\tt enumerate(iterable, start=0)} -- return an enumerate object
 \item {\tt all(iter), any(iter)} -- True if all/any of elements are/is true.
 \item {\tt hash({\em obj})} -- return hash value of object
