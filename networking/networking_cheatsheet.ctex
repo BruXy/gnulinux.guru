@@ -754,7 +754,7 @@ USERCTL=yes
 \item URL format: \type{http://user:password@domain:port/path?query#fragment_id}
 \item Mirror site: {\tt wget -e robots=off -r -L {\sl URL}}, 
 \item Display HTTP header: {\tt curl -I {\sl URL}}, {\tt wget -S {\sl URL}}
-\item Download file: {\tt curl -O {\sl URL/file}}
+\item Download file: {\tt curl -O {\sl URL/file}}, {\tt wget {\sl URL/file}}
 \item Write output to file: {\tt curl -o file {\sl URL} }
 \item List directory: {\tt curl -s {\sl URL} --list-only}
 \item Authenticate: {\tt curl -u {\sl user}:{\sl password} {\sl URL}}, {\tt wget --user {\sl user} --password {\sl pass} {\sl URL}}
@@ -770,7 +770,8 @@ USERCTL=yes
 \item Form upload file: {\tt Z curl --form upload=@{\sl localfilename} --form press=OK {\sl URL}}
 \item Enable HTTP proxy in shell: {\tt export http_proxy=http://foo:bar@202.54.1.1:3128/}
 \item Use the same for HTTPS: {\tt export https_proxy=\symdollar{}http_proxy}
-\item Convert page to text: {\tt elinks -dump {\sl URL}}
+\item Convert page to text: {\tt elinks -dump {\sl URL}}, {\tt lynx -dump {\sl URL}}
+\item Start HTTP server on port 9000 and share the current directory: {\tt python3 -m http.server 9000}
 \stopitemize
 
 \section{OpenSSL}
