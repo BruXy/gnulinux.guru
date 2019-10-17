@@ -140,14 +140,13 @@ Privilege port $<$ 1024 can be opened only by the root user!
 
 %\bTABLE[frame=off,style=\tfx]
 %\bTR\bTD
-\startitemize[columns,three]
-\item 20, 21 FTP (File Transfer Protocol)  
+\startitemize[columns,four]
+\item 20, 21 FTP 
 \item 22  SSH (Secure Shell) 
 \item 23  Telnet 
 \item 25  SMTP 
 \item 42  WINS 
 \item 53	DNS 
-\item 135-139, 445 Windows shares, login, RPC 
 \item 80, 8080  HTTP  
 \item 88	Kerberos 
 \item 110	POP3 
@@ -225,6 +224,12 @@ Privilege port $<$ 1024 can be opened only by the root user!
 \stopitemize
 \item Kernel network parameters: {\tt sysctl -a \| grep net}
 \item Displaying RAW Network Statistics: {\tt netstat --statistics --raw}
+\item Restart PCI/PCIe bus device {\tt enp1s0}:
+    \startitemize
+    \item Find the number of slot: {\tt find /sys/devices -name enp1s0} (and use it for following commands).
+    \item Remove device: {\tt echo 1 > /sys/devices/pci0000:00/0000:00:1c.0/0000:01:00.0/remove}
+    \item Rescan bus: {\tt echo 1 > /sys/devices/pci0000:00/0000:00:1c.0/rescan}
+    \stopitemize
 \stopitemize
 
 \subsection{Wi-Fi Networking}
