@@ -523,9 +523,10 @@ USERCTL=yes
 \item Copy key to host and update {\tt \symtilda/.authorized_keys}: {\tt ssh-copy-id {\sl user@host}}; {\tt cat \symtilda/.ssh/id_rsa.pub \| ssh user@host 'cat >> \symtilda/.ssh/authorized_keys'}
 \item Holds SSH keys in memory for 8 hours: \type{ssh-agent -t $((8*3600))}
 \item Add key to agent: {\tt ssh-add  \symtilda/.ssh/id_rsa} (will ask for passphrase once in time life)
-\item Forward SSH agent: {\tt ssh -A hostname}
+\item Forward SSH agent: {\tt ssh -A {\sl hostname}}
 \item Connect to SSH {\sl host} via {\sl server}: {\tt ssh -At {\sl server} 'ssh {\sl host}'}
 \item Scan machine public key, with timeout 1 second: {\tt ssh-keyscan -T 1 -p {\sl port} {\sl host}}
+\item Use somebody's else SSH agent: {\tt export SSH_AUTH_SOCK=/tmp/ssh-uSU1Oq9ek5/agent.17339; ssh-add -l; ssh {\sl user}@{\sl hostname}}
 \stopitemize
 
 \section{Remote desktop}
@@ -750,7 +751,7 @@ USERCTL=yes
 \startitemize
 \item Client to access WHOIS service: {\tt whois}, {\tt jwhois}
 \item Query domain on given WHOIS server: {\tt whois -h whois.nic.cz seznam.cz}
-\item Check who owns current IP address/domain: {\tt whois {\sl IP}}\,/\,{\tt whois {\sl domain}}
+\item Check who owns current IP address range/domain: {\tt whois {\sl IP}}\,/\,{\tt whois {\sl domain}}
 \stopitemize
 
 \section{HTTP(S) (Hypertext Transfer Protocol [SECURE])}
