@@ -605,17 +605,18 @@ USERCTL=yes
 \item Usage: {\tt rsync {\sl source} {\sl destination} }
 \item Tunnel through SSH on port 2222: {\tt rsync -avHPS --rsh="ssh -p 2222" source {\sl user@host:/dest/dir}}
 \item {\tt rsync} CLI options:
-\startitemize
+\startitemize[columns,two]
 \item {\tt -v, --verbose} -- increase amount of output information
 \item {\tt -a, --archive} -- archive mode, equals {\tt -rlptgoD}
 \item {\tt -r, --recursive} -- recursive into directories
 \item {\tt -l, --links} -- copy symlinks as symlinks
+\item {\tt -L, --copy-links} -- transform symlink into referent file/dir
 \item {\tt -p, --perms} -- preserve permissions
 \item {\tt -t, --times} -- preserve timestamp
 \item {\tt -g, --group; -o, --owner} -- preserve group, owner
 \item {\tt -D} -- synchronize device files
 \item {\tt -H, --hard-links} -- preserve hard links
-\item {\tt -P, --partial --progress} -- keep partial files (good for resuming transfer)
+\item {\tt -P, --partial --progress} -- keep partial files (for resuming transfer)
 \item {\tt -S, --sparse} -- handle sparse files efficiently
 \item {\tt --dry-run} -- perform a trial run with no changes made 
 \item {\tt --bwlimit=100} -- limit transferring speed to 100 kB/s
