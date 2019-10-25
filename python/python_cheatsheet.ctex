@@ -26,6 +26,7 @@ Comments: \type{# everything behind hash}\crlf
 \item {\tt -c '{\em code}'} -- run code from command line
 \item {\tt python -m py_compile {\em script.py}} -- test syntax of script
 \item {\tt python3 -c 'import keyword; print(keyword.kwlist)'} -- keywords
+\item {\tt python -i}, {\tt ipython} -- interactive mode
 \stopitemize
 
 \section{Create virtual environment}
@@ -99,7 +100,7 @@ except [type [as value]]: \crlf
 \startitemize
 \item {\tt import {\sl module}} -- find and initialize {\em module}
 \item {\sl module.function()} -- use function of imported module
-\item {\tt from {\sl module} import *} -- import all stuff to local name space
+\item {\tt from {\sl module} import *} -- import all to local name space
 \item {\tt import {\sl module} as {\sl name}} -- rename imported module
 \item {\tt from {\sl module} import {\sl name} as {\sl othername}}
 % \item raise %3.0
@@ -115,6 +116,7 @@ except [type [as value]]: \crlf
 \item {\tt assert {\em expression} [, {\em message}]}
 \item {\tt exec {\em codestring}}
 \item Generator expression: \crlf {\tt {\em result expr.} for {\em loop var.} in {\em iterable} if {\em filter expr.}}
+\item {\tt s = 'Yes' if k == True else 'No'} -- ternary operator
 \item {\tt def noop(*args, **kws): return None} -- no-operation function
 \stopitemize
 
@@ -211,7 +213,7 @@ except [type [as value]]: \crlf
 \eTABLEhead
 % ----
 \bTABLEbody
-\bTR\bTD Init.       \eTD \bTD {\tt ()},{\tt tuple()}\eTD  \bTD \type{[}\type{]}, {\tt list()} \eTD \bTD \type{{}}, {\tt dict()} \eTD \bTD {\tt ""},{\tt ''},{\tt str()} \eTD \bTD {\tt set()} \eTD \eTR
+\bTR\bTD Init.       \eTD \bTD {\tt (,)},{\tt tuple()}\eTD  \bTD \type{[}\type{]}, {\tt list()} \eTD \bTD \type{{}}, {\tt dict()} \eTD \bTD {\tt ""},{\tt ''},{\tt str()} \eTD \bTD \type{{}}, {\tt set()} \eTD \eTR
 \bTR\bTD {\tt clear} \eTD \bTD ---  \eTD \bTD ---  \eTD \bTD $\bullet$  \eTD \bTD ---  \eTD \bTD $\bullet$ \eTD \eTR
 \bTR\bTD {\tt copy}  \eTD \bTD ---  \eTD \bTD ---  \eTD \bTD $\bullet$  \eTD \bTD ---  \eTD \bTD $\bullet$ \eTD \eTR
 \bTR\bTD {\tt count} \eTD \bTD $\bullet$  \eTD \bTD $\bullet$  \eTD \bTD ---  \eTD \bTD $\bullet$  \eTD \bTD ---   \eTD \eTR
@@ -293,7 +295,7 @@ except [type [as value]]: \crlf
 
 \startitemize
 \item {\tt A = set()} -- empty set \hfill $A=\symlb \emptyset \symrb$
-\item {\tt A = set('Ouagadougou')} -- {\tt A = set(['a','d','g','o','u','O'])}, unordered collection of unique and immutable objects
+\item {\tt A = set('Ouagadougou')} = {\tt A = set(['a','d','g','o','u','O'])}, unordered collection of unique and immutable objects
 \item {\tt A = \symlb{}'a', 'd', 'g', 'o', 'u', 'O'\symrb} -- set definition
 \item {\tt A = frozenset(range(−5, 5))} -- immutable set of $-5\ldots{}4$
 \item {\tt 'a' in A} -- returns {\tt True} if value is presented \hfill $a\in{}A$
@@ -318,12 +320,14 @@ except [type [as value]]: \crlf
 
 \startitemize
 \item {\tt s = "Hello"}, {\tt s = 'Hello'} -- definition, {\tt "} and {\tt '} works same
+\item \type{s[::-1]} -- reverse string (olleH)
 \item {\tt """This is multi-line block"""} -- collects into a single string
 \item {\tt s[1]='e'} -- indexing H\low{0}~e\low{1}~l\low{2}~l\low{3}~o\low{4}
 \item {\tt str({\sl n})} -- convert number $n$ to string
 \item {\tt 'Hello ' + 'World'}, {\tt "Hello" "World"} -- concatenation
 \item {\tt 'Hello' * 3} -- repetition $3\times$
-\item Unicode \symalpha: \type{u"\03b1"}, \type{U"\U000003B1"}, {\tt u"\tbs{}N\symlb{}GREEK SMALL LETTER ALPHA\symrb{}"}
+%\item Unicode \symalpha: \type{u"\03b1"}, \type{U"\U000003B1"}, {\tt u"\tbs{}N\symlb{}GREEK SMALL LETTER ALPHA\symrb{}"}
+\item Unicode \uv{\rightarrow}: \type{"\u2192"}, \type{"\U00002192"}, {\tt "\tbs{}N\symlb{}Rightwards Arrow\symrb{}"}
 \item Raw string: \type{r"\n"}, \type{R'\n'} does not interpret escape sequences
 \item Unicode raw string: \type{ur"\n"}, \type{UR'\n'}
 \item {\tt str()}, {\tt bytes()}, {\tt bytearray()} -- create string from object
@@ -392,11 +396,12 @@ except [type [as value]]: \crlf
 \item {\tt isalnum, isalpha, isdecimal, isdigit, isidentifier, islower, isnumeric, isprintable, isspace, istitle, isupper} -- tests
 \stopitemize
 
-\section{Other build-in functions}
+\section{Other built-in functions}
 
 %154 pocket guide
 
 \startitemize
+\item {\tt help({\sl object})}, {\tt help('{\sl function}')} -- display documentation
 \item {\tt max(iterable)}, {\tt min(iterable)} -- return max/min value
 \item {\tt reversed(iterable)} -- return a reverse iterator
 \item {\tt sorted(iterable, key=None, reverse=False)} -- return sorted

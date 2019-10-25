@@ -20,7 +20,7 @@
 \directlua{pdf.setminorversion(4)}
 %\pdfminorversion=4
 %\setupbodyfont[helvetica,7.9pt]  %
-\setupbodyfont[8.225pt]  %
+\setupbodyfont[8.1pt]  %
 \setuppapersize[A4, portrait][A3, landscape] % A3, A4, A5, A6; landscape
 %\setuppapersize[A4, portrait] % A3, A4, A5, A6; landscape
 \setuparranging[2SIDE] % zmena stranek pro vyrobu knizky,
