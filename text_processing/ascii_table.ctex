@@ -1,0 +1,13 @@
+\setuppapersize[A2]
+\starttext
+\setupTABLE[each][each][style=\tfxx,align={middle,middle}]
+\setupTABLE[header][headstyle=\tfxx]
+\startluacode
+FORMAT = "context"
+require("ascii")
+-- FORMAT = "html"
+ascii_table()
+\stopluacode
+\stoptext
+
+
