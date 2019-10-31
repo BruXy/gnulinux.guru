@@ -1,0 +1,369 @@
+\input text_processing_style.ctex
+
+\def\DF{\dotfill{}}
+\def\stt{\tt\sl{}}
+\def\symlb{\{}
+\def\symrb{\}}
+\def\symdollar{\$}
+\def\symalpha{$\alpha$}
+\def\symtilda{\type{~}}
+
+\starttext
+\startcolumns[n=2]
+
+\title{RegEx \& CLI Text Processing}
+
+%\mycopyright
+
+ASCII Table:
+
+%https://garbagecollected.org/2017/01/31/four-column-ascii/
+
+% Use: https://www.contextgarden.net/Programming_in_LuaTeX
+
+\section{Regex}
+
+% VIM
+\subsection{Regular expressions}
+
+\startitemize
+\item Begin/end of:\DF line \type{^}\,/\,{\tt \symdollar}, word \type{\<}\,/\,\type{\>}, file \type{\%^}\,/\,\type{\%$} 
+\item Last searched pattern/substitution: \DF \type{&}\,/\,{\tt \symtilda} %\type{~}
+\item Matches any character:\DF \type{.} (dot)
+\item Or/and:\DF \type{\|}\,/\,\type{\&}
+\item Suppress next special symbol:\DF \type{\.}, \type{\&}, {\tt \symdollar}, \type{\^}, \type{\\}, \type{\*} 
+\item Atom:\DF \type{\(}pattern\type{\)}
+\item $N$\high{th} reference:\DF {\tt \type{\}{\em N}},\DF first \type{\(}pattern\type{\)} = \type{\1}
+\item Ranges:\DF \type{[abcd]} \a \type{[a-d]}, \type{[a-zA-Z]} \a {\tt \backslash{}a}, \type{[0-9]} \a \type{\d}
+\item Ignored chars and ranges:\DF \type{[^abcd]} \a \type{[^a-d]}
+\item Zero or multiple {\em z}:\DF {\tt {\em z}\type{*}} \a{\tt{\em z}\type{\{0,\}}}
+\item One or multiple {\em z}:\DF {\tt {\em z}\type{\+}} \a{\tt{\em z}\type{\{1,\}}}
+\item One or zero times:\DF {\tt {\em z}}\type{\?} \a{\tt{\em z}\type{\{0,1\}}}
+\item Repetition {\em z}:\DF \type{z\{n\}} accurate $n\times$, \type{z\{n,\}} minimal $n\times$, \type{z\{n,m\}} min. $n$ and max. $m$ times 
+
+%\item Obsahuje 
+%Třídy znaků: \type{[:alnum:]}
+%[:alpha:] [:ascii:] [:blank:] [:digit:]
+%{\bf Příklady:} 
+\stopitemize
+
+
+% PERL
+
+\subsubsection{Regular expressions}
+
+\startitemize
+\item {\tt "výraz"}, {\tt qr/výrax/}, {\tt /výraz/}, {\tt m/výraz/}
+\item {\tt s/výraz/náhrada/\sl m} -- substitution
+\item {\tt tr/\ldots/\ldots/\sl m}, {\tt y/\ldots/\ldots/\sl m} -- náhrada znaků
+\item Modifikátory {\sl m}: 
+\startitemize
+    \item {\tt i}~-- ignoruje velikost písmen;
+    \item {\tt m}~-- víceřádkový mód (\type{^} a \type{$} = \type{\n});
+%    \item {\tt o}~-- vyhodnotí výraz pouze jednou;
+    \item {\tt g}~-- hledá všechny výrazy;
+    \item {\tt s} -- jednořádkový mód, \uv{\tt{.}} zahrnuje \type{\n};
+    \item {\tt x} -- povolí bílé znaky a komentáře;
+\stopitemize
+%a -- vynutí striktní ASCII režim
+%d
+%l
+%u -- vyhodnotí výraz s Unicode sémantikou
+
+\item \type{$&} / \type{$MATCH} -- zachycený řetězec
+\item \type{$`} / \type{$PREMATCH} -- řetězec před \type{$&}
+\item \type{$'} / \type{$POSTMATCH} -- řetězec za \type{$&}
+%\type{$+ \type{$LAST_PARENT_MATCH
+\item \type{.} (tečka) -- libovolný znak
+\item {\tt [\ldots]}/{\tt [^\ldots]} -- množina/negovaná množina znaků
+\item \type{^}/\type{$} -- začátek/konec řádku nebo řetězce
+\item {\tt ( )} -- seskupení výrazu
+\item {\type{|}} -- nebo, alternativní výrazy
+\item \type{\}{\stt n} -- $n$\high{th} matching expression
+
+
+\definetype[regexp][option=RAW,blank=small]
+
+\def\tbs{\textbackslash{}}
+
+\def\IsSpace{
+    {\tt [ \tbs{}t\tbs{}n\tbs{}r\tbs{}f]}
+}
+
+\def\IsNotSpace{
+    {\tt [\type{^} \tbs{}t\tbs{}n\tbs{}r\tbs{}f]}
+}
+
+
+\bTABLE\tfx
+\setupTABLE[c][1,2,3,4][align=center]
+\bTABLEhead
+\bTR\bTH Meta \eTH\bTH POSIX \eTH\bTH Unicode \eTH\bTH Set \eTH\bTH Description \eTH\eTR
+\eTABLEhead
+\bTABLEbody
+\bTR\bTD \type{\d} \eTD\bTD \type{[:digit:]}  \eTD\bTD {\tt \tbs{}p}\type{{IsDigit}}    \eTD\bTD \type{[0-9]}         \eTD\bTD Any digit character\eTD\eTR
+\bTR\bTD \type{\D} \eTD\bTD                   \eTD\bTD {\tt \tbs{}P}\type{{IsDigit}}    \eTD\bTD \type{[^0-9]}        \eTD\bTD Any non-digit character\eTD\eTR
+\bTR\bTD \type{\s} \eTD\bTD \type{[:space:]}  \eTD\bTD {\tt \tbs{}p}\type{{IsSpace}}    \eTD\bTD 
+\IsSpace
+%\type{[ \t\n\r\f]}
+\eTD\bTD White space\eTD\eTR
+\bTR\bTD \type{\S} \eTD\bTD                   \eTD\bTD {\tt \tbs{}P}\type{{IsSpace}}    \eTD\bTD 
+%\type{[^ \t\n\r\f]}
+\IsNotSpace
+\eTD\bTD Cokoliv mimo bílého znaku\eTD\eTR
+\bTR\bTD \type{\w} \eTD\bTD \type{[:word:]}   \eTD\bTD {\tt \tbs{}p}\type{{IsWord}}     \eTD\bTD \type{[a-zA-Z0-9_]}  \eTD\bTD Znaky identifikátorů\eTD\eTR
+\bTR\bTD \type{\W} \eTD\bTD                   \eTD\bTD {\tt \tbs{}P}\type{{IsWord}}     \eTD\bTD \type{[^a-zA-Z0-9_]} \eTD\bTD Cokoliv mimo znaků identifikátorů\eTD\eTR
+\bTR\bTD \type{\b} \eTD\bTD                   \eTD\bTD                       \eTD\bTD                      \eTD\bTD hranice slova, opakem je \type{\B}\eTD\eTR
+\bTR\bTD           \eTD\bTD \type{[:alnum:]}  \eTD\bTD {\tt \tbs{}p}\type{{PosixAlnum}} \eTD\bTD \type{[A-Za-z0-9]}   \eTD\bTD Alfanumerické znaky\eTD\eTR
+\bTR\bTD           \eTD\bTD \type{[:xdigit:]} \eTD\bTD {\tt \tbs{}p}\type{{PosixXDigit}}\eTD\bTD \type{[A-Fa-f0-9]}   \eTD\bTD Hexadecimální čísla\eTD\eTR
+\bTR\bTD           \eTD\bTD \type{[:print:]}  \eTD\bTD {\tt \tbs{}p}\type{{PosixPrint}} \eTD\bTD 
+{\tt [\tbs{}x20-\tbs{}x7E]}
+\eTD\bTD Tisknutelné znaky\eTD\eTR
+\bTR\bTD           \eTD\bTD \type{[:alpha:]}  \eTD\bTD {\tt \tbs{}p}\type{{PosixAlnum}} \eTD\bTD \type{[A-Za-z]}      \eTD\bTD Abecední znaky\eTD\eTR
+\eTABLEbody
+\eTABLE
+
+\item Kvantifikátory:
+
+\def\match{\inframed[frame=off,
+    background=color,
+    bottomframe=on,
+    backgroundcolor=gray,
+    backgroundoffset=0pt]}
+
+\bTABLE%\tfx
+\setupTABLE[c][1,2][align=center]
+\setupTABLE[c][4][align=left]
+\bTABLEhead
+\bTR\bTH Stand. \eTH\bTH Líný \eTH\bTH Rozsah \eTH
+\bTD[nr=7,frame=off,align=flushleft]
+
+\tfx
+{\bf Examples:}
+    \startitemize
+        \item \regexp{a*b} -- \match{aab}c \match{ab}c \match{b}c
+        \item \regexp{a?b} -- a\match{ab}c \match{ab}c \match{b}c
+        \item \regexp{a+b} -- \match{aab}c \match{ab}c bc
+        \item \regexp{[els]{1,3}} -- a\match{ll} in th\match{e} darkn\match{ess}
+        \item \regexp{Pe(t|p)a} -- Pera \match{Peta} \match{Pepa}
+%        \item \regexp{<[^>]*>} -- \match{<meta>} \match{<b id="c">}
+        \item \regexp{".*"} -- \match{"Ahoj" "Hello"}
+        \item \regexp{"[^"]*"} -- \match{"Ahoj"} \match{"Hello"}
+    \stopitemize
+
+\eTD
+\eTR
+\eTABLEhead
+\bTABLEbody
+\bTR\bTD \type{*}    \eTD\bTD \type{*?}     \eTD\bTD 0 a víc\eTD\eTR
+\bTR\bTD \type{+}    \eTD\bTD \type{+?}     \eTD\bTD 1 a víc\eTD\eTR
+\bTR\bTD \type{?}    \eTD\bTD \type{??}     \eTD\bTD 0 nebo 1 položka\eTD\eTR
+\bTR\bTD \type{{n}}  \eTD\bTD \type{{n}?}   \eTD\bTD přesně $n\times$\eTD\eTR
+\bTR\bTD \type{{n,}} \eTD\bTD \type{{n,}?}  \eTD\bTD minimálně $n\times$\eTD\eTR
+\bTR\bTD \type{{n,m}}\eTD\bTD \type{{n,m}?} \eTD\bTD min. $n\times$ a max. $m\times$\eTD\eTR
+\eTABLEbody
+\eTABLE
+\stopitemize
+
+
+\section{Regex examples}
+
+\startitemize
+\item Empty line: \type{^$}
+\stopitemize
+
+% ISO/IEC 646:1991
+
+\section{ASCII and Unicode manipulations}
+
+\startitemize
+\item Ordinal value of \uv{A}: \type{printf "%d" \'A}
+\item Convert integer to character: \type{printf \\$(printf '%03o' 65)}
+\item Use escape sequences 0x41 (hex. A) and 141 (oct. a): \type{printf \\x41\\141} or \type{printf "\x41\141"}
+\item Show ASCII table: {\tt ascii}, {\tt man 7 ascii}
+\item \type{echo -n "α" | hexdump -C}
+\item Different way how to display $\alpha$ in terminal:
+\startitemize
+\item Interpret UTF-8 escape sequences:  \type{echo -e "\u03B1"}, \type{printf "\u03B1\n"}
+\item \type{perl -e 'binmode STDOUT, ":utf8"; print "\N{U+03b1}\n";'}
+\item Interpret UTF-16 escape sequences: \type{echo -e "\xce\xb1"}, \type{printf "1\xce\xb1\n"}, \type{awk 'BEGIN { print "\xce\xb1"; }'}
+\item \type{perl -e 'print "\xce\xb1\n";'}
+\item \type{perl -Mcharnames=:full -e 'binmode STDOUT, ":utf8"; print "\N{GREEK SMALL LETTER ALPHA}\n";'}
+\stopitemize
+\stopitemize
+
+\section{Stream editor for filtering and transforming text -- sed}
+
+\startitemize
+\item {\tt sed [-n] -e '{\it příkaz}[;{\it příkaz}\low{2}]' [-f {\it skript}] {\it vstup(y)}}
+\item Nahrazování (s): \crlf
+       \type{sed s/vzor/náhrada/flag < vstup.txt > vystup.txt}\crlf
+        Flagy: {\tt g}~-- vše pokryté regexem, {$n$ -- pořadí výskytu v řádku } 
+\item Rozsah: {\tt '1,10 {\it příkaz}'}, do konce {\tt '10,\$ {\it příkaz}'}
+\item Vypsání části (p): {\tt sed -n '5,\$p' vstup.txt}
+\item Vyhledávání: {\tt sed -n '/regex/p' vstup.txt}
+\item Náhrada znaků (y): {\tt y/ěščřžýáíé/escrzyaie/}
+\item Vymazání řádků (d): {\tt '/^[[:blank:]]*\#/d'}, {\tt '/^\$/d'}
+\item Vlož před řádek (i): \type{'1i\text'} před první řádek vlož \uv{text}
+\item Vlož za řádek (a): \type{'$a\konec'} za poslední vlož \uv{konec}
+\item Merge every two lines: \type{sed 'N;s/\n/ /'}
+\item Display every 3rd line: sed -n '0~3p' input.txt
+\stopitemize
+
+From line to line-1
+\type{ec2-metadata | sed -ne '0,/user-data:/{/user-data:/d;p}'}
+
+\section{Charset conversions}
+
+\startitemize
+\item recode IBM437..UTF-8 
+\item recode iso-8859-2..utf-8 soubor.txt
+\item recode utf-8..iso-8859-2 soubor.txt
+\item \type{tr '[:lower:]' '[:upper:]'}
+\item \type{tr '\302\240' '  ' }
+\item \type{tr '\0' '\n' | nl -v 0}
+\stopitemize
+
+Remove repeated characters: tr -s
+
+\section{Handling columns}
+
+\startitemize
+\item cut
+\item \type{cut -d: -f 1,3 /etc/passwd # login a UID}
+\item \type{ls -l | cut -d' ' -f 6 # velikosti souborů}
+\item \type{ls -l | cut -b 27-35,48- | sort -rn }
+\item \type{awk  -F: '{print $1 " " $3}' /etc/passwd}
+\item \type{perl -F: -ane 'print "@F[0] @F[3]\n"' /etc/passwd}
+\item \type{ls -l | awk '{print $5 " " $9}' # problém? }
+\item Get last column \type{| rev | cut -d'.' -f 1 | rev}
+\item Switch some columns: \type{awk -F '/' '{print  $2"/"$1}' <<< "aaa/xxx"}
+\stopitemize
+
+
+\section{Sorting}
+
+\startitemize
+\item Sort in reverse order: {\tt sort -r}
+\item Sort and ignore case: {\tt sort -f}
+\item Sort by number: {\tt sort -n}
+\item Sort and strip of duplicates: {\tt sort -u} or {\tt sort \| uniq}
+\item Sort by second column with delimited CSV: {\tt sort -t';' -k 2,2}
+\item Sort 1st column alphabetically and 2nd numerically: {\tt sort -t"," -k1,1 -k2n,2}
+\item Version sort (1.1, 1.2, 1.11,\ldots): {\tt sort -V}
+\item Find out of order lines in semi-sorted file: {\tt sort -c}
+\item Random permutation of input lines: {\tt shuf}, {\tt shuf -R}
+\stopitemize
+
+
+
+\section{cut -- remove section from each line}
+
+\startitemize
+\item Default delimiter is TAB ({\tt 0x0A}, \type{\t}).
+\stopitemize
+
+\section{Searching for string}
+
+\startitemize
+\item grep -F 'fixed string' -- do not interpret special characters
+\item grep 'regex' soubor
+\item \type{awk '/regex/ { print $0 }' soubor}
+\item perl -ne 'print if /regex/' soubor
+\item perl -ne '/regex/ && print' soubor
+\item sed -e '/regex/!d' soubor
+\item First lie of output: head -n 1, sed 1q
+\item Last line of output: tail -n 1, \type{sed '$!d'}
+
+
+This shell command can find wrong characters in your SLS files:
+%find . -name '*.sls'  -exec  grep --color='auto' -P -n '[^\x00-\x7F]' \tbs{} \tbs;
+\stopitemize
+
+
+Generate random password: \type{tr -dc 'A-Za-z0-9~!@#$%^&*+-_=`|(){}[]:;\"<>,.?/' </dev/urandom | head -c 16}
+
+\section{JSON (JavaScript Object Notation)}
+
+\startitemize
+\item Pretty print: {\tt python -m json.tool {\stt file.json}}, {\tt jq . {\stt file.json}}
+\stopitemize
+
+
+\section{Format output}
+
+\startitemize
+\item {\tt column -t}
+\item Join every two lines: \type{sed 'N;s/\n/ /'}
+\stopitemize
+
+
+\section{GNU Bourne-Again SHell}
+
+\startBash
+#!/bin/bash
+name="LinuxDays2013"
+if [[ $name =~ L[a-zA-Z]*([0-9]+) ]]
+then
+    echo ${BASH_REMATCH[1]}
+fi
+\stopBash
+
+\startitemize
+\item Podpora od verze 3.x (\type{$BASH_VERSION})
+\item \type{$BASH_REMATCH}, \type{${BASH_REMATCH[0]}} -- celý řetězec
+\item \type{${BASH_REMATCH[1]}} -- podskupina \uv{jedno a více čísel}
+\stopitemize
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Perl}
+
+\startPerl
+#!/usr/bin/env perl
+
+$name = "LinuxDays2013";
+
+if ( $name =~ m/L[a-zA-Z]*([0-9]+)/ ) {
+    print $1 . "\n"
+}
+\stopPerl
+
+\startitemize
+\item (PCRE) Perl Compatible Regular Expression
+\item Zpětná reference se provádí pomocí \type{$}$n$
+\item Operátor {\tt m/{\em regex}/{\em flagy}} vrací true při nalezení
+\item Nahrazení \type{$name =~ s/Linux/Windows/;} (zpětná ref. \type{\}$n$)
+\stopitemize
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Python}
+
+\startPython
+#!/usr/bin/env python3
+import re
+name = 'LinuxDays2013'
+
+match = re.match(r'L[a-zA-Z]*([0-9]+)', name)
+if match:
+    print(match.group(1))
+\stopPython
+
+\startitemize
+\item Supports perl style (PCRE) of regex
+\item Use raw strings {\tt r'}{\em regex}{\tt '} (problem escape-sequences)
+\item {\tt object = re.match({\em regex, input[, flags]})}
+\stopitemize
+
+\section{Ruby}
+
+\startRuby
+#!/usr/bin/env ruby
+name = 'LinuxDays2013'
+
+if match = name.match(/L[a-zA-Z]*([0-9]+)/)
+    puts match.captures[0]
+\stopRuby
+
+
+\stopcolumns\stoptext
