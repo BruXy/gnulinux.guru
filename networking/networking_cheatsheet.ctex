@@ -490,6 +490,8 @@ USERCTL=yes
 	%~\&   - background ssh (when waiting for connections to terminate)
 	%~~   - send the escape character by typing it twice
 	\stopitemize
+\item Connect over list of jumboxes: {\tt ssh -J user1@host1:port1,user2@host2:port2 user3@target -p port3}
+\item Connect over bastion to target:2222: {\tt ssh -o ProxyCommand="ssh -i \symtilda/.ssh/id_rsa user@bastion -W \%h:\%p" user@target -p2222}
 \item Local port transfer -- remote port will be available locally:
 	\startitemize
 	\item {\tt ssh -L {\sl LocalPort:RemoteIP:RemotePort host}}
@@ -520,7 +522,7 @@ USERCTL=yes
 \item Generate 4096bit key with comment: {\tt ssh-keygen -t rsa -b 4096 -C "Top secret key"}
 \item Generate public key from private: {\tt ssh-keygen -y -f private.pem > public.pub}
 \item Permissions: {\tt chmod 700 \symtilda/.ssh}; {\tt chmod 600 \symtilda/.ssh/authorized_keys}
-\item Copy key to host and update {\tt \symtilda/.authorized_keys}: {\tt ssh-copy-id {\sl user@host}}; {\tt cat \symtilda/.ssh/id_rsa.pub \| ssh user@host 'cat >> \symtilda/.ssh/authorized_keys'}
+\item Copy key to host: {\tt ssh-copy-id {\sl user@host}}; {\tt cat \symtilda/.ssh/id_rsa.pub \| ssh user@host 'cat >> \symtilda/.ssh/authorized_keys'}
 \item Holds SSH keys in memory for 8 hours: \type{ssh-agent -t $((8*3600))}
 \item Add key to agent: {\tt ssh-add  \symtilda/.ssh/id_rsa} (will ask for passphrase once in time life)
 \item Forward SSH agent: {\tt ssh -A {\sl hostname}}
@@ -647,6 +649,7 @@ USERCTL=yes
 \item Scan IPv6 network: {\tt nmap -6 }
 \item Scan ports: {\tt -p 22}, {\tt -p 1-1024}, {\tt -F} (only most common ports), {\tt -p-} (1-65535), {\tt -p U:53,111,137,T:21-25,80} (given TCP/UDP ports)
 \item Detect OS and services: {\tt -A}, {\tt -sV} (standard), {\tt -sV --version-intensity 5} (aggresive)
+\item Aggressive ({\tt -T4}) OS and services version detection: {\tt nmap -v -A -T4 172.31.224.10}
 %\item Display state of port: {\tt --reason} -- syn-ack (), 
 \item Scan a firewall for MAC address spoofing: {\tt nmap -v -sT -PN --spoof-mac 11:22:33:AA:BB:CC 192.168.1.1}
 %POZOR \item Scan for UDP services: {\tt -sU}, 
