@@ -338,6 +338,7 @@ USERCTL=yes
 \item List process communication on port: {\tt lsof -i :22} / {\tt lsof -i :ssh}
 \item Check PID binded on local port: {\tt ss -lt}; {\tt fuser -n tcp 22}
 \item Monitor net. communication of single process: {\tt strace -f -e trace=network -s 10000 -p {\sl PID}} 
+\item Monitor bandwidth of processes: {\tt nethog}
 \item Color and interactive network monitor: {\tt iptraf-ng}
 \stopitemize
 
@@ -505,9 +506,10 @@ USERCTL=yes
 	\stopitemize
 \item Dynamic port transfer -- creation of SOCKS proxy:
 	\startitemize
-	\item {\tt ssh -D LocalAddress:LocalPort host}
+	\item {\tt ssh -D LocalAddress:LocalPort host}, {\tt ssh -D 1080 {\sl host}}
 	\item Use LocalAddress:LocaPort as SOCKS proxy and all request will be forwarded through host.
 	\item {\tt curl --user-agent "Mozilla" --socks4 localhost:1080 http://www.whatsmyip.org/}
+    \item SSH via SOCKS proxy: {\tt ssh -o ProxyCommand='nc --proxy-type socks4 --proxy 127.0.0.1:1080 \%h \%p' {\sl user}@{\sl target}}
 	\stopitemize
 %\item SSH \uv{netcat} mode --
 %ssh -W host:port server
@@ -782,6 +784,7 @@ USERCTL=yes
 \item Use the same for HTTPS: {\tt export https_proxy=\symdollar{}http_proxy}
 \item Convert page to text: {\tt elinks -dump {\sl URL}}, {\tt lynx -dump {\sl URL}}
 \item Start HTTP server on port 9000 and share the current directory: {\tt python3 -m http.server 9000}
+\item Nginx test configuration: {\tt nginx -t -c {\sl config}}, dump config: {\tt nginx -T}
 \stopitemize
 
 \section{OpenSSL}
