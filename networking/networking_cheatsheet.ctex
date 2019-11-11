@@ -140,7 +140,7 @@ Privilege port $<$ 1024 can be opened only by the root user!
 
 %\bTABLE[frame=off,style=\tfx]
 %\bTR\bTD
-\startitemize[columns,four]
+\startitemize[columns,five]
 \item 20, 21 FTP 
 \item 22  SSH (Secure Shell) 
 \item 23  Telnet 
@@ -510,6 +510,7 @@ USERCTL=yes
 	\item Use LocalAddress:LocaPort as SOCKS proxy and all request will be forwarded through host.
 	\item {\tt curl --user-agent "Mozilla" --socks4 localhost:1080 http://www.whatsmyip.org/}
     \item SSH via SOCKS proxy: {\tt ssh -o ProxyCommand='nc --proxy-type socks4 --proxy 127.0.0.1:1080 \%h \%p' {\sl user}@{\sl target}}
+    \item Set SOCKS proxy in shell: {\tt export http_proxy=socks5://127.0.0.1:1080; export https_proxy=\symdollar{}http_proxy}
 	\stopitemize
 %\item SSH \uv{netcat} mode --
 %ssh -W host:port server
