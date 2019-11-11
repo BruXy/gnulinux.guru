@@ -659,6 +659,7 @@ USERCTL=yes
 \item Wait 5 seconds between probes: {\tt --scan-delay 5s}
 \item Never do DNS resolution\,/\,Always resolve: {\tt -n}\,/\,{\tt -R}
 \item Scan using default safe script: {\tt nmap -sV -sC 10.0.0.1}
+\item Scan via SOCKS proxy: {\tt nmap -sV -Pn -n --proxies socks4://127.0.0.1:1080 scanme.nmap.org}
 %POZOR \item Host discovery and ping scan: {\tt -sP
 %-sT
 %-sO  -- IP Protocol scan
