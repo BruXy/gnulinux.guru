@@ -267,6 +267,7 @@ except [type [as value]]: \crlf
 \item {\tt l.sort(key=None, reverse=False)} -- sort list in-place
 \item {\tt l.reverse()} -- reverse list in-place
 \item {\tt sum(l)} -- return sum of numeric list
+\item {\tt sorted(set(l))} -- sort and unique list via set
 \stopitemize
 
 
@@ -278,7 +279,7 @@ except [type [as value]]: \crlf
 \item {\tt h = dict(key1="value", key2="another")} -- different syntax
 \item {\tt h["key3"] = 333} -- add another value
 \item {\tt h = \symlb{}c: ord(c) for c in 'spam'\symrb} -- comprehension expression
-\item {\tt {\em key in h}} -- returns {\tt True} if key exist (was {\tt h.has_key("key")}
+\item {\tt {\em 'key'} in h} -- returns {\tt True} if key exist (was {\tt h.has_key("key")})
 \item {\tt h.keys()} -- return list of keys
 \item {\tt h.values()} -- return list of values
 \item {\tt h.clear()} -- remove all items
@@ -289,6 +290,7 @@ except [type [as value]]: \crlf
 %\item {\tt h.setdefault(key, [, default])} --
 \item {\tt h.fromkeys(seq [, value])} -- new dictionary from keys in {\em seq}
 \item {\tt dict(zip(['a','b'], [1,2]))} -- join to {\tt \symlb{}'a': 1, 'b': 2\symrb}
+\item {\tt for key, value in h.items():} -- iterate dictionary
 \stopitemize
 
 \subsection{Sets}
