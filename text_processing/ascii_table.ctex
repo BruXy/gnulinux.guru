@@ -1,13 +1,16 @@
-\setuppapersize[A2]
+\setuppapersize[A3,landscape]
 \starttext
 \setupTABLE[each][each][style=\tfxx,align={middle,middle}]
-\setupTABLE[header][headstyle=\tfxx]
+% First, row and columnt without frame
+\setupTABLE[c][1][frame=off,align={lohi,flushright}]
+\setupTABLE[header][headstyle=\tfxx,frame=off]
 \startluacode
 FORMAT = "context"
 require("ascii")
 -- FORMAT = "html"
 ascii_table()
 \stopluacode
+
 \stoptext
 
 

@@ -101,16 +101,19 @@ local Control = {
 function p(code)
    if Control[code] ~= nil then
         out = Control[code][1]
+        out = out .. "\\crlf"
         if Control[code][3] ~= nil then
-            out = out .. "\\crlf" .. Control[code][3]
+            out = out .. Control[code][3]
         end
         if code <= 32 or code == 127 then
+            -- Control sequences
             tex.sprint("{\\tt " .. out .. "}")
         else
-            context(out)
+            -- Problematic TeX sequences
+            context("{\\tfd " .. out .. "}")
         end
    else
-        context(string.char(code))
+        context("{\\tfd " .. string.char(code) .. "}")
    end
 end
 
@@ -137,25 +140,16 @@ function print_prefix(code)
 end
 
 function ascii_table_header()
-    -- Header
+    -- Header is showing only decimal code.
     bTABLEhead()
-    for line = 1, 4  do
-        bTR()
-        for code = 0, 31 do
-            -- decimal
-            bTH()
-            if line == 1 then context(code)
-            -- hexa
-            elseif line == 2 then tex.sprint('{\\tt' .. string.format("0x%02X", code) .. '}')
-            -- octal
-            elseif line == 3 then context(string.format("%#o", code))
-            -- binary
-            elseif line == 4 then context(byte2bin(code, 5))
-            end
-            eTH()
-        end
-        eTR()
+    bTR()
+    bTH() eTH() -- first empty column for prefixx
+    for code = 0, 31 do
+        bTH()
+            context(code)
+        eTH()
     end
+    eTR()
     eTABLEhead()
 end
 
@@ -168,8 +162,19 @@ function ascii_table_content()
             if code > 1 then
             eTR() bTR() -- next row
             end
+            -- prefix
+            bTD() context(code) eTD()
         end
-        bTD() p(code) eTD()
+        bTD() 
+            -- table cell with code and interpretation
+            -- (1) top has hexa and octal
+            context(string.format("%02X", code) .. "\\hfill")
+            context(string.format("%o", code) .. "\\vfill")
+            -- (2) character itself
+            p(code)
+            -- (3) binary
+            context("\\vfill {\\switchtobodyfont[7pt] " .. byte2bin(code, 7) .. "}")
+        eTD()
     end
     eTABLEbody()
 end
