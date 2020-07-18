@@ -19,7 +19,7 @@
 %\setupoutput[dvips,acrobat] % dvips, acrobat
 \directlua{pdf.setminorversion(4)}
 %\setupbodyfont[helvetica,7.9pt]  %
-\setupbodyfont[8.05pt]  %
+\setupbodyfont[7.925pt]  %
 \setuppapersize[A4, portrait][A3, landscape] % A3, A4, A5, A6; landscape
 %\setuppapersize[A4, portrait] % A3, A4, A5, A6; landscape
 \setuparranging[2SIDE] % zmena stranek pro vyrobu knizky,
@@ -114,7 +114,8 @@
 \setupcolor[rgb]
 
 % Nastaveni seznamu s odrazkami
-\setupitemize[1][standard,packed,joinedup][margin=4pt]
+\setupitemize[1][packed,joinedup][width=10pt,margin=4pt]
+%margin={4pt}]
 % joinedup -- zadne mezery pred a za
 
 \defineitemgroup[enumerate]

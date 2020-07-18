@@ -425,6 +425,7 @@ USERCTL=yes
 \item Save iptables: {\tt /sbin/iptables-save > /etc/sysconfig/iptables}, {\tt /etc/init.d/iptables save}
 \item Network Address Translation (NAT) / Masquarage:  {\tt iptables -t nat -A POSTROUTING -s 10.200.0.0/24 -o eth0 -j MASQUERADE}
 \item Delete rule: {\tt iptables -t nat --line-numbers -L} (list in table); {\tt iptables -t nat -D PREROUTING 2} (delete 2nd line)
+\item Check banned host for sshd service: {\tt fail2ban-client status sshd}
 \stopitemize
 
 \subsection{Dynamic Firewall Manager -- {\tt firewalld}}
@@ -755,6 +756,7 @@ USERCTL=yes
 %\item Check record: {\tt dig +cdflag www.root.cz}
 \item Get DNSSEC root keys: \type{dig . DNSKEY | grep -Ev '^($|;)' > root.keys}
 \item Verify DNSSEC of {\em root.cz} A record: \type{dig +sigchase +trusted-key=./root.keys www.root.cz A}
+\item Scan for DNS in local network: \type{nmap --script=dns-service-discovery -p 53,5353 172.31.224.0/24 -oG - | grep open}
 \stopitemize
 
 \section{WHOIS service}
@@ -779,6 +781,7 @@ USERCTL=yes
 \item Use saved cookies: {\tt wget -nv --content-disposition --referer= --cookies=on {\sl URL}}
 %POZOR https://gist.github.com/3-n/3307405
 \item Download URL and display it in stdout: {\tt curl {\sl URL}}, {\tt wget -q -O - {\sl URL}}
+\item Download script and execute: \type{wget -q -O - https://server/script.sh | bash -x -v}
 \item Resume broken download: {wget -c {\sl URL}}, {\tt curl -L -O -C - {\sl URL}}
 \item Change referer and browser id.: {\tt wget --referer {\sl URL} --user-agent "Mozilla/5.0 (compatible; Linux)"}
 \item Set HTTP header: {\tt curl -H "Content-Type: application/xml" {\sl URL}}
