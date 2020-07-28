@@ -651,7 +651,7 @@ USERCTL=yes
 
 \startitemize
 \item Scan multiple IP addresses: {\tt nmap 192.168.1.1-254}, {\tt nmap 192.168.1.*}, {\tt nmap 192.168.1.0/24}
-\item Scan IP range for open HTTP port, grepable output to stdout: {\tt nmap -p80 10.0.0.0/24 -oG - }
+\item Scan IP range for open HTTP port, grepable output to stdout: \type{nmap --open -p80 10.0.0.0/24 -oG - }
 \item Scan hosts given in file: {\tt nmap -iL list.txt} (host, network, IP per like)
 \item Scan IPv6 network: {\tt nmap -6 }
 \item Scan ports: {\tt -p 22}, {\tt -p 1-1024}, {\tt -F} (only most common ports), {\tt -p-} (1-65535), {\tt -p U:53,111,137,T:21-25,80} (given TCP/UDP ports)

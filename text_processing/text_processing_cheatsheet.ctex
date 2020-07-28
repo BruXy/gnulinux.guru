@@ -47,7 +47,6 @@ ASCII Table:
 %{\bf Příklady:} 
 \stopitemize
 
-
 % PERL
 
 \subsubsection{Regular expressions}
@@ -174,40 +173,51 @@ ASCII Table:
 
 % ISO/IEC 646:1991
 
+\section{Inter-process Communication (IPC)}
+
+\startitemize
+\item Pipe:
+\item Named pipe:
+\item T-pipe:
+\item Network pipe:
+\item Show progress: pv
+\stopitemize
+
 \section{ASCII and Unicode manipulations}
 
 \startitemize
 \item Ordinal value of \uv{A}: \type{printf "%d" \'A}
-\item Convert integer to character: \type{printf \\$(printf '%03o' 65)}
+\item Convert decimal integer to character: \type{printf \\$(printf '%03o' 65)}
 \item Use escape sequences 0x41 (hex. A) and 141 (oct. a): \type{printf \\x41\\141} or \type{printf "\x41\141"}
-\item Show ASCII table: {\tt ascii}, {\tt man 7 ascii}
+\item Show ASCII table: {\tt man 7 ascii}, {\tt ascii}
 \item \type{echo -n "α" | hexdump -C}
 \item Different way how to display $\alpha$ in terminal:
-\startitemize
-\item Interpret UTF-8 escape sequences:  \type{echo -e "\u03B1"}, \type{printf "\u03B1\n"}
-\item \type{perl -e 'binmode STDOUT, ":utf8"; print "\N{U+03b1}\n";'}
-\item Interpret UTF-16 escape sequences: \type{echo -e "\xce\xb1"}, \type{printf "1\xce\xb1\n"}, \type{awk 'BEGIN { print "\xce\xb1"; }'}
-\item \type{perl -e 'print "\xce\xb1\n";'}
-\item \type{perl -Mcharnames=:full -e 'binmode STDOUT, ":utf8"; print "\N{GREEK SMALL LETTER ALPHA}\n";'}
-\stopitemize
+    \startitemize
+    \item Interpret UTF-8 escape sequences:  \type{echo -e "\u03B1"}, \type{printf "\u03B1\n"}
+    \item \type{perl -e 'binmode STDOUT, ":utf8"; print "\N{U+03b1}\n";'}
+    \item Interpret UTF-16 escape sequences: \type{echo -e "\xce\xb1"}, \type{printf "1\xce\xb1\n"}, \type{awk 'BEGIN { print "\xce\xb1"; }'}
+    \item \type{perl -e 'print "\xce\xb1\n";'}
+    \item \type{perl -Mcharnames=:full -e 'binmode STDOUT, ":utf8"; print "\N{GREEK SMALL LETTER ALPHA}\n";'}
+    \stopitemize
 \stopitemize
 
 \section{Stream editor for filtering and transforming text -- sed}
 
 \startitemize
 \item {\tt sed [-n] -e '{\it příkaz}[;{\it příkaz}\low{2}]' [-f {\it skript}] {\it vstup(y)}}
-\item Nahrazování (s): \crlf
-       \type{sed s/vzor/náhrada/flag < vstup.txt > vystup.txt}\crlf
-        Flagy: {\tt g}~-- vše pokryté regexem, {$n$ -- pořadí výskytu v řádku } 
+\item Substitutions (s): \crlf
+       \type{sed s/pattern/replacement/flag < in.txt > out.txt}\crlf
+        Flags: {\tt g}~-- vše pokryté regexem, {\tt $n$ -- pořadí výskytu v řádku }
 \item Rozsah: {\tt '1,10 {\it příkaz}'}, do konce {\tt '10,\$ {\it příkaz}'}
 \item Vypsání části (p): {\tt sed -n '5,\$p' vstup.txt}
 \item Vyhledávání: {\tt sed -n '/regex/p' vstup.txt}
-\item Náhrada znaků (y): {\tt y/ěščřžýáíé/escrzyaie/}
+\item Chars substitutions (y): {\tt y/ěščřžýáíé/escrzyaie/}
 \item Vymazání řádků (d): {\tt '/^[[:blank:]]*\#/d'}, {\tt '/^\$/d'}
 \item Vlož před řádek (i): \type{'1i\text'} před první řádek vlož \uv{text}
 \item Vlož za řádek (a): \type{'$a\konec'} za poslední vlož \uv{konec}
 \item Merge every two lines: \type{sed 'N;s/\n/ /'}
 \item Display every 3rd line: sed -n '0~3p' input.txt
+\item \type{}
 \stopitemize
 
 From line to line-1
@@ -216,20 +226,39 @@ From line to line-1
 \section{Charset conversions}
 
 \startitemize
-\item recode IBM437..UTF-8 
-\item recode iso-8859-2..utf-8 soubor.txt
-\item recode utf-8..iso-8859-2 soubor.txt
-\item \type{tr '[:lower:]' '[:upper:]'}
-\item \type{tr '\302\240' '  ' }
-\item \type{tr '\0' '\n' | nl -v 0}
+\item Convert DOS characters to UTF-8: {\tt iconv -f cp437 -t utf-8}, {\tt recode IBM437..UTF-8}
+\item recode iso-8859-2..utf-8 file.txt
+\item recode utf-8..iso-8859-2 file.txt
+\item Replace UTF-8 non-break-space to normal space: \type{tr '\302\240' ' ' }
+\item Delete set of character: {\tr -d 'ABC'}
 \stopitemize
 
-Remove repeated characters: tr -s
+\section{Case conversion}
+
+\startitemize
+\item Convert upper-case to lower: \type{tr '[:upper:]' '[:lower:]'}
+\item Bash 4+ build-in methods:
+    \startitemize
+    \item Uppercase first/all character(s): \type{${VAR^}}/\type{${VAR^^}}
+    \item Lowercase first/all character(s). \type{${VAR,}}/\type{${VAR,,}}
+    \item Reverse case of first/all character(s): \type{${VAR~}}/\type{${VAR~~}}
+    \stopitemize
+\stopitemize
+
+\section{Trimming whitespace}
+
+\startitemize
+\item Convert zero-endings to new-line: \type{tr '\0' '\n' | nl -v 0}
+\item Remove repeated space characters: {\tt tr -s ' '}
+\item Remove repeated white characters: \type{sed -r 's/[[:blank:]]+/ /g'}
+\item Remove empty lines:awk 'NF > 0' filename, awk NF filename, \type{grep -v '^$'}
+\stopitemize
 
 \section{Handling columns}
 
 \startitemize
 \item cut
+\item Last column: \type{awk '{print $NF}' filename}, rev | cut -d'.' -f 1 | rev
 \item \type{cut -d: -f 1,3 /etc/passwd # login a UID}
 \item \type{ls -l | cut -d' ' -f 6 # velikosti souborů}
 \item \type{ls -l | cut -b 27-35,48- | sort -rn }
@@ -238,24 +267,26 @@ Remove repeated characters: tr -s
 \item \type{ls -l | awk '{print $5 " " $9}' # problém? }
 \item Get last column \type{| rev | cut -d'.' -f 1 | rev}
 \item Switch some columns: \type{awk -F '/' '{print  $2"/"$1}' <<< "aaa/xxx"}
+\item Join files by lines, set delimiter \uv{,}: {\tt paste file1.txt file2.txt}
+\item Sum numbers: \type{cat num.txt | paste -sd+ | bc}
 \stopitemize
-
 
 \section{Sorting}
 
 \startitemize
+\item Locales can affect sorting, {\tt export LC_ALL=C}
 \item Sort in reverse order: {\tt sort -r}
 \item Sort and ignore case: {\tt sort -f}
 \item Sort by number: {\tt sort -n}
 \item Sort and strip of duplicates: {\tt sort -u} or {\tt sort \| uniq}
-\item Sort by second column with delimited CSV: {\tt sort -t';' -k 2,2}
+\item Sort by second column with \uv{;}-delimited CSV: {\tt sort -t';' -k 2,2}
 \item Sort 1st column alphabetically and 2nd numerically: {\tt sort -t"," -k1,1 -k2n,2}
+\item Do not sort 1st line: \type {... | awk 'NR == 1; NR > 1 {print $0 | "sort -n"}'}
+\item Do not sort 1st line (bash): \type{... | (read -r; printf "%s\n" "$REPLY"; sort)}
 \item Version sort (1.1, 1.2, 1.11,\ldots): {\tt sort -V}
 \item Find out of order lines in semi-sorted file: {\tt sort -c}
 \item Random permutation of input lines: {\tt shuf}, {\tt shuf -R}
 \stopitemize
-
-
 
 \section{cut -- remove section from each line}
 
@@ -267,6 +298,7 @@ Remove repeated characters: tr -s
 
 \startitemize
 \item grep -F 'fixed string' -- do not interpret special characters
+\item Search for non-matching lines: {\tt grep -v text}, \type{awk '!/text/' filename}
 \item grep 'regex' soubor
 \item \type{awk '/regex/ { print $0 }' soubor}
 \item perl -ne 'print if /regex/' soubor
@@ -275,30 +307,84 @@ Remove repeated characters: tr -s
 \item First lie of output: head -n 1, sed 1q
 \item Last line of output: tail -n 1, \type{sed '$!d'}
 
-
 This shell command can find wrong characters in your SLS files:
 %find . -name '*.sls'  -exec  grep --color='auto' -P -n '[^\x00-\x7F]' \tbs{} \tbs;
 \stopitemize
 
 
-Generate random password: \type{tr -dc 'A-Za-z0-9~!@#$%^&*+-_=`|(){}[]:;\"<>,.?/' </dev/urandom | head -c 16}
+Generate random password: \type{tr -dc 'A-Za-z0-9#%^&*+-_=<>' </dev/urandom | head -c 16}
 
 \section{JSON (JavaScript Object Notation)}
 
 \startitemize
 \item Pretty print: {\tt python -m json.tool {\stt file.json}}, {\tt jq . {\stt file.json}}
+\item Escaped string \type{"{\"key\":1, \"word\":\"cat\"}"}: \type{jq 'fromjson | .'}
+\item
 \stopitemize
-
 
 \section{Format output}
 
 \startitemize
 \item {\tt column -t}
 \item Join every two lines: \type{sed 'N;s/\n/ /'}
+\item Join lines with delimiter: \type{paste -s --delimiters="|"}
+\item Fold for 64 columns, break at space: {\tt fold -w 64 -s}
+\item pr — Paginate or columnate files for printing.
+\item Convert tab to spaces: expand
+\item Convert spaces to tab: unexpand
+\item Print line numbers: \type{nl}, \type{cat -n}
 \stopitemize
 
+fmt  Reformat paragraph text.
+head, tail, split, csplit
+cat, tac, nl, od, base64
+shuf, shred, sort
 
-\section{GNU Bourne-Again SHell}
+\section{Comparing files}
+
+\startitemize
+\item Checksums: b2sum, cksum, md5sum, sha1sum, sha224sum, sha256sum, sha384sum, sha512sum, sum
+\item Compare sorted files: {\tt comm}
+\item Compare files: {\tt diff}
+\item Compare output of two commands: \type{diff <(cat /etc/passwd) <(cut -f2 /etc/passwd){
+\stopitemize
+
+\section{Convert numeric base and number format}
+
+\startitemize
+\item Convert from hexa to bin: \type{echo 'ibase=16; obase=2; ABC123' | bc}
+\item Convert from bin to hex: \type{printf "%x" $[2#101010111100]}
+\item \type{du -B1 |  numfmt --to=iec-i --suffix=B;}
+\item Binary dumps: hexdump -C, od
+\stopitemize
+
+\section{Printf string formatting}
+
+\startitemize
+\item \% [flags][width][.precision][length]specifier
+\item Numerical specifier: \type{%u},\,\type{%d},\,\type{%i} decimal; \type{%E},\,\type{%f} float, \type{%x},\,\type{%X} hex;\,\type{%o} octal
+\item String specifier: \type{%s} string,\,\type{%%} char \%, \type{%q} quote safely for shell, \type{%b} interpret escape sequences
+\item Width: $n$  prints at least $n$ chars, spaces from right, $0n$ print at least $n$ chars, zeros from left, \type{*} width specified in preceding parameter
+\item Precision: min. number of digits, digits after decimal point, number of printed chars, {\tt *} number of chars given by preceding parameter 
+\item Flags: {\tt -} left-justify, {\tt +} prints number with sign {\tt +/-}
+\stopitemize
+
+\section{Textual formats conversions}
+
+\startitemize
+\item HTML to text: {\tt elinks --dump}, {\tt lynx --dump}
+\item pandoc -f -t
+\stopitemize
+
+\section{Source code formatting}
+
+\startitemize
+\item 
+\stopitemize
+
+\section{Regex handling}
+
+\subsection{GNU Bourne-Again SHell}
 
 \startBash
 #!/bin/bash
@@ -316,7 +402,7 @@ fi
 \stopitemize
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Perl}
+\subsection{Perl}
 
 \startPerl
 #!/usr/bin/env perl
@@ -337,7 +423,7 @@ if ( $name =~ m/L[a-zA-Z]*([0-9]+)/ ) {
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Python}
+\subsection{Python}
 
 \startPython
 #!/usr/bin/env python3
@@ -355,7 +441,7 @@ if match:
 \item {\tt object = re.match({\em regex, input[, flags]})}
 \stopitemize
 
-\section{Ruby}
+\subsection{Ruby}
 
 \startRuby
 #!/usr/bin/env ruby
@@ -365,5 +451,5 @@ if match = name.match(/L[a-zA-Z]*([0-9]+)/)
     puts match.captures[0]
 \stopRuby
 
-
-\stopcolumns\stoptext
+\stopcolumns
+\stoptext
