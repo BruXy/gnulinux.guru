@@ -671,7 +671,7 @@ USERCTL=yes
 %-O
 \item Using Nmap Scripting Engine (NSE):
 \startitemize
-\item List installed scripts: {\tt locate .nse}, {\tt rpm -ql nmap}
+\item List installed scripts: {\tt locate .nse}, {\tt rpm -ql nmap}, {\tt dpkg -S nmap}
 \item Traceroute with geolocation: {\tt nmap --traceroute --script traceroute-geolocation.nse {\sl host}}
 \item Brufe-force find of interesting server files and directories: {\tt nmap --script http-enum www.host.com}
 \item Scan network for HTTP servers: {\tt nmap --script http-title -sV -p 80 192.168.0.0/24}
@@ -765,6 +765,7 @@ USERCTL=yes
 \item Client to access WHOIS service: {\tt whois}, {\tt jwhois}
 \item Query domain on given WHOIS server: {\tt whois -h whois.nic.cz seznam.cz}
 \item Check who owns current IP address range/domain: {\tt whois {\sl IP}}\,/\,{\tt whois {\sl domain}}
+\item Get all subnets for specific AS (Autonomous system): \type{whois -h whois.radb.net -- -i origin AS855 | grep route}
 \stopitemize
 
 \section{HTTP(S) (Hypertext Transfer Protocol [SECURE])}
