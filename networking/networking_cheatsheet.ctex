@@ -326,6 +326,7 @@ USERCTL=yes
 \startitemize
 \item Configure device: {\tt dhclient -v eth0}
 \item Release device configuration: {\tt dhclient -r} 
+\item See what DHCP server provides: {\tt nmap --script broadcast-dhcp-discover}
 \item DHCP client data: {\tt /var/lib/dhclient/dhclient.leases}
 \stopitemize
 
