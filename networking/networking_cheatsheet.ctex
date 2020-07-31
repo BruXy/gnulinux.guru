@@ -197,8 +197,8 @@ Privilege port $<$ 1024 can be opened only by the root user!
 \item Check if physical link exits: {\tt ethtool eth0}
 \item Loop-back interface: {\tt ifconfig lo 127.0.0.1}
 \item Loop-back route:  {\tt route add 127.0.0.1}
-\item List devices: {\tt cat /proc/net/dev}, {\tt netstat -ie}
-\item Show devices and configuration: {\tt  ifconfig}, {\tt ip addr show}, {\tt ip link show}, {\tt ip link list}
+\item List interfaces: {\tt cat /proc/net/dev}, {\tt netstat -ie}, {\tt tcpdump -D}
+\item Show configuration: {\tt  ifconfig}, {\tt ip addr show}, {\tt ip link show}, {\tt ip link list}
 \item Disable device: {\tt ifconfig eth0 down}; {\tt ip link set eth0 down}; {\tt nmcli connection down eth0}
 \item Rename device (when disabled): {\tt ip link set {\sl enp0s25} name {\sl eth0}}
 \item Enable device: {\tt ifconfig eth0 up}; {\tt ip link set eth0 up}; {\tt nmcli connection up eth0}
@@ -356,6 +356,7 @@ USERCTL=yes
 \item Flood with SYN packets with spoofed source IP: {\tt hping3 -S -P -U --flood -V --rand-source {\sl host}}
 \item Smurf attack: {\tt hping3 -1 --flood -a {\sl host}}
 \item Use TCP instead: {\tt tcptraceroute}, {\tt tcping {\sl host port}}
+\item See who is pinging: {\tt tcpdump -i eth0 icmp}
 \stopitemize
 
 \section{Ethernet Bridge Manipulation}
@@ -472,6 +473,7 @@ USERCTL=yes
 \item Capture telnet and ssh: {\tt tcpdump -n portrange 22-23}
 %\item {\tt tcpdump -nnvvS src 10.0.0.5 and dst port 3389}
 \item Check packet filter syntax: {\tt man pcap-filter}
+\item See HTTP requests: \type{tcpdump -v -n -l | grep -E -i "POST /|GET /|Host:"}
 \stopitemize
 
 % dst src tcp udp port X host XXX net XXX
