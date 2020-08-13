@@ -768,7 +768,7 @@ USERCTL=yes
 \item Client to access WHOIS service: {\tt whois}, {\tt jwhois}
 \item Query domain on given WHOIS server: {\tt whois -h whois.nic.cz seznam.cz}
 \item Check who owns current IP address range/domain: {\tt whois {\sl IP}}\,/\,{\tt whois {\sl domain}}
-\item Get all subnets for specific AS (Autonomous system): \type{whois -h whois.radb.net -- -i origin AS855 | grep route}
+\item Get all subnets for specific AS (Autonomous system): {\tt whois -h whois.radb.net -\/- -i origin AS855 \| grep route}
 \stopitemize
 
 \section{HTTP(S) (Hypertext Transfer Protocol [SECURE])}

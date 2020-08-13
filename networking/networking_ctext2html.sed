@@ -8,3 +8,4 @@ s:\\quotation\\bgroup\(.*\)\\egroup:“\1”:
 s:\\uv{\(.*\)}:“\1”:
 s/\\bgroup\\tt/<span style="font-family: monospace;text-align:right;">/
 s:\\egroup:</span>:
+s:\\\/::g
