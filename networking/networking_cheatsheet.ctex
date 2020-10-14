@@ -138,6 +138,9 @@ Use: {\tt ipcalc}, {\tt sipcalc} for IP/net calculations.
 
 Privilege port $<$ 1024 can be opened only by the root user!
 
+% Get list of top 30 ports:
+% sort -r -k3 /usr/share/nmap/nmap-services | grep -v '^#' | head -n 30
+
 %\bTABLE[frame=off,style=\tfx]
 %\bTR\bTD
 \startitemize[columns,five]
@@ -522,6 +525,7 @@ USERCTL=yes
 %ssh -W host:port server
 \item Remote filesystem: {\tt sshfs -o allow_other,defer_permissions,IdentityFile=\symtilda/.ssh/id_rsa user@xxx.xxx.xxx.xxx:/ /mnt/droplet}
 \item Copy remote stdout to your X11 buffer: {\tt ssh user@host 'cat /path/to/some/file' \| xclip}
+\item Compare local and remote file: {\tt diff \symtilda/.bashrc <(ssh work cat \symtilda/.bashrc)}
 \item Check detailed SystemD logs for SSH daemon: {\tt journalctl -u sshd}
 \stopitemize
 
