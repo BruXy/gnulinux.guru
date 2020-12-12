@@ -6,7 +6,7 @@
 %  Martin Bruchanov -- bruxy at regnet dot cz                   %
 %                                                               %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\input vim_tahak_style.ctex
+\input vim_style.ctex
 
 \starttext
 \startcolumns[n=2]

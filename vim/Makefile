@@ -1,4 +1,3 @@
-PROJECT=bash
+PROJECT=vim
 
 include ../Makefile.main
-
