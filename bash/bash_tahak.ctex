@@ -1,4 +1,11 @@
-\input bash_style.ctex
+% Style configuration
+\def\confBodyfont{7.9pt}
+\def\confLinespace{2.52ex}
+\input ../_styles/basic_style.ctex
+\input ../_styles/formatting_macros.ctex
+
+\def\stt{\tt\sl{}}
+
 \starttext
 \startcolumns[n=2]
 
@@ -368,6 +375,7 @@ EOF                         EOF
 \startitemize
 \item {\tt date} -- vypíše datum, {\tt date --date=@\sl unix\_čas}
 \item \type{date +"%Y%m%d} \type{%H:%M:%S} \type{%Z"} -- formát data {\tt 20090923 13:39:02 CEST} %POZOR
+\item \type{printf '%(%Y-%m-%d %H:%M:%S)T\n'} -- formát data s pomocí \type{%T}
 \item {\tt cal} -- zobrazí kalendář
 \item {\tt crontab -e} -- editace crontabu, {\tt -l} vylistování, údaje {\stt min hour date month day command}, {\tt * * * * * příkaz} každou minutu, {\tt 1 * * * * příkaz} 1. min. hodiny
 \item {\tt  at,  batch,  atq,  atrm} --  umisťuje do fronty, zobrazuje či maže úlohy určené pro pozdější provedení

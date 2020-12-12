@@ -1,4 +1,9 @@
-\input bash_style.ctex
+% Style configuration
+\def\confBodyfont{7.9pt}
+\def\confLinespace{2.52ex}
+\input ../_styles/basic_style.ctex
+\input ../_styles/formatting_macros.ctex
+
 \starttext
 \startcolumns[n=2]
 
@@ -6,7 +11,7 @@
 
 \mycopyright
 
-\startparagraph	
+\startparagraph    
 Set interpreter: \type{#!/bin/bash} \qquad Remarks: \type{# this is comment}
 \stopparagraph
 
@@ -27,62 +32,62 @@ Set interpreter: \type{#!/bin/bash} \qquad Remarks: \type{# this is comment}
 
 \bTABLEbody
 \bTR
-	\bTD vi-command mode ({\ss C}) \eTD
-	\bTD ~\C{\ES} \eTD
-	\bTD --- \eTD
+    \bTD vi-command mode ({\ss C}) \eTD
+    \bTD ~\C{\ES} \eTD
+    \bTD --- \eTD
 \eTR
 
 \bTR
-	\bTD Previous/next command in history \eTD
-	\bTD ~\CC{j}~/~\CC{k}\eTD
-	\bTD ~\C{\CT+p} / \C{\CT+n}\crlf \C{\PU} / \C{\PD}\eTD
+    \bTD Previous/next command in history \eTD
+    \bTD ~\CC{j}~/~\CC{k}\eTD
+    \bTD ~\C{\CT+p} / \C{\CT+n}\crlf \C{\PU} / \C{\PD}\eTD
 \eTR
 \bTR
-	\bTD Automatic fill of file name \eTD
-	\bTD ~\C{\ES}\CC{\ES} \eTD
-	\bTD ~\C{\TT} \eTD
-\eTR
-
-\bTR
-	\bTD List of all matches \eTD
-	\bTD ~\C{\ES}\C{=} \eTD
-	\bTD ~\C{Tab}\C{Tab}\eTD
+    \bTD Automatic fill of file name \eTD
+    \bTD ~\C{\ES}\CC{\ES} \eTD
+    \bTD ~\C{\TT} \eTD
 \eTR
 
 \bTR
-	\bTD Horizontal move in command line\eTD
-	\bTD ~\CC{h} / \CC{l}\eTD
-	\bTD ~\C{\CT+b} / \C{\CT+f}, \C{$\leftarrow$} / \C{$\rightarrow$}\eTD
+    \bTD List of all matches \eTD
+    \bTD ~\C{\ES}\C{=} \eTD
+    \bTD ~\C{Tab}\C{Tab}\eTD
 \eTR
 
 \bTR
-	\bTD Jump to line begin/end \eTD
-	\bTD ~\CC{\type{^}} / \CC{\symdollar{}}\eTD
-	\bTD ~\C{\CT+a} / \C{\CT+e}\eTD
+    \bTD Horizontal move in command line\eTD
+    \bTD ~\CC{h} / \CC{l}\eTD
+    \bTD ~\C{\CT+b} / \C{\CT+f}, \C{$\leftarrow$} / \C{$\rightarrow$}\eTD
 \eTR
 
 \bTR
-	\bTD Backward/forward search in history\eTD
-	\bTD ~\CC{/} / \CC{?}  \eTD
-	\bTD ~\C{\CT+r} / \C{\CT+s}\eTD
+    \bTD Jump to line begin/end \eTD
+    \bTD ~\CC{\type{^}} / \CC{\symdollar{}}\eTD
+    \bTD ~\C{\CT+a} / \C{\CT+e}\eTD
 \eTR
 
 \bTR
-	\bTD Delete word to the end/begin\eTD
-	\bTD ~\CC{dw} / \CC{db}\eTD
-	\bTD ~\C{\ES~d} / \C{\ES~h} \eTD
+    \bTD Backward/forward search in history\eTD
+    \bTD ~\CC{/} / \CC{?}  \eTD
+    \bTD ~\C{\CT+r} / \C{\CT+s}\eTD
 \eTR
 
 \bTR
-	\bTD Delete text from cursor to the line end/begin\eTD
-	\bTD ~\CC{d\type{$}} / \CC{d\type{^}} \eTD
-	\bTD ~\C{\CT+k} / \C{\CT+u}\eTD
+    \bTD Delete word to the end/begin\eTD
+    \bTD ~\CC{dw} / \CC{db}\eTD
+    \bTD ~\C{\ES~d} / \C{\ES~h} \eTD
+\eTR
+
+\bTR
+    \bTD Delete text from cursor to the line end/begin\eTD
+    \bTD ~\CC{d\type{$}} / \CC{d\type{^}} \eTD
+    \bTD ~\C{\CT+k} / \C{\CT+u}\eTD
 \eTR
 
 %bTR
-%	\bTD \eTD
-%	\bTD \eTD
-%	\bTD \eTD
+%    \bTD \eTD
+%    \bTD \eTD
+%    \bTD \eTD
 %eTR
 
 \eTABLEbody
@@ -212,9 +217,9 @@ Run a script as: {\tt bash {\sl option script and its parameters}}
 {\tfx
 \startlines
 {\tt while getopts "a:b" opt; do case \symdollar{}opt in
-\qquad	a) echo a = \symdollar{}OPTARG ;;
-\qquad	b) echo b ;;
-\qquad	\backslash{}?) echo "Unknown parameter!" ;;
+\qquad    a) echo a = \symdollar{}OPTARG ;;
+\qquad    b) echo b ;;
+\qquad    \backslash{}?) echo "Unknown parameter!" ;;
 esac; done
 shift \symdollar{}((\symdollar{}OPTIND - 1)); echo "Last: \symdollar{}1" }
 \stoplines}
@@ -224,42 +229,42 @@ shift \symdollar{}((\symdollar{}OPTIND - 1)); echo "Last: \symdollar{}1" }
 \section{Control expressions}
 
 \startitemize
-	\item {\tt ({\sl commands})}, {\tt \symdollar{}({\sl commands})}, \type{`}{\stt commands}\type{`}, {\tt \symlb{\sl commands;}\symrb} -- run in subshell
-	\item {\tt \symdollar{}({\sl program})}, \type{`}{\stt program}\type{`} -- output of program replaces command
-	\startitem \type{test}, \type{[ ]} -- condition evaluation:
-		\startitemize
-			\item numeric comparison: {\tt {\sl a} -eq {\sl b}}~\dots $a=b$, {\tt  {\sl a} -ge {\sl b}}~\dots $a\ge{}b$, {\tt  {\sl a} -gt {\sl b}}~\dots $a>b$, {\tt  {\sl a} -le {\sl b}}~\dots $a\le{}b$, {\tt  {\sl a} -lt {\sl b}}~\dots $a<b$
-			\item file system: {\tt -d {\sl file}} is directory, {\tt	-f {\sl file}} exists and is not dir., {\tt	-r {\sl file}} exists and is readable, {\tt	-w {\sl file}} exists and is writable, {\tt	-s {\sl file}} is non-zero size, {\tt -a {\sl file}} exists
-			\item logical: {\tt -a} and, {\tt -o} or, {\tt !} negation 		
-		\stopitemize
-	\stopitem	
-	\item \type{[[ ]]} -- comparison of strings, equal {\tt =}, non-equal {\tt !=}, {\tt -z }{\stt string} is zero sized, {\tt -n }{\stt string} is non-zero sized, \type{<}, \type{>} lexical comparison
-	\item \type{[} {\stt condition} \type{] && [} {\stt condition} \type{]}
-	\item {\tt true} -- returns 0 value
-	\item {\tt false} -- returns 1 value
-	\item {\tt break} -- terminates executed cycle
-	\item {\tt continue} -- starts new iteration of cycle
-	\item {\tt eval {\sl parameters}} -- executes parameters as command
-	\item {\tt exit {\sl value}} -- terminates script with return value
-	\item {\tt . {\sl script}}, {\tt source {\sl script}} -- reads and interprets another script
-	\item {\tt : {\sl argument}} -- just expand argument or do redirect
-	\item {\tt alias {\sl name='commands'}} -- expand {\sl name} to commands
-	\item {\tt unalias {\sl name}} -- cancel alias 
-	\item {\tt if [ {\sl condition} ]; then {\sl commands}; \crlf elif [ {\sl condition} ]; then {\sl commands}; \crlf else {\sl commands}; fi}
+    \item {\tt ({\sl commands})}, {\tt \symdollar{}({\sl commands})}, \type{`}{\stt commands}\type{`}, {\tt \symlb{\sl commands;}\symrb} -- run in subshell
+    \item {\tt \symdollar{}({\sl program})}, \type{`}{\stt program}\type{`} -- output of program replaces command
+    \startitem \type{test}, \type{[ ]} -- condition evaluation:
+        \startitemize
+            \item numeric comparison: {\tt {\sl a} -eq {\sl b}}~\dots $a=b$, {\tt  {\sl a} -ge {\sl b}}~\dots $a\ge{}b$, {\tt  {\sl a} -gt {\sl b}}~\dots $a>b$, {\tt  {\sl a} -le {\sl b}}~\dots $a\le{}b$, {\tt  {\sl a} -lt {\sl b}}~\dots $a<b$
+            \item file system: {\tt -d {\sl file}} is directory, {\tt    -f {\sl file}} exists and is not dir., {\tt    -r {\sl file}} exists and is readable, {\tt    -w {\sl file}} exists and is writable, {\tt    -s {\sl file}} is non-zero size, {\tt -a {\sl file}} exists
+            \item logical: {\tt -a} and, {\tt -o} or, {\tt !} negation         
+        \stopitemize
+    \stopitem    
+    \item \type{[[ ]]} -- comparison of strings, equal {\tt =}, non-equal {\tt !=}, {\tt -z }{\stt string} is zero sized, {\tt -n }{\stt string} is non-zero sized, \type{<}, \type{>} lexical comparison
+    \item \type{[} {\stt condition} \type{] && [} {\stt condition} \type{]}
+    \item {\tt true} -- returns 0 value
+    \item {\tt false} -- returns 1 value
+    \item {\tt break} -- terminates executed cycle
+    \item {\tt continue} -- starts new iteration of cycle
+    \item {\tt eval {\sl parameters}} -- executes parameters as command
+    \item {\tt exit {\sl value}} -- terminates script with return value
+    \item {\tt . {\sl script}}, {\tt source {\sl script}} -- reads and interprets another script
+    \item {\tt : {\sl argument}} -- just expand argument or do redirect
+    \item {\tt alias {\sl name='commands'}} -- expand {\sl name} to commands
+    \item {\tt unalias {\sl name}} -- cancel alias 
+    \item {\tt if [ {\sl condition} ]; then {\sl commands}; \crlf elif [ {\sl condition} ]; then {\sl commands}; \crlf else {\sl commands}; fi}
 %\stoplines
 \startitem {\tt for {\sl variable} in {\sl arguments}; do {\sl commands; } done }
 \startitemize
-	\item \type{{a..z}} -- expands to {\tt a b c \dots z}
-	\item {\tt \symlb\sl{i..n..s}\symrb} -- sequence from {\sl i} to {\sl n} with step {\sl s} 
-	\item {\tt \type{\"}\symlb{}a,b,c\symrb{}\type{\"}} -- expands to {\tt "a" "b" "c"}
-	\item {\tt \symlb{}1,2\symrb{}\symlb{}a,b\symrb{}} -- expands to {\tt 1a 1b 2a 2b}
-	\item {\tt seq {\sl start step end}} -- number sequence
+    \item \type{{a..z}} -- expands to {\tt a b c \dots z}
+    \item {\tt \symlb\sl{i..n..s}\symrb} -- sequence from {\sl i} to {\sl n} with step {\sl s} 
+    \item {\tt \type{\"}\symlb{}a,b,c\symrb{}\type{\"}} -- expands to {\tt "a" "b" "c"}
+    \item {\tt \symlb{}1,2\symrb{}\symlb{}a,b\symrb{}} -- expands to {\tt 1a 1b 2a 2b}
+    \item {\tt seq {\sl start step end}} -- number sequence
 \stopitemize
 \stopitem
 \item {\tt for((i=1; i<10; i++)); do  {\sl commands; } done}
 \item {\tt while {\sl returns true}; do {\sl commands;} done}
 \item {\tt until [ {\sl test returns true} ]; do {\sl commands;} done}
-\item {\tt case {\tt \symdollar{}prom} in value$_1$) commands	;; \crlf value$_2$) commands	;; *) implicit. commands ;; \crlf esac}
+\item {\tt case {\tt \symdollar{}prom} in value$_1$) commands    ;; \crlf value$_2$) commands    ;; *) implicit. commands ;; \crlf esac}
 \item Function definition: {\tt function {\sl name ()} \symlb {\sl commands}; \symrb}
 \item {\tt return {\sl value}} -- return value of the function 
 \item {\tt declare -f {\sl function}} -- print function declaration
@@ -268,25 +273,25 @@ shift \symdollar{}((\symdollar{}OPTIND - 1)); echo "Last: \symdollar{}1" }
 \section{Redirections and pipes}
 
 \startitemize
-	\item {\tt 0} stdin/input, {\tt 1} stdout/output, {\tt 2} stderr/error output
-	\item \type{>} {\stt file}  -- redirection, create new file or truncate it to zero size
-	\item \type{>>} {\stt file} -- append new data at the end of file
-	\item {\stt command\low{1}}\type{<<<}{\stt command\low{2}} -- ouput from 2\high{nd} to stdin of  1\high{st}
-	\item {\stt command } \type{<} {\stt file} -- read stdin from file
-	\item \type{tee} {\stt file} -- read stdin, writes to file and to stdout
-	\item {\stt command} \type{2>} {\stt file} -- redirect error messages to file
-%	\item \type{2>} -- přesměruje pouze chybová hlášení
-	\item {\tt exec 1> >(tee -a log.txt)} -- redirect stdout also to file 
-	\item \type{2>&1} -- merge stderr and stdout
-	\item \type{exec 3<>/dev/tcp/}{\stt addr/port} -- create descriptor for network read/write
-	\item \type{exec 3>&-} -- close descriptor
-	\item {\stt command} \type{> /dev/null 2>&1} -- suppress all output
-	\item \type{n> n>}\type{> n>&m} -- operation redirect for descriptors {\sl n, m}
-	\item {\tt mkfifo {\sl name}} -- make a named pipe, it can be written and read as file
-	\item {\stt command}\low{1} \type{|} {\stt command}\low{2} -- pipe, connection between processes
+    \item {\tt 0} stdin/input, {\tt 1} stdout/output, {\tt 2} stderr/error output
+    \item \type{>} {\stt file}  -- redirection, create new file or truncate it to zero size
+    \item \type{>>} {\stt file} -- append new data at the end of file
+    \item {\stt command\low{1}}\type{<<<}{\stt command\low{2}} -- ouput from 2\high{nd} to stdin of  1\high{st}
+    \item {\stt command } \type{<} {\stt file} -- read stdin from file
+    \item \type{tee} {\stt file} -- read stdin, writes to file and to stdout
+    \item {\stt command} \type{2>} {\stt file} -- redirect error messages to file
+%    \item \type{2>} -- přesměruje pouze chybová hlášení
+    \item {\tt exec 1> >(tee -a log.txt)} -- redirect stdout also to file 
+    \item \type{2>&1} -- merge stderr and stdout
+    \item \type{exec 3<>/dev/tcp/}{\stt addr/port} -- create descriptor for network read/write
+    \item \type{exec 3>&-} -- close descriptor
+    \item {\stt command} \type{> /dev/null 2>&1} -- suppress all output
+    \item \type{n> n>}\type{> n>&m} -- operation redirect for descriptors {\sl n, m}
+    \item {\tt mkfifo {\sl name}} -- make a named pipe, it can be written and read as file
+    \item {\stt command}\low{1} \type{|} {\stt command}\low{2} -- pipe, connection between processes
     \item {\stt command} \type{2>&1} \type{|} \periods[3] -- can be shortened to {\stt command} \type{|&} \periods[3]
     \item {\tt \symdollar{}\symlb{}PIPESTATUS[0]\symrb}, {\tt \symdollar{}\symlb{}PIPESTATUS[1]\symrb{}} -- retvals before and after pipe
-	\item {\tt read {\sl parameters}} -- read input line and separate it into parameters
+    \item {\tt read {\sl parameters}} -- read input line and separate it into parameters
 \stopitemize
 
 \subsection{Input for interactive programs (here documents)}
@@ -307,15 +312,15 @@ EOF                         EOF
 \section{Evaluating mathematical expressions}
 
 \startitemize
-	\item {\tt let {\sl expression}}, {\tt expr {\sl expression}}, {\tt \symdollar((}{\em expression}{\tt ))}, {\tt \symdollar((}{\em expression1, expression2}{\tt ))}, {\tt \symdollar[}{\em expression}{\tt ]}
+    \item {\tt let {\sl expression}}, {\tt expr {\sl expression}}, {\tt \symdollar((}{\em expression}{\tt ))}, {\tt \symdollar((}{\em expression1, expression2}{\tt ))}, {\tt \symdollar[}{\em expression}{\tt ]}
 
-	\item Numeric systems: {\em base}\type{#}{\em number}; hexa {\tt 0xABC}, octal {\tt 0253}, binary \type{2#10101011}
+    \item Numeric systems: {\em base}\type{#}{\em number}; hexa {\tt 0xABC}, octal {\tt 0253}, binary \type{2#10101011}
 
-	\item Operators: {\tfx {\tt i++}, {\tt ++i}, {\tt i--}, {\tt --i}, {\tt +}, {\tt -}; {\tt **} power, {\tt *}, {\tt /}, \type{%} remainder; logical: \type{!} neg., \type{&&} and, \type{||} or; binary: {\tt \symtilda}, \type{&}, \type{|}; \type{<<}, \type{>>} shifts; assignment: \type{= *= /= }\type{%}\type{= += -= <>= &= ^= |=} {\tt >>= <<=}; relations: \type{< <= > >=} }
-	
-	\item {\tt factor {\sl n}} -- factorize $n$ into primes 
+    \item Operators: {\tfx {\tt i++}, {\tt ++i}, {\tt i--}, {\tt --i}, {\tt +}, {\tt -}; {\tt **} power, {\tt *}, {\tt /}, \type{%} remainder; logical: \type{!} neg., \type{&&} and, \type{||} or; binary: {\tt \symtilda}, \type{&}, \type{|}; \type{<<}, \type{>>} shifts; assignment: \type{= *= /= }\type{%}\type{= += -= <>= &= ^= |=} {\tt >>= <<=}; relations: \type{< <= > >=} }
+    
+    \item {\tt factor {\sl n}} -- factorize $n$ into primes 
 
-	\item Floating point operations:  {\tt echo "scale=10; 22/7" \type{|} bc}
+    \item Floating point operations:  {\tt echo "scale=10; 22/7" \type{|} bc}
 \stopitemize
 
 \section{Screen output}
@@ -375,6 +380,7 @@ EOF                         EOF
 \startitemize
 \item {\tt date} -- print date, {\tt date --date=@}{\stt unix\_time}
 \item \type{date +"%Y%m%d} \type{%H:%M:%S} \type{%Z"} -- format to {\tt 20130610 13:39:02 CEST} %POZOR
+\item \type{printf '%(%Y-%m-%d %H:%M:%S)T\n'} -- format date via printf \type{%T}
 \item {\tt cal} -- display calendar
 \item {\tt crontab -e} -- edit crontab, {\tt -l} list, format {\stt min hour date month day command}, {\tt * * * * * command} run every minute, {\tt 1 * * * * command} 1\high{st} min of every hour
 \item {\tt  at,  batch,  atq,  atrm} -- queue, examine or delete jobs for later execution
@@ -475,10 +481,10 @@ File name wildchars: \type{?}  a char; \type{*} zero or more chars;
 \section{System utilities}
 
 \startitemize
-\item {\tt uname -a} -- name and version of operating system
+\item {\tt uname -a, cat /proc/version} -- name and version of operating system
 \item {\tt uptime} -- how long the system has been running
 \item {\tt fuser} -- identify processes using files or sockets
-\item {\tt lsof} --	list open files
+\item {\tt lsof} --    list open files
 \item {\tt sync} -- flush file system buffers
 \item {\tt chroot {\sl dir command}} -- run command with special root directory
 \item {\tt strace,ltrace {\sl program}} -- show used system/library calls

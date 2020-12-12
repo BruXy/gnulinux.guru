@@ -1,4 +1,8 @@
-\input python_vzhled.ctex
+%\input python_vzhled.ctex
+\def\confBodyfont{8.1pt}
+\def\confLinespace{2.775ex}
+\input ../_styles/basic_style.ctex
+\input ../_styles/formatting_macros.ctex
 
 % Reserved worlds
 
