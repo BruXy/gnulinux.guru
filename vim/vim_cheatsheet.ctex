@@ -120,6 +120,7 @@
 \item Join lines: \DF \CC{J} add space,\DF \CC{gJ} without space
 \item Copy to register:\DF line \CC{Y} \a \CC{yy}, word \CC{yw}
 \item Copy to the beginning/end of line:\DF \CC{y0}\,/\,\CC{y\symdollar}
+\item Copy $N$ characters forward/backwards:\DF \CC{y$N$l}/\CC{y$N$h}
 \item More registers: press \CC{"{\em k}\ldots} before command will save text to register {\em k}. E.g. \CC{"kyy} copies line into \type{k}
 \item Paste content of last used register or last deleted text: after \CC{p}, before \CC{P} cursor, \CC{"kpp} pastes register \type{k}
 \item Special register: \type{"%} -- current file name, \type{"/} -- last search, \type{"+} -- system clipboard \ldots
