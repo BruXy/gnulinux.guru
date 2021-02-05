@@ -1,0 +1,107 @@
+
+\startuniqueMPgraphic{shadow}
+fill OverlayBox cornered 3pt shifted (0.8pt,-0.8pt) withcolor .1white ;
+fill OverlayBox cornered 4pt withcolor \MPcolor{\overlaycolor};
+setbounds currentpicture to OverlayBox ;
+\stopuniqueMPgraphic
+
+\defineoverlay [shadow] [\uniqueMPgraphic{shadow}]
+
+% macro #1 = color of key
+\def\key#1{\inframed[frame=on,
+    corner=round,
+    background=shadow,
+    backgroundcolor=#1,
+    bottomframe=on,
+    radius=1.5pt, %
+    offset=-0.8pt,
+%    height=1.1em, %
+%    height=\lineheight, %
+    backgroundoffset=0pt]}
+
+
+%%%%%%%%%% Prikazy
+
+\def\dd{{\tt ..}}
+\def\bod{{\it bod}}
+
+\def\ods{\hskip2em{}}
+\def\pods{\hskip1em{}}
+
+\def\ES{{\sc Esc}{}}
+\def\DEL{{\sc Del}{}}
+\def\BS{{\sc BackSpace}{}}
+\def\IN{{\sc Ins}{}}
+\def\TT{{\sc Tab}{}}
+\def\PD{{\sc PageDown}{}}
+\def\PU{{\sc PageUp}{}}
+\def\EN{{\sc Enter}{}}
+\def\SH{{\sc Shift}{}}
+\def\CT{{\sc Ctrl}{}}
+\def\AT{{\sc Alt}{}}
+\def\HM{{\sc Home}{}}
+\def\EN{{\sc End}{}}
+
+% v dolnim indexu bude nazev rezimu jako Sans-Serif
+\def\sssymbol#1{\hbox{\switchtoformulabodyfont[ss,script] #1}}
+
+\definehspace[odsaz][.15em]
+%\definehspace[odsaz][0pt]
+
+% Command
+% #1 keyboard imput
+% #2 editation mode type
+% #3 color
+\def\mez{\hspace[odsaz]}
+\definecolor[darkgray][r=0.4,g=0.4,b=0.4]
+\def\COMMAND#1#2#3{\key{#3}{\mez{\tt #1}\color[darkgray]{\tfx\ss \low{#2}}\mez}}
+
+% regular grey
+\def\C#1{\key{gray}{\mez{\tt #1}\mez}}
+
+% color for each environment
+\definecolor[command][r=1,g=0.5,b=0.5]
+\definecolor[exkey][r=0.5,g=1,b=1]
+\definecolor[edit][r=1,g=1,b=0.5]
+\definecolor[visual][r=0.5,g=1,b=0.5]
+
+\def\CC#1{\COMMAND{#1}{C}{command}} % command
+\def\CV#1{\COMMAND{#1}{V}{visual}}  % visual
+\def\CE#1{\COMMAND{#1}{E}{edit}}    % edit
+\def\CSK#1{\COMMAND{#1}{ex}{exkey}} % shortcuts for ex-mode
+
+\def\DF{\dotfill{}}
+\def\Df{} % without dotfill but for HTML
+\def\U#1{\underbar{#1}}
+
+\def\exframe{\inframed[frame=off,
+    background=color,
+    frameoffset=0.5pt, %
+%    radius=2.5pt, %
+%    height=broad, %
+%    strut=yes,
+%    offset=none,
+    offset=-1pt,
+    backgroundcolor=exkey,
+    backgroundoffset=0pt
+]}
+
+\def\CS#1{\exframe{\,\tt :#1\,}}
+
+\def\uv#1{\quote{#1}} % quotation 'uvozovky'
+
+\def\a{$\approx$ {}}
+\def\symlb{\{}
+\def\symrb{\}}
+\def\symdollar{\$}
+\def\symalpha{$\alpha$}
+\def\symtilda{\type{~}}
+\def\stt{\tt\sl{}}
+
+\def\pyind{\strut\hskip1.5em}
+
+\def\btt#1{{\tt\bf #1}{}}
+\def\stt#1{{\tt\sl #1}{}}
+\def\tbs{\textbackslash{}}
+\def\cbf{\bf{}} % centered bf for HTML
+\def\framedTABLE{\bTABLE}

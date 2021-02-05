@@ -1,11 +1,14 @@
 % Style configuration
-\def\confBodyfont{7.9pt}
-\def\confLinespace{2.52ex}
+\def\confBodyfont{7.8pt}
+\def\confLinespace{2.5ex}
 \input ../_styles/basic_style.ctex
 \input ../_styles/formatting_macros.ctex
 
 \starttext
-\startcolumns[n=2]
+\startcolumns[n=2,
+   strut=yes,
+   balance=yes,
+   backgroundoffset=0mm]
 
 \title{Bourne-Again SHell and Linux CLI}
 
@@ -67,7 +70,7 @@ Set interpreter: \type{#!/bin/bash} \qquad Remarks: \type{# this is comment}
 \eTR
 
 \bTR
-    \bTD Backward/forward search in history\eTD
+    \bTD Backward/forward history search\eTD
     \bTD ~\CC{/} / \CC{?}  \eTD
     \bTD ~\C{\CT+r} / \C{\CT+s}\eTD
 \eTR
@@ -214,6 +217,8 @@ Run a script as: {\tt bash {\sl option script and its parameters}}
 
 \subsection{Read options from command line}
 
+\vskip -1mm
+
 {\tfx
 \startlines
 {\tt while getopts "a:b" opt; do case \symdollar{}opt in
@@ -296,6 +301,8 @@ shift \symdollar{}((\symdollar{}OPTIND - 1)); echo "Last: \symdollar{}1" }
 
 \subsection{Input for interactive programs (here documents)}
 
+\vskip -1mm
+
 {\tfx
 \starttyping
 ./program <<  EOF      ./program <<-'EOF' # suppress tabulators
@@ -304,6 +311,7 @@ Input2                      Input2
 EOF                         EOF
 \stoptyping
 }
+\vskip -1mm
 
 \subsection{Process file line by line}
 

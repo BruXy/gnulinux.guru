@@ -1,0 +1,126 @@
+\language[en]
+\mainlanguage[en]
+\enableregime[utf]
+
+\pdfvariable minorversion 4
+
+% Main font size
+\setupbodyfont[\confBodyfont]
+
+%%%%%%%%%%%%%%
+% Page setup %
+%%%%%%%%%%%%%%
+
+\setuppapersize[A4, portrait][A3, landscape] % A3, A4, A5, A6; landscape
+\setuparranging[2SIDE] % two pages on one papersheet
+
+%\usemodule[old-multicolumns]
+
+% Page size
+\setuplayout[%
+    width=200mm,%
+    height=288mm,%
+    header=0mm, %
+    footer=0mm, %
+    topspace=2mm, %
+    leftmargin=0mm, %
+    rightmargin=0mm, %
+    leftedge=0mm,
+    backspace=3mm,
+]
+
+%%%%%%%%%
+% Title %
+%%%%%%%%%
+
+\definefont[TitleFont][RegularBold sa 2.0]
+
+\def\ShadowOffset{-2.5pt}
+\define[1]\TitleShadow{\rlap{%
+    \color[lightgray]{#1}}\kern\ShadowOffset\lower\ShadowOffset\hbox{#1}%
+}
+
+\setuphead[title][
+    before={\blank[small]},
+    textcommand=\TitleShadow,
+    style=\TitleFont,
+    align=center,
+    after={\blank[-2*small]},
+]
+
+%%%%%%%%%%%%%%%%%
+% (Sub)Sections %
+%%%%%%%%%%%%%%%%%
+
+\definefont[SectionFont][RegularBold sa 1.35]
+\define[1]\Cislovani{{#1}.} % tecka za cislem kapitoly
+\setuphead[section][
+     style=\SectionFont,
+     numbercommand=\Cislovani,
+     before={\blank[-2*small]},
+     after={\blank[-3*small]},
+]
+
+\definefont[SubsectionFont][RegularBold sa 1.1]
+\setuphead[subsection][   %
+   style=\SubsectionFont, %
+   numbercommand=\Cislovani,%
+   before={\blank[-2*small]},
+   after={\blank[-3*small]},
+]
+
+% mezery mezi odstavci
+\setupwhitespace[none]
+
+% velikost odsazeni
+\setupindenting[none]  % none, small, medium, bix, next, first, [rozmer]
+
+% Pouziti barev
+\setupcolors[state=start]
+\setupcolor[rgb]
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+% Bullet list settings %
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setupinterlinespace[line=\confLinespace]
+\setupitemize[1][packed,joinedup][margin=0pt]
+
+\setuplines[indenting=always,%
+    before=\nowhitespace,joinedup]
+
+% Vypnuti popisku
+\setupcaptions[location=none]
+
+% nezery pred a za plovoucimi objekty
+\setupfloats[spacebefore=,spaceafter=]
+
+% vlastnosti verbatim
+\setuptyping[typing][before={\blank[-0.5mm]},after={\blank[0mm]}]
+
+%%%%%%%%%%%%%
+% Copyright %
+%%%%%%%%%%%%%
+
+\def\mycopyright{
+\vskip -3mm
+\placeintermezzo[here,none]{}{
+\framed[frame=off,bottomframe=on,frameoffset=1mm]{
+    \startalignment[middle]
+    {\tfx \copyright{} \date[][year]
+        Martin 'BruXy' Bruchanov, {\tt bruchy@gmail.com}}
+    \stopalignment
+    }
+  }
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Additional formatting commands %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Included relative to the path of the main document!
+
+%\input ../_style/formatting_macros.ctex
+%\input formatting_macros.ctex
+
+

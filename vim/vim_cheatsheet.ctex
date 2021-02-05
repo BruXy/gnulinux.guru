@@ -6,7 +6,11 @@
 %  Martin Bruchanov -- bruxy at regnet dot cz                   %
 %                                                               %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\input vim_style.ctex
+
+\def\confBodyfont{9.7pt}
+\def\confLinespace{2.675ex}
+\input ../_styles/basic_style.ctex
+\input ../_styles/formatting_macros.ctex
 
 \starttext
 \startcolumns[n=2]
@@ -21,12 +25,12 @@
 \item {\bf Key combination}~-- several keys pressed together, e.g. \CE{\CT+A} means \CE{\CT+\SH+a}.
 \item {\bf Key sequence}~-- several keys or combinations pressed gradually, e.g.. \CE{\CT+ww} means a press of combination \C{\CT+w} and than a key \C{w}.
 \item {\bf Working mode}~-- it is displayed bottom right:
-	\startitemize
-\item 		\color[command]{\blacksquare}~{\ss C}~-- basic command mode, \CE{\ES},
-\item 		\color[edit]{\blacksquare}~{\ss E}~-- insert mode \CC{\IN}, \CC{i}, 
-\item 		\color[visual]{\blacksquare}~{\ss V}~-- visual, used for highlighting of text blocks \CC{v}/\CC{V}, 
-\item 		\color[exkey]{\blacksquare}~{\ss ex}~-- command line {\em ex}-mode \CC{:}.
-	\stopitemize
+    \startitemize
+\item         \color[command]{\blacksquare}~{\ss C}~-- basic command mode, \CE{\ES},
+\item         \color[edit]{\blacksquare}~{\ss E}~-- insert mode \CC{\IN}, \CC{i}, 
+\item         \color[visual]{\blacksquare}~{\ss V}~-- visual, used for highlighting of text blocks \CC{v}/\CC{V}, 
+\item         \color[exkey]{\blacksquare}~{\ss ex}~-- command line {\em ex}-mode \CC{:}.
+    \stopitemize
 \item Repeat command with typing number $n\times$ of repetitions before command, e.g. \CC{5x} deletes 5 chars from cursor position. Option \CS{set \U{s}how\U{c}md} shows command sequence in bottom right.
 %\item Vynutit si příkaz je možné pomocí {\tt !}, např. \CS{w!} si vynutí uložení souboru, \CS{q!} ukončení ViMu.
 \item Help: \CS{help {\em topic}}, use \CSK{Tab} for command completion.
@@ -36,15 +40,15 @@
 \item Set or unset options with \CS{set {\em option}} a \CS{set no{\em option}}. Alone \CS{set} displays current options.
 \item Shortening of options:\DF \CS{\U{se}t \U{i}gnore\U{c}ase} \a\CS{se ic}
 \item {\bf Line addressing} of {\em ex}-commands:
-	\startitemize
-	\item \CS{$x$command}\DF  execute on line $x$	
-	\item \CS{$x$,$y$command}\DF from  $x$ to line $y$
-	\item \CS{.,\symdollar{}command}\DF from actual position to the end
-    \item \CS{\%command} \a \CS{1,\$command}\DF for whole file	
-	\item \CS{.,+$x$comm} \a $x$\CS{comm}\DF from cursor to next $x$ lines
-	\item \CS{.,\symdollar--$x$}\DF from current position to $x$. line from the end
-	\item \CS{/{\em pattern\low{1}}/,/{\em pattern\low{2}}/}\DF from the first occurrence of line with {\em pattern\low{1}} to the first {\em pattern\low{2}}
-	\stopitemize
+    \startitemize
+    \item \CS{$x$command}\DF  execute on line $x$    
+    \item \CS{$x$,$y$command}\DF from  $x$ to line $y$
+    \item \CS{.,\symdollar{}command}\DF from actual position to the end
+    \item \CS{\%command} \a \CS{1,\$command}\DF for whole file    
+    \item \CS{.,+$x$comm} \a $x$\CS{comm}\DF from cursor to next $x$ lines
+    \item \CS{.,\symdollar--$x$}\DF from current position to $x$. line from the end
+    \item \CS{/{\em pattern\low{1}}/,/{\em pattern\low{2}}/}\DF from the first occurrence of line with {\em pattern\low{1}} to the first {\em pattern\low{2}}
+    \stopitemize
 \item More {\em ex}-commands together:\DF \CS{command\low{1} \| command\low{2}}
 \item Comparison of two files:\DF {\tt vimdiff {\em file\low{1}} {\em file\low{2}}}
 \stopitemize

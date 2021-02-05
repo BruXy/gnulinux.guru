@@ -6,7 +6,11 @@
 %  Martin Bruchanov -- bruxy at regnet dot cz                   %
 %                                                               %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\input vim_style.ctex
+
+\def\confBodyfont{9.7pt}
+\def\confLinespace{2.675ex}
+\input ../_styles/basic_style.ctex
+\input ../_styles/formatting_macros.ctex
 
 \starttext
 \startcolumns[n=2]
