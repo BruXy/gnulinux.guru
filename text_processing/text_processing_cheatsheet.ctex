@@ -1,12 +1,10 @@
-\input text_processing_style.ctex
+\def\confBodyfont{9.0pt}
+\def\confLinespace{2.675ex}
+\input ../_styles/basic_style.ctex
+\input ../_styles/formatting_macros.ctex
 
-\def\DF{\dotfill{}}
-\def\stt{\tt\sl{}}
-\def\symlb{\{}
-\def\symrb{\}}
-\def\symdollar{\$}
-\def\symalpha{$\alpha$}
-\def\symtilda{\type{~}}
+% Syntax formating with t-vim module
+\input text_processing_style.ctex
 
 \starttext
 \startcolumns[n=2]
@@ -14,17 +12,36 @@
 \title{RegEx \& CLI Text Processing}
 
 %\mycopyright
-
-ASCII Table:
-
+%ASCII Table:
 %https://garbagecollected.org/2017/01/31/four-column-ascii/
-
 % Use: https://www.contextgarden.net/Programming_in_LuaTeX
 
-\section{Regex}
+\section{Regular expressions (REGEX)}
 
-% VIM
-\subsection{Regular expressions}
+\bTABLE\tfx
+\setupTABLE[c][1,2,3,4][align=center]
+\bTABLEhead
+\bTR\bTH Expression \eTH\bTH Basic \eTH\bTH Extended \eTH\eTR
+\eTABLEhead
+\bTABLEbody
+\bTR
+    \bTD Any characted (except \type{\n}) \eTD
+    \bTD .\eTD
+    \bTD .\eTD
+\eTR
+\bTR
+    \bTD\eTD
+    \bTD\eTD
+    \bTD\eTD
+\eTR
+\bTR
+    \bTD\eTD
+    \bTD\eTD
+    \bTD\eTD
+\eTR
+\eTABLEbody
+\eTABLE
+
 
 \startitemize
 \item Begin/end of:\DF line \type{^}\,/\,{\tt \symdollar}, word \type{\<}\,/\,\type{\>}, file \type{\%^}\,/\,\type{\%$} 
@@ -223,6 +240,17 @@ ASCII Table:
 From line to line-1
 \type{ec2-metadata | sed -ne '0,/user-data:/{/user-data:/d;p}'}
 
+\section{AWK}
+
+\startitemize
+\item FS — field separator (default: space(s) or tabs)
+\item RS — record separator (default: newline)
+\item NF — number of fields in the record
+\item NR — number of the current record
+\item OFS — output field separator
+\item ORS — output record separator
+\stopitemize
+
 \section{Charset conversions}
 
 \startitemize
@@ -304,7 +332,7 @@ From line to line-1
 \item perl -ne 'print if /regex/' soubor
 \item perl -ne '/regex/ && print' soubor
 \item sed -e '/regex/!d' soubor
-\item First lie of output: head -n 1, sed 1q
+\item First line of output: head -n 1, sed 1q
 \item Last line of output: tail -n 1, \type{sed '$!d'}
 
 This shell command can find wrong characters in your SLS files:
@@ -318,8 +346,9 @@ Generate random password: \type{tr -dc 'A-Za-z0-9#%^&*+-_=<>' </dev/urandom | he
 
 \startitemize
 \item Pretty print: {\tt python -m json.tool {\stt file.json}}, {\tt jq . {\stt file.json}}
-\item Escaped string \type{"{\"key\":1, \"word\":\"cat\"}"}: \type{jq 'fromjson | .'}
-\item
+\item Escaped string \type{"{\"k\":1, \"word\":\"x\"}"}: \type{jq 'fromjson|.'}
+\item Extract values for two keys and join them with comma: \type{curl -s http://ifconfig.co/json | jq -r '[.country,.city]|join(", ")'}
+\item Extract values from array {\tt results}: \type{jq '.results[] | {name, age}'}
 \stopitemize
 
 \section{Format output}
@@ -330,9 +359,9 @@ Generate random password: \type{tr -dc 'A-Za-z0-9#%^&*+-_=<>' </dev/urandom | he
 \item Join lines with delimiter: \type{paste -s --delimiters="|"}
 \item Fold for 64 columns, break at space: {\tt fold -w 64 -s}
 \item pr — Paginate or columnate files for printing.
-\item Convert tab to spaces: expand
-\item Convert spaces to tab: unexpand
+\item Convert tab to spaces and vice versa: {\tt expand}, {\tt unexpand}
 \item Print line numbers: \type{nl}, \type{cat -n}
+\item Join paragraphs to single line: \type{s/\n\([^\n]\)/\1/}
 \stopitemize
 
 fmt  Reformat paragraph text.
@@ -346,7 +375,7 @@ shuf, shred, sort
 \item Checksums: b2sum, cksum, md5sum, sha1sum, sha224sum, sha256sum, sha384sum, sha512sum, sum
 \item Compare sorted files: {\tt comm}
 \item Compare files: {\tt diff}
-\item Compare output of two commands: \type{diff <(cat /etc/passwd) <(cut -f2 /etc/passwd){
+\item Compare output of two commands: \type{diff <(cat /etc/passwd) <(cut -f2 /etc/passwd)}
 \stopitemize
 
 \section{Convert numeric base and number format}
@@ -374,6 +403,7 @@ shuf, shred, sort
 \startitemize
 \item HTML to text: {\tt elinks --dump}, {\tt lynx --dump}
 \item pandoc -f -t
+\item Convert string to URI format: \type{jq -sRr @uri}
 \stopitemize
 
 \section{Source code formatting}
@@ -384,11 +414,11 @@ shuf, shred, sort
 
 \section{Regex handling}
 
-\subsection{GNU Bourne-Again SHell}
+\subsection{GNU Bourne-Again SHell (version$>=$3.x)}
 
 \startBash
 #!/bin/bash
-name="LinuxDays2013"
+name="LinuxDays2020"
 if [[ $name =~ L[a-zA-Z]*([0-9]+) ]]
 then
     echo ${BASH_REMATCH[1]}
@@ -396,18 +426,15 @@ fi
 \stopBash
 
 \startitemize
-\item Podpora od verze 3.x (\type{$BASH_VERSION})
-\item \type{$BASH_REMATCH}, \type{${BASH_REMATCH[0]}} -- celý řetězec
-\item \type{${BASH_REMATCH[1]}} -- podskupina \uv{jedno a více čísel}
+\item \type{$BASH_REMATCH}, \type{${BASH_REMATCH[0]}} -- whole string
+\item \type{${BASH_REMATCH[1]}} -- groups \uv{one and more numbers}
 \stopitemize
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\subsection{Perl}
 
 \startPerl
 #!/usr/bin/env perl
 
-$name = "LinuxDays2013";
+$name = "LinuxDays2020";
 
 if ( $name =~ m/L[a-zA-Z]*([0-9]+)/ ) {
     print $1 . "\n"
@@ -415,10 +442,9 @@ if ( $name =~ m/L[a-zA-Z]*([0-9]+)/ ) {
 \stopPerl
 
 \startitemize
-\item (PCRE) Perl Compatible Regular Expression
-\item Zpětná reference se provádí pomocí \type{$}$n$
-\item Operátor {\tt m/{\em regex}/{\em flagy}} vrací true při nalezení
-\item Nahrazení \type{$name =~ s/Linux/Windows/;} (zpětná ref. \type{\}$n$)
+\item Reference groups with \type{$}$n$
+\item Operator {\tt m/{\em regex}/{\em flags}} returns true when found
+\item Replace \type{$name =~ s/Linux/OpenBSD/;}
 \stopitemize
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -428,7 +454,7 @@ if ( $name =~ m/L[a-zA-Z]*([0-9]+)/ ) {
 \startPython
 #!/usr/bin/env python3
 import re
-name = 'LinuxDays2013'
+name = 'LinuxDays2020'
 
 match = re.match(r'L[a-zA-Z]*([0-9]+)', name)
 if match:

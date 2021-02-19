@@ -1,21 +1,17 @@
 TEX=context
-WEB_ROOT=~/HOME_DESK/Documents/html/gnulinux/
+WEB_ROOT=./web_root/
 STYLE_DEFINITIONS=../_styles/basic_style.ctex ../_styles/formatting_macros.ctex
 
 .PHONY: all pdf html clean upload publish
 
-all: Makefile $(PROJECT)_tahak.pdf $(PROJECT)_tahak_include.html \
-     $(PROJECT)_tahak.html $(PROJECT)_cheatsheet.pdf \
-     $(PROJECT)_cheatsheet_include.html $(PROJECT)_cheatsheet.html \
-     $(PROJECT)_cheatsheet_0001.png $(PROJECT)_cheatsheet_thumbnail.png \
-     $(PROJECT)_cheatsheet.tar.bz2
+all: Makefile $(PROJECT)_cheatsheet.pdf \
+	$(PROJECT)_cheatsheet_include.html $(PROJECT)_cheatsheet.html \
+	$(PROJECT)_cheatsheet_0001.png $(PROJECT)_cheatsheet_thumbnail.png \
+	 $(PROJECT)_cheatsheet.tar.bz2
 
 pdf: $(PROJECT)_cheatsheet.pdf
 
 html: $(PROJECT)_cheatsheet_include.html $(PROJECT)_cheatsheet.html
-
-$(PROJECT)_tahak.pdf: $(STYLE_DEFINITIONS) $(PROJECT)_tahak.ctex
-	$(TEX) $(PROJECT)_tahak.ctex
 
 $(PROJECT)_cheatsheet.pdf: $(STYLE_DEFINITIONS) $(PROJECT)_cheatsheet.ctex
 	$(TEX) $(PROJECT)_cheatsheet.ctex
@@ -25,12 +21,6 @@ $(PROJECT)_cheatsheet_include.html: $(PROJECT)_cheatsheet.ctex $(PROJECT)_ctext2
 
 $(PROJECT)_cheatsheet.html: $(PROJECT)_cheatsheet_include.html ../html_header.sed
 	sed -f ../html_header.sed $(PROJECT)_cheatsheet_include.html > $(PROJECT)_cheatsheet.html
-
-$(PROJECT)_tahak_include.html: $(PROJECT)_style.ctex $(PROJECT)_tahak.ctex $(PROJECT)_ctext2html.sed
-	sed -f $(PROJECT)_ctext2html.sed $(PROJECT)_tahak.ctex > $(PROJECT)_tahak_include.html
-
-$(PROJECT)_tahak.html: $(PROJECT)_tahak_include.html ../html_header.sed
-	sed -f ../html_header.sed $(PROJECT)_tahak_include.html > $(PROJECT)_tahak.html
 
 $(PROJECT)_cheatsheet_0001.png: $(PROJECT)_cheatsheet.pdf
 	pdf2png -x 512 $(PROJECT)_cheatsheet.pdf
@@ -48,22 +38,22 @@ publish: $(PROJECT)_cheatsheet.pdf \
 
 .SUFFIXES: .ctex
 
-tarball: $(PROJECT)_tahak.tar.bz2
-
 changelog:
 	@echo "<ul>"
 	@git log --date=short --pretty=format:"	<li> %cd :: %s</li>" -- *
 	@echo "</ul>"
 
 $(PROJECT)_cheatsheet.tar.bz2: $(PROJECT)_style.ctex $(PROJECT)_cheatsheet.ctex Makefile $(PROJECT)_ctext2html.sed 
-	cd ..; tar cvjf $@ $(PROJECT)_tahak/{*.ctex,Makefile,$(PROJECT)_ctext2html.sed} html_header.sed
+	cd ..; tar cvjf $@ $(PROJECT)/{*.ctex,Makefile,$(PROJECT)_ctext2html.sed} html_header.sed
 	cp ../$@ .
 
 clean:
 	rm -f $(PROJECT)*.log $(PROJECT)*.tuc
 
 veryclean: clean
-	rm -f $(PROJECT)_tahak.pdf $(PROJECT)_cheatsheet.{pdf,html} $(PROJECT)_cheatsheet_include.html \
-		  $(PROJECT)_cheatsheet_0001.png $(PROJECT)_tahak.html $(PROJECT)_tahak_include.html \
-          $(PROJECT)_cheatsheet_thumbnail.png	$(PROJECT)_cheatsheet.tar.bz2
+	rm -f $(PROJECT)_cheatsheet.{pdf,html} \
+        $(PROJECT)_cheatsheet_include.html \
+        $(PROJECT)_cheatsheet_0001.png \
+        $(PROJECT)_cheatsheet_thumbnail.png \
+        $(PROJECT)_cheatsheet.tar.bz2
 

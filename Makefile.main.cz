@@ -1,0 +1,46 @@
+TEX=context
+WEB_ROOT=./web_root/
+STYLE_DEFINITIONS=../_styles/basic_style.ctex ../_styles/formatting_macros.ctex
+
+.PHONY: all pdf html clean upload publish
+
+all: Makefile $(PROJECT)_tahak.pdf $(PROJECT)_tahak_include.html \
+     $(PROJECT)_tahak.html 
+
+pdf: $(PROJECT)_tahak.pdf
+
+html: $(PROJECT)_tahak_include.html $(PROJECT)_tahak.html
+
+$(PROJECT)_tahak.pdf: $(STYLE_DEFINITIONS) $(PROJECT)_tahak.ctex
+	$(TEX) $(PROJECT)_tahak.ctex
+
+$(PROJECT)_tahak_include.html: $(PROJECT)_style.ctex $(PROJECT)_tahak.ctex $(PROJECT)_ctext2html.sed
+	sed -f $(PROJECT)_ctext2html.sed $(PROJECT)_tahak.ctex > $(PROJECT)_tahak_include.html
+
+$(PROJECT)_tahak.html: $(PROJECT)_tahak_include.html ../html_header.sed
+	sed -f ../html_header.sed $(PROJECT)_tahak_include.html > $(PROJECT)_tahak.html
+
+$(PROJECT)_tahak_0001.png: $(PROJECT)_tahak.pdf
+	pdf2png -x 512 $(PROJECT)_tahak.pdf
+
+$(PROJECT)_cheatsheet_thumbnail.png: $(PROJECT)_cheatsheet_0001.png
+	convert -unsharp 1.0 -resize 320x $^ PNG:$@
+
+publish: $(PROJECT)_cheatsheet.pdf \
+		$(PROJECT)_cheatsheet.html \
+		$(PROJECT)_cheatsheet_include.html \
+		$(PROJECT)_cheatsheet_thumbnail.png \
+		$(PROJECT)_cheatsheet.tar.bz2
+	cp $^ $(WEB_ROOT)
+	make -C $(WEB_ROOT)
+
+.SUFFIXES: .ctex
+
+tarball: $(PROJECT)_tahak.tar.bz2
+
+clean:
+	rm -f $(PROJECT)*.log $(PROJECT)*.tuc
+
+veryclean: clean
+	rm -f $(PROJECT)_tahak.pdf $(PROJECT)_tahak.html $(PROJECT)_tahak_include.html 
+
