@@ -1,6 +1,6 @@
 %\input python_vzhled.ctex
-\def\confBodyfont{8.1pt}
-\def\confLinespace{2.775ex}
+\def\confBodyfont{7.925pt}
+\def\confLinespace{2.75ex}
 \input ../_styles/basic_style.ctex
 \input ../_styles/formatting_macros.ctex
 
@@ -87,7 +87,7 @@ if {\em condition} : \crlf
 
 \bTD
 try: \crlf
-\pyind possible runtime error \crlf
+\pyind{} possible runtime error \crlf
 except [type [as value]]: \crlf
 \pyind error-recovery code \crlf
 [ else: \crlf
@@ -137,7 +137,7 @@ except [type [as value]]: \crlf
 \subsection{Functions}
 
 \startitemize
-\item {\tt def function(param1, param2,...): \crlf \pyind pass}
+\item {\tt def function(param1, param2,...): \crlf \pyind{} pass}
 \startitem {\tt def func(arg,... arg=value, ... *arg, **arg):}
 \startitemize
     \item {\tt arg} -- matched by name or position
@@ -273,6 +273,7 @@ except [type [as value]]: \crlf
 \item {\tt l.reverse()} -- reverse list in-place
 \item {\tt sum(l)} -- return sum of numeric list
 \item {\tt sorted(set(l))} -- sort and unique list via set
+\item {\tt sorted(unsorted_l, key=str.casefold)} -- sort case insensitive
 \stopitemize
 
 
@@ -282,20 +283,22 @@ except [type [as value]]: \crlf
 \item {\tt h = \symlb\symrb}, {\tt h = dict()} -- initialization of empty dictionary
 \item {\tt h = \symlb "key1": "value", "key2": "another"\symrb} -- definition
 \item {\tt h = dict(key1="value", key2="another")} -- different syntax
+\item {\tt h = dict([('key1', 'value'), ('key2', 'another'])} -- yet another
 \item {\tt h["key3"] = 333} -- add another value
 \item {\tt h = \symlb{}c: ord(c) for c in 'spam'\symrb} -- comprehension expression
 \item {\tt {\em 'key'} in h} -- returns {\tt True} if key exist (was {\tt h.has_key("key")})
-\item {\tt h.keys()} -- return list of keys
-\item {\tt h.values()} -- return list of values
+\item {\tt h.keys()}, {\tt h.values()} -- return list of keys, and values
 \item {\tt h.clear()} -- remove all items
 \item {\tt g = h.copy()} -- returns a shallow copy of {\tt h}
 \item {\tt h.get(key [, {\sl default}])} -- if key is not found return {\em default}
 \item {\tt h.popitem()} -- removes and returns an {\tt (key, value)} pair
 \item {\tt h.pop(k [, {\sl def}])} -- returns and removes $k$ else return {\em def}
+\item {\tt del h['key1']} -- remove entry for key {\em key1}
 %\item {\tt h.setdefault(key, [, default])} --
 \item {\tt h.fromkeys(seq [, value])} -- new dictionary from keys in {\em seq}
 \item {\tt dict(zip(['a','b'], [1,2]))} -- join to {\tt \symlb{}'a': 1, 'b': 2\symrb}
 \item {\tt for key, value in h.items():} -- iterate dictionary
+\item {\tt g = \symlb\symrb; g.update(h)}, {\tt g = dict(h)}, {\tt g = dict(h.items())} -- make copy
 \stopitemize
 
 \subsection{Sets}
