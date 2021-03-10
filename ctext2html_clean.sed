@@ -1,4 +1,5 @@
 # Deletion
+s:\\dev\conf.*::
 s:\\setupTABLE.*::g
 s:\\DF::g
 s:\\starttext::

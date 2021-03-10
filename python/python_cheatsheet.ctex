@@ -1,6 +1,6 @@
 %\input python_vzhled.ctex
-\def\confBodyfont{7.925pt}
-\def\confLinespace{2.75ex}
+\def\confBodyfont{7.9pt}
+\def\confLinespace{2.74ex}
 \input ../_styles/basic_style.ctex
 \input ../_styles/formatting_macros.ctex
 
@@ -285,6 +285,7 @@ except [type [as value]]: \crlf
 \item {\tt h = dict(key1="value", key2="another")} -- different syntax
 \item {\tt h = dict([('key1', 'value'), ('key2', 'another'])} -- yet another
 \item {\tt h["key3"] = 333} -- add another value
+\item {\tt h[(1+2j)] = 666} -- also hashable object can be a key
 \item {\tt h = \symlb{}c: ord(c) for c in 'spam'\symrb} -- comprehension expression
 \item {\tt {\em 'key'} in h} -- returns {\tt True} if key exist (was {\tt h.has_key("key")})
 \item {\tt h.keys()}, {\tt h.values()} -- return list of keys, and values

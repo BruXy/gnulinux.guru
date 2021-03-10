@@ -1,5 +1,7 @@
 TEX=context
-WEB_ROOT=./web_root/
+
+# Paths are relative from inside each project directory
+WEB_ROOT=../web_root/
 STYLE_DEFINITIONS=../_styles/basic_style.ctex ../_styles/formatting_macros.ctex
 
 .PHONY: all pdf html clean upload publish
@@ -17,10 +19,12 @@ $(PROJECT)_cheatsheet.pdf: $(STYLE_DEFINITIONS) $(PROJECT)_cheatsheet.ctex
 	$(TEX) $(PROJECT)_cheatsheet.ctex
 
 $(PROJECT)_cheatsheet_include.html: $(PROJECT)_cheatsheet.ctex $(PROJECT)_ctext2html.sed
-	sed -f $(PROJECT)_ctext2html.sed $(PROJECT)_cheatsheet.ctex > $(PROJECT)_cheatsheet_include.html
+	sed -f $(PROJECT)_ctext2html.sed $(PROJECT)_cheatsheet.ctex > $@
+	sed -i -f ../ctext2html_clean.sed $@
 
 $(PROJECT)_cheatsheet.html: $(PROJECT)_cheatsheet_include.html ../html_header.sed
-	sed -f ../html_header.sed $(PROJECT)_cheatsheet_include.html > $(PROJECT)_cheatsheet.html
+	sed -f ../html_header.sed $(PROJECT)_cheatsheet_include.html > $@
+	sed -i -f ../ctext2html_clean.sed $@
 
 $(PROJECT)_cheatsheet_0001.png: $(PROJECT)_cheatsheet.pdf
 	pdf2png -x 512 $(PROJECT)_cheatsheet.pdf
@@ -43,8 +47,8 @@ changelog:
 	@git log --date=short --pretty=format:"	<li> %cd :: %s</li>" -- *
 	@echo "</ul>"
 
-$(PROJECT)_cheatsheet.tar.bz2: $(PROJECT)_style.ctex $(PROJECT)_cheatsheet.ctex Makefile $(PROJECT)_ctext2html.sed 
-	cd ..; tar cvjf $@ $(PROJECT)/{*.ctex,Makefile,$(PROJECT)_ctext2html.sed} html_header.sed
+$(PROJECT)_cheatsheet.tar.bz2: $(STYLE_DEFINITIONS) $(PROJECT)_cheatsheet.ctex Makefile $(PROJECT)_ctext2html.sed 
+	cd ..; tar cvjf $@ $(PROJECT)/{*.ctex,Makefile,$(PROJECT)_ctext2html.sed} html_header.sed _styles/*.ctex
 	cp ../$@ .
 
 clean:
