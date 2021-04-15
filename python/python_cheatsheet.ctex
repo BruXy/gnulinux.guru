@@ -1,5 +1,5 @@
 %\input python_vzhled.ctex
-\def\confBodyfont{7.9pt}
+\def\confBodyfont{7.88pt}
 \def\confLinespace{2.74ex}
 \input ../_styles/basic_style.ctex
 \input ../_styles/formatting_macros.ctex
@@ -107,10 +107,10 @@ except [type [as value]]: \crlf
 \item {\tt from {\sl module} import *} -- import all to local name space
 \item {\tt import {\sl module} as {\sl name}} -- rename imported module
 \item {\tt from {\sl module} import {\sl name} as {\sl othername}}
-% \item raise %3.0
 \item {\tt break} -- exit while or for loop, skip associated else
 \item {\tt continue} -- perform next iteration of cycle
 \item {\tt quit([code={\sl exit code}])} -- exit script and set return value
+\item {\tt raise Exception('Message')} -- create error during execution
 \item {\tt global {\sl name}} -- reference global value
 % \item nonlocal name -- %3.0
 \item {\tt exec("print('Ahoj')")} -- compile and exec code
@@ -245,7 +245,7 @@ except [type [as value]]: \crlf
 \item {\tt l = [1, 2, 3]} -- one dimensional array
 \item {\tt [3] * 4} -- repeated 4$\times$ to {\tt [3, 3, 3, 3]}
 \item {\tt l[1]} -- returns 2, indexing: 1\low{0} 2\low{1} 3\low{2}
-\item {\tt l[i:j]} -- slicing from index $i$ to $j$
+\item {\tt l[i:j]} -- slicing from index $i$ to $j-1$
 \item {\tt l[i:]} -- slicing from index $i$ to end of list
 \item {\tt l[i:j:k]} -- slicing with step $k$ $\approx$ {\tt l[slice(i,j[,k])]}
 \item {\tt l[-1]} -- last item (first from back)
@@ -267,7 +267,7 @@ except [type [as value]]: \crlf
 \item {\tt l[:0]=[x,y,z]} -- insert item at front of list
 \item {\tt l.remove(value)} -- remove first occurrence of value
 \item {\tt l.pop({\sl i})}, {\tt l.pop()} -- return and remove value, without index last
-\item {\tt l.index(x\,[,\,i[,\,j]])} -- index of first occur. of x, between $i$ to $j$
+\item {\tt l.index(x\,[,\,i[,\,j]])} -- index of first occur. of x, between $i$ to $j-1$
 \item {\tt l.count(x)} -- return number of occurrence of object {\em x}
 \item {\tt l.sort(key=None, reverse=False)} -- sort list in-place
 \item {\tt l.reverse()} -- reverse list in-place
@@ -334,6 +334,7 @@ except [type [as value]]: \crlf
 \item \type{s[::-1]} -- reverse string (olleH)
 \item {\tt """This is multi-line block"""} -- collects into a single string
 \item {\tt s[1]='e'} -- indexing H\low{0}~e\low{1}~l\low{2}~l\low{3}~o\low{4}
+\item {\tt s[i:j]} -- substring from $i$ to $j-1$ (same indexing as lists)
 \item {\tt str({\sl n})} -- convert number $n$ to string
 \item {\tt 'Hello ' + 'World'}, {\tt "Hello" "World"} -- concatenation
 \item {\tt 'Hello' * 3} -- repetition $3\times$
