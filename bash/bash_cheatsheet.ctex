@@ -5,10 +5,7 @@
 \input ../_styles/formatting_macros.ctex
 
 \starttext
-\startcolumns[n=2,
-   strut=yes,
-   balance=yes,
-   backgroundoffset=0mm]
+\startcolumns[n=2, strut=yes, balance=yes, backgroundoffset=0mm]
 
 \title{Bourne-Again SHell and Linux CLI}
 
@@ -503,7 +500,7 @@ File name wildchars: \type{?}  a char; \type{*} zero or more chars;
 
 \startitemize
 \item {\tt df} -- display free space
-\item {\tt mount} -- print mounted partitions
+\item {\tt mount, findmnt} -- print mounted partitions
 \item {\tt mount -o remount -r -n /} -- change mount read only
 \item {\tt mount -o remount -w -n /} --  change mount writeable
 \item {\tt mount -t iso9660 cdrom.iso /mnt/dir -o loop} -- mount image 

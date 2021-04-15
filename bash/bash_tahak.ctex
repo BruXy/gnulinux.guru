@@ -489,7 +489,7 @@ Nahrazení v jménech souborů: \type{?} znak; \type{*} žádný nebo více znak
 
 \startitemize
 \item {\tt df} -- ukáže volné místo na připojených oddílech
-\item {\tt mount} -- ukáže připojené oddíly
+\item {\tt mount, findmnt} -- ukáže připojené oddíly
 \item {\tt mount -o remount -r -n /} -- změna připojení / pouze pro čtení
 \item {\tt mount -o remount -w -n /} --  změna připojení / pouze pro zápis
 \item {\tt mount -t iso9660 cdrom.iso /mnt/dir -o loop} -- připoj image 
