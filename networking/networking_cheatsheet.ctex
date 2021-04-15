@@ -555,6 +555,7 @@ USERCTL=yes
 \item on local, enable connection: {\tt xhost +{\sl REMOTE_IP}}
 \stopitemize
 \item Windows remote desktop: {\tt rdesktop -u {\sl USER} -d {\sl DOMAIN} -g 1024x768 -r disk:local=\symtilda {\sl hostname}}
+\item Windows remote desktop: {\tt xfreerdp /u:"{\sl User name}" /drive:home,/home/{\sl user} /v:{\sl hostname}:3389}
 \item Other options: X2Go, VNC, NoMachine NX.
 \stopitemize
 
