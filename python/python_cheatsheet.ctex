@@ -131,7 +131,7 @@ except [type [as value]]: \crlf
 \item \type{_private} -- underscored named object is private
 \item \type{def __init__(self, ...):}\crlf \pyind {\tt self.data = []} -- constructor
 \item {\tt class DerivedClass(BaseClass)} -- inheritance
-\item \type{def __iter__(self):} --
+%\item \type{def __iter__(self):} --
 \stopitemize
 
 \subsection{Functions}
@@ -151,6 +151,7 @@ except [type [as value]]: \crlf
 % \item {\tt decorator} %???
 \item {\tt return [{\em expression}]} -- return from function
 \item {\tt yield {\em expression}} -- suspend function state and return, on next iteration restore prior state
+\item {\tt def gen(x):\backslash{}n for i in range(x): yield i*i} -- returns gener. object
 \stopitemize
 
 \section{Variables}
@@ -161,13 +162,13 @@ except [type [as value]]: \crlf
 \item {\tt global name [,name]} -- global variable in local context
 \startitem {\bf Number formats: }
 \startitemize
-    \item     {\tt 2006, 2006l, 2006L}~-- decimal integer, long;
-    \item     {\tt 0775}, {\tt oct(0x1fd)}~-- octal;
-    \item     {\tt 0xBABE}, {\tt hex(47806)}~-- hexadecimal;
-    \item     {\tt 0b101010}, {\tt bin(42)}~-- binary;
-    \item     {\tt 3.14, 314e-2}~-- floating point;
-    \item   {\tt 1+2j, 1.0+2.0J, complex(1,2) } -- complex number;
-    \item   {\tt b'Ahoj'} -- sequence of 8-bit values;
+    \item {\tt 2006, 2006l, 2006L}~-- decimal integer, long;
+    \item {\tt 0775}, {\tt oct(0x1fd)}~-- octal;
+    \item {\tt 0xBABE}, {\tt hex(47806)}~-- hexadecimal;
+    \item {\tt 0b101010}, {\tt bin(42)}~-- binary;
+    \item {\tt 3.14, 314e-2}~-- floating point;
+    \item {\tt 1+2j, 1.0+2.0J, complex(1,2) } -- complex number;
+    \item {\tt b'Ahoj'} -- sequence of 8-bit values;
 \stopitemize
 \stopitem
 \item {\tt int(x)}, {\tt long(x)}, {\tt float(x)}, {\tt str(n)} -- type conversions
