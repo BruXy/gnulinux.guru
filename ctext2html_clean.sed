@@ -11,3 +11,4 @@ s:\\mycopyright.*:<!-- mycopyright -->:
 s:{\\tfx::g
 # s:}::g
 s:{\\tt::g
+/\\vskip/d

