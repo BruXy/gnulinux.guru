@@ -19,18 +19,19 @@ $(PROJECT)_cheatsheet.pdf: $(STYLE_DEFINITIONS) $(PROJECT)_cheatsheet.ctex
 	$(TEX) $(PROJECT)_cheatsheet.ctex
 
 $(PROJECT)_cheatsheet_include.html: $(PROJECT)_cheatsheet.ctex $(PROJECT)_ctext2html.sed
-	sed -f $(PROJECT)_ctext2html.sed $(PROJECT)_cheatsheet.ctex > $@
+	sed -f ../ctext2html.sed -f $(PROJECT)_ctext2html.sed $(PROJECT)_cheatsheet.ctex > $@
 	sed -i -f ../ctext2html_clean.sed $@
 
 $(PROJECT)_cheatsheet.html: $(PROJECT)_cheatsheet_include.html ../html_header.sed
 	sed -f ../html_header.sed $(PROJECT)_cheatsheet_include.html > $@
+	sed -i -e 's/HTML_DOC_TITLE/$(HTML_DOC_TITLE)/' $@
 	sed -i -f ../ctext2html_clean.sed $@
 
 $(PROJECT)_cheatsheet_0001.png: $(PROJECT)_cheatsheet.pdf
-	pdf2png -x 512 $(PROJECT)_cheatsheet.pdf
+	pdf2png -x 512 -a $(PROJECT)_cheatsheet.pdf
 
 $(PROJECT)_cheatsheet_thumbnail.png: $(PROJECT)_cheatsheet_0001.png
-	convert -unsharp 1.0 -resize 320x $^ PNG:$@
+	convert -append -unsharp 1.0 -resize 320x $(PROJECT)_cheatsheet_0*.png PNG:$@
 
 publish: $(PROJECT)_cheatsheet.pdf \
 		$(PROJECT)_cheatsheet.html \
@@ -57,7 +58,7 @@ clean:
 veryclean: clean
 	rm -f $(PROJECT)_cheatsheet.{pdf,html} \
         $(PROJECT)_cheatsheet_include.html \
-        $(PROJECT)_cheatsheet_0001.png \
+        $(PROJECT)_cheatsheet_0*.png \
         $(PROJECT)_cheatsheet_thumbnail.png \
         $(PROJECT)_cheatsheet.tar.bz2
 
