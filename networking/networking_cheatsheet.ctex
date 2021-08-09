@@ -528,6 +528,7 @@ USERCTL=yes
 \item Copy remote stdout to your X11 buffer: {\tt ssh user@host 'cat /path/to/some/file' \| xclip}
 \item Compare local and remote file: {\tt diff \symtilda/.bashrc <(ssh work cat \symtilda/.bashrc)}
 \item Check detailed SystemD logs for SSH daemon: {\tt journalctl -u sshd}
+\item Display server settings: \type{sshd -T | sort | less}
 \stopitemize
 
 
