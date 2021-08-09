@@ -19,7 +19,7 @@
 %\setupoutput[dvips,acrobat] % dvips, acrobat
 \directlua{pdf.setminorversion(4)}
 %\setupbodyfont[helvetica,7.9pt]  %
-\setupbodyfont[7.84pt]  %
+\setupbodyfont[7.83pt]  %
 \setuppapersize[A4, portrait][A3, landscape] % A3, A4, A5, A6; landscape
 %\setuppapersize[A4, portrait] % A3, A4, A5, A6; landscape
 \setuparranging[2SIDE] % zmena stranek pro vyrobu knizky,
