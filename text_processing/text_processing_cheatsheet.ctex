@@ -351,6 +351,14 @@ Generate random password: \type{tr -dc 'A-Za-z0-9#%^&*+-_=<>' </dev/urandom | he
 \item Extract values from array {\tt results}: \type{jq '.results[] | {name, age}'}
 \stopitemize
 
+\section{YAML (Yet Another Markup Language}
+
+\startitemize
+\item Check syntax: {\tt yamllint}
+\item Convert JSON to YAML: \type{echo '{"array":[1,2,{"b":"c"}]}' | yq -y}
+\item YAML to JSON: \type{ruby -ryaml -rjson -e 'puts JSON.pretty_generate(YAML.load(ARGF))' < file.yml > file.json}
+\stopitemize
+
 \section{Format output}
 
 \startitemize
@@ -375,7 +383,11 @@ shuf, shred, sort
 \item Checksums: b2sum, cksum, md5sum, sha1sum, sha224sum, sha256sum, sha384sum, sha512sum, sum
 \item Compare sorted files: {\tt comm}
 \item Compare files: {\tt diff}
+\item Compare side-by-side: {\tt diff -y}, {\tt vimdiff}
 \item Compare output of two commands: \type{diff <(cat /etc/passwd) <(cut -f2 /etc/passwd)}
+\item Create patch: {\tt diff -u old.c new.c > fix.patch}
+\item Update file: {\tt patch to_be_fix.c fix.patch}
+\item Create patch from source tree: {\tt diff -Naur dir1/ dir2/ > update.patch}
 \stopitemize
 
 \section{Convert numeric base and number format}
