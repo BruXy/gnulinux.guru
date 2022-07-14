@@ -703,6 +703,7 @@ USERCTL=yes
 \item Protocols: {\tt --tcp}, {\tt --udp}, {\tt --sctp}, {\tt --ssl}, {\tt -4}, {\tt -6}
 \item Listen on TCP port 1234: {\tt nc -v -k -l 1234}, UDP port: {\tt nc -v -k -ul 1234}
 \item Allow/deny: {\tt --allow 192.168.0.0/24}, {\tt --deny 10.0.0.0/8}
+%\item Telnet: \type{stty raw && nc towel.blinkenlights.nl 23}
 \item Transfer file: 
 \startitemize
 \item Sender: {\tt cat file.txt \| nc -v -l -p 5555}
@@ -744,7 +745,8 @@ USERCTL=yes
 	nameserver 8.8.4.4
 	search .mydomain.com
 \stoptyping
-\item Look up the IP address: {\tt host {\sl name}}, {\tt nslookup {\sl name}}, {\tt dig +short {\sl name}}
+\item Resolver configuration for {\tt systemd}: {\tt /etc/systemd/resolved.conf}
+\item Look up the IP address: {\tt host {\sl name}}, {\tt nslookup {\sl name}}, {\tt dig +short {\sl name}}, {\tt resolvectl query {\sl name}
 \item Get DNS record: {\tt dig {\sl name}}, {\tt host -a {\sl name}}
 \item Get entries from Name Service Switch libraries: {\tt getent}  
 \item Test resolution with {\tt /etc/hosts}: {\tt getent hosts {\sl name}}
