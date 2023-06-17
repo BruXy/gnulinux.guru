@@ -15,7 +15,7 @@ pdf: $(PROJECT)_cheatsheet.pdf
 
 html: $(PROJECT)_cheatsheet_include.html $(PROJECT)_cheatsheet.html
 
-$(PROJECT)_cheatsheet.pdf: $(STYLE_DEFINITIONS) $(PROJECT)_cheatsheet.ctex
+$(PROJECT)_cheatsheet.pdf: $(STYLE_DEFINITIONS) $(PROJECT)_cheatsheet.ctex $(PROJECT)_style.ctex
 	$(TEX) $(PROJECT)_cheatsheet.ctex
 
 $(PROJECT)_cheatsheet_include.html: $(PROJECT)_cheatsheet.ctex $(PROJECT)_ctext2html.sed
@@ -48,7 +48,7 @@ changelog:
 	@git log --date=short --pretty=format:"	<li> %cd :: %s</li>" -- *
 	@echo "</ul>"
 
-$(PROJECT)_cheatsheet.tar.bz2: $(STYLE_DEFINITIONS) $(PROJECT)_cheatsheet.ctex Makefile $(PROJECT)_ctext2html.sed 
+$(PROJECT)_cheatsheet.tar.bz2: $(STYLE_DEFINITIONS) $(PROJECT)_cheatsheet.ctex Makefile $(PROJECT)_ctext2html.sed
 	cd ..; tar cvjf $@ $(PROJECT)/{*.ctex,Makefile,$(PROJECT)_ctext2html.sed} html_header.sed _styles/*.ctex
 	cp ../$@ .
 

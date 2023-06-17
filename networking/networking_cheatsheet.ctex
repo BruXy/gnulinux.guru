@@ -746,7 +746,7 @@ USERCTL=yes
 	search .mydomain.com
 \stoptyping
 \item Resolver configuration for {\tt systemd}: {\tt /etc/systemd/resolved.conf}
-\item Look up the IP address: {\tt host {\sl name}}, {\tt nslookup {\sl name}}, {\tt dig +short {\sl name}}, {\tt resolvectl query {\sl name}
+\item Look up the IP address: {\tt host {\sl name}}, {\tt nslookup {\sl name}}, {\tt dig +short {\sl name}}, {\tt resolvectl query {\sl name}}
 \item Get DNS record: {\tt dig {\sl name}}, {\tt host -a {\sl name}}
 \item Get entries from Name Service Switch libraries: {\tt getent}  
 \item Test resolution with {\tt /etc/hosts}: {\tt getent hosts {\sl name}}
@@ -769,6 +769,8 @@ USERCTL=yes
 \item Get DNSSEC root keys: \type{dig . DNSKEY | grep -Ev '^($|;)' > root.keys}
 \item Verify DNSSEC of {\em root.cz} A record: \type{dig +sigchase +trusted-key=./root.keys www.root.cz A}
 \item Scan for DNS in local network: \type{nmap --script=dns-service-discovery -p 53,5353 172.31.224.0/24 -oG - | grep open}
+\item DNS over HTTPS (DoH): {\tt doh}, \type{dog A AAAA MX www.example.com @https://cloudflare-dns.com/dns-query --https}
+
 \stopitemize
 
 \section{WHOIS service}
