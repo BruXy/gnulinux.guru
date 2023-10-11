@@ -85,6 +85,7 @@ s:\\symlb:\&#123;:g
 s:\\symrb:\&#125;:g
 s:\\hfill: :g
 s:\\backslash:\\:g
+s:\\textbackslash:\\:g
 s:--- :— :g
 s:-- :– :g
 s:\\ldots:…:g

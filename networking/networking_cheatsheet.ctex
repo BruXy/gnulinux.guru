@@ -748,11 +748,12 @@ USERCTL=yes
 \item Resolver configuration for {\tt systemd}: {\tt /etc/systemd/resolved.conf}
 \item Look up the IP address: {\tt host {\sl name}}, {\tt nslookup {\sl name}}, {\tt dig +short {\sl name}}, {\tt resolvectl query {\sl name}}
 \item Get DNS record: {\tt dig {\sl name}}, {\tt host -a {\sl name}}
-\item Get entries from Name Service Switch libraries: {\tt getent}  
+\item Trace DNS servers from root: {\tt dig +trace {\sl name}}
+\item Get entries from Name Service Switch libraries: {\tt getent}
 \item Test resolution with {\tt /etc/hosts}: {\tt getent hosts {\sl name}}
 \item Return hostname for IP: {\tt dig -x 10.32.1.10 +short}
 \item Return IP for {\sl hostname}: {\tt dig {\sl hostname} +short}
-\item Scan network for DNS records: {\tt for i in 192.168.10.\symlb{}1..254\symrb{}; do echo -e \$i \\t \$(dig +short -x \$i); done}
+\item Scan network for DNS records: {\tt for i in 192.168.10.\symlb1..254\symrb; do echo -e \symdollar{}i \textbackslash{}t \symdollar(dig +short -x \symdollar{}i); done}
 \item Get specific DNS record: {\tt dig -t {\sl record} {\sl hostname/domain}}, {\tt host -t {\sl record} {\sl hostname/domain}}
 \startitemize
 \item {\tt A / AAAA} -- return 32/128 bit address for host
