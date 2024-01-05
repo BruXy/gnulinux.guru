@@ -11,7 +11,7 @@
 
 \mycopyright
 
-\startparagraph    
+\startparagraph
 Set interpreter: \type{#!/bin/bash} \qquad Remarks: \type{# this is comment}
 \stopparagraph
 
@@ -108,6 +108,7 @@ Set interpreter: \type{#!/bin/bash} \qquad Remarks: \type{# this is comment}
 \item {\tt fc} -- run defined {\tt \symdollar{}EDITOR} wit last command
 \item {\tt fc -e vim {\sl z k}} -- open {\tt vim} editor with commands from $z$ to $k$
 \item \type{^old^new} -- substitute {\sl old} with {\sl new} in last command
+\item {\tt !{\sl n}:s/old/new/} -- substitute {\sl old} in command number {\sl n}
 \item {\stt program} {\tt `!!`} -- use output of last command as input
 \stopitemize
 
