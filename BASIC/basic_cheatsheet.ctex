@@ -1,0 +1,119 @@
+\def\confBodyfont{7.88pt}
+\def\confLinespace{2.74ex}
+
+\input ../_styles/basic_style.ctex
+\input ../_styles/formatting_macros.ctex
+
+% https://en.wikipedia.org/wiki/Sinclair_BASIC
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\starttext
+\startcolumns[n=2]
+\title{ZX Spectrum BASIC}
+Beginners' All-purpose Symbolic Instruction Code
+\mycopyright
+\blank[2mm]
+
+\section{Expression statements}
+
+\startitemize
+\item {\tt IF} {\em condition} {\tt} THEN
+\item Condition operators: =, >, <, <=, >=, <>
+\item Logical operators: AND, OR, NOT
+\item {\tt RUN}~-- execute program from beginning
+\item {\tt RUN} {\em n} ~-- {\tt CLEAR} and execute program from line $n$
+\item {\tt STOP}~-- halt program execution
+\item {\tt CONTINUE}~-- start again execution after STOP or break
+\item {\tt GO TO} {\em n}~-- jump to line number $n$
+\item {\tt GO SUB \em n}~-- execute subroutine on line $n$ until {\tt RETURN}
+\item {\tt RETURN}~-- go to next line after GO SUB call
+\item {FOR i = a TO b}
+\item {FOR i = a TO b STEP c}
+\item {NEXT i}
+\stopitemize
+
+\subsection{Functions}
+
+\section{Variables and data}
+
+\startitemize
+\item Numbers are stored floating points 40 bits wide, exponent 8, mantisa 31 + 1 (hidden 1) \item DATA \item READ \item RESTORE
+\stopitemize
+
+\section{Operators}
+
+\startitemize
+\item
+\stopitemize
+
+\section{Data types}
+
+\subsection{Strings}
+
+\section{Memory access}
+
+\startitemize
+\item POKE
+\item PEEK
+\item USR
+\item CLEAR~-- deletes all variables
+\stopitemize
+
+\section{Text Input, Output and Formatting}
+
+\startitemize
+\item \type{PRINT} {\em statement}~-- output text with new line
+\item \type{PRINT} {\em statement}{\tt ,}~--
+\item \type{PRINT} {\em statement}{\tt ;}
+\item \type{PRINT} {\em statement}{\tt `}
+\item \type{PRINT AT line, column;"text"}~-- print at defined position
+\item Position: 0, 0 top left corner, 21, 31 bottor right corner of screen
+\item \type{CLS}~-- clear screen
+\item {\tt POKE} 23692, $n$~-- ask to \uv{scroll?} after $n$ lines
+\stopitemize
+
+
+\section{Mathematical functions}
+
+\startitemize
+\item {\tt RND}~-- random number in range 0, 1
+\item {\tt INT RND*6}~-- generate random integers 0 to 5
+\item {\tt RANDOMIZE} n~-- seed for random sequence 0 to 65535
+\item a$\uparrow$b~-- raising $a$ to power $b$ ($a^b$)
+\item {\tt PI} -- $\pi$ constant, 3.141592653589
+\item {\tt EXP} $x$ -- ${\rm e}^x$
+\item {\tt LN} $x$ --
+\item {\tt LN $x$ / LN $a$}~-- logarithms of $x$ in base $a$
+SIN, COS, TAN, ASN, ACS, ATN
+\stopitemize
+
+\section{Graphics}
+
+\startitemize
+\item POINT
+\item PLOT x, y
+\item DRAW
+\item CIRCLE x, y, r
+\stopitemize
+
+
+\section{Peripheral devices}
+
+\startitemize
+\item BEEP duration, pitch~-
+\item OUT port, byte~-- send byte to port
+\item LOAD
+\item SAVE
+\item VERIFY
+\item MERGE
+\item CAT~-- list content of the drive
+\item COPY~-- send 22 lines from screen to printer
+\item DELETE
+\item ERASE
+\item FORMAT f
+\stopitemize
+
+\stopcolumns
+\stoptext
+
