@@ -1,0 +1,225 @@
+% vim: tw=0
+
+\def\confBodyfont{7.88pt}
+\def\confLinespace{2.74ex}
+
+\input ../_styles/basic_style.ctex
+\input ../_styles/formatting_macros.ctex
+
+% https://en.wikipedia.org/wiki/Sinclair_BASIC
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\starttext
+\startcolumns[n=2]
+\title{GNU/Linux Monitoring and\crlf Administration}
+\mycopyright
+\blank[2mm]
+
+\section{CPU}
+
+\startitemize
+\item cat /proc/cpuinfo~-- get list of logicall processors
+\item lscpu -- display detail information about the CPU architecture
+\item arch, uname -m, sysctl -n kernel.arch~-- display CPU architecture
+\item uname -a~--
+\item top, htop, hegemon, gotop~-- linux processes and utilization
+\item \type{uptime, w | sed -n '1p'}~-- uptime and system load
+\item cat /proc/uptime~-- uptime in seconds, total idle time for CPUs
+\item mpstat~-- Report processors related statistics.
+\item mpstat -P ALL 1~-- report statistic for {\em all} CPUs every second
+\item sar~-- Collect, report, or save system activity information.
+\item iostat~-- CPU and I/O statistics
+\item iostat -xz 1~-- extended statistics every second (-z omit no activity)
+\item tload~-- graphic representation of load
+\stopitemize
+
+%iowait iotop
+
+\section{Memory}
+
+\startitemize
+\item \type{cat /proc/meminfo}~-- report about memory on the system.
+\item free~-- free and used memory in the system
+\item free -m, -g~-- output in mebibytes and gibibytes (1 GiB = 1024 MiB)
+\item vmstat~-- virtual memory statistics
+\item vmstat $n$ -- get statistics every $n$ seconds
+    \startitemize
+    \item   r, b~-- running and block processes
+    \item free~-- amount of idle memory
+    \item si, so~-- swap-in, swap-out
+    \item us, sy, id, wa, st~--
+    \stopitemize
+\item ps -efly --sort=-rss -- processes sorted by resident set size (RSS, used memory)
+\item \type{cat /proc/$pid/oom_score}~-- Out-of-Memory score of the process
+\item swapon, swapoff~-- enable/disable devices and files for paging and swapping
+\stopitemize
+
+%\subsection{Swap}
+
+%\section{I/O}
+
+\section{Disks and file system}
+
+\startitemize
+\item df
+\item du
+\item fdisk, cfdisk, sfdisk
+\item fsck
+\item blkid
+\item mount
+\item hdparm
+\item lsblk~-- List of all storage devices attached
+\item nvme~-- the NVMe storage command line interface utility
+\item tune2fs - adjust parameters on ext2/ext3/ext4 file systems
+\item resize2fs
+\item partprobe~-- inform the OS of partition table changes
+\item ls~--
+\item stat
+\item lsof -- list open files
+\item \type{sudo find / -type f -size +100M -exec du -ah {} + | sort -hr | head}~-- search for big files
+\stopitemize
+
+\subsection{Logical Volume Manager}
+
+\startitemize
+\item pvdisplay, vgdisplay, lvdisplay~--
+\item
+\stopitemize
+
+\section{Processes}
+
+\startitemize
+\item ps
+\item pstree, ps xaf~-- parent/child processes hierarchy
+\item \type{ps -eo pcpu,pid,user,args | sort -r -k1 | head -n 10}
+\item pgrep, pidof
+\item pwdx, /proc/pid/cwd ~-- current working directory of a process
+\item {\tt cat /proc/{\sl PID}/limits}~-- get limits of PID
+\item {\tt prlimit --pid {\sl PID}}~-- get and set process resource limits
+\item nice~--
+\item ionice~-- set or get process I/O scheduling class and priority
+\item renice~--
+\item Priority: -20 (highest)...0 (base)... 19 (lowest)
+\item pmap -x PID~-- return memory map of a process
+\item nohup
+\item kill PID~-- send signal to a process, default TERM
+    \startitemize
+    \item 
+    \stopitemize
+\item pidstat - Report statistics for Linux tasks
+\item {\tt time \sl command} (shell built-in)~-- time a simple command or give resource usage
+\item \type{/usr/bin/time --verbose}~-- detail statistics of process runtime
+        real~-- elapsed time running of proccess
+        user~-- seconds spends in user mode
+        sys~-- seconds spends in kernel mode
+\item strace -s 128 -p PID -- probe process syscalls
+\item ltrace -- proble process library calls
+\item ldd executable~-- show shared object dependencies
+% Obsolete: skill, snice
+\stopitemize
+
+\section{Kernel}
+
+\startitemize
+\item \type{dmesg -T | tail} ~-- kernel messages with human readable time
+\item uname -srv~-- kernel name, release and version
+\item sysctl -a~-- display all parameters
+\item sysctl -n 
+\item cat /proc/cmdline~-- booting parameters of the current kernel
+\item slabtop - display kernel slab cache information in real time
+\item cat /proc/slabinfo~--
+\stopitemize
+
+\section{OS Info and management}
+
+\startitemize
+\item getconf -a ~-- query system configuration variables
+\item runlevel~--  Print previous and current SysV runlevel
+    \startitemize
+    \item 0  ~-- Power Off, {\tt poweroff.target}
+    \item 1  ~-- Single-user mode, {\tt rescue.target}
+    \item 2  ~-- Multi-user mode, {\tt multi-user.target}
+    \item 3  ~-- Multi-user mode with networking, {\tt multi-user.target}
+    \item 5  ~-- Full mode (same as 3 + GUI), {\tt graphical.target}
+    \item 6  ~-- Reboot, {\tt reboot.target}
+    \stopitemize
+\item w, pinky
+\item users - print the user names of users currently logged in to the current host
+\item osqueryi -- SQL queries for various OS settings (supports \type{--json})
+\item \type{echo "select * from users where uid > 500;" | osqueryi}
+\item \type{systemctl list-units --type=service --state=active}~-- list running daemons
+\item \type{systemctl list-units --failed}~-- Failed service status
+\item {\tt systemctl start/restart/stop {\sl service name}}~-- Control service
+\item {\tt systemctl mask {\sl servicename}}~-- Prevent service from starting
+\item {\tt systemctl is-enabled/is-active/enable/disable}~--
+\item {\tt systemd-analyze blame}~-- Display service start times
+\stopitemize
+
+\section{HW Info}
+
+\startitemize
+\item lshw~-- Will list a full summary of all hardware recognized by your system
+\item lsusb~-- List of USB devices plugged into your system
+\item lspci~-- Lists the PCI controllers and devices plugged into PCI slots
+\item lsscsi~-- Lists all the scsi and sata devices attached to your system
+\item dmidecode~-- in-dept info about system
+\stopitemize
+
+
+\section{Logs}
+
+\startitemize
+\item journalctl
+\item journalctl -r ~-- display logs in reverse orded
+\item journalctl --since "2 hours ago"~-- list last 2 hours
+\item journalctl -r -u ssh -p err -- error log from SSH daemon
+\item journalctl -r -u ssh -g "session opened" -- match string
+\item Common logs:
+\startitemize
+\item /var/log/syslog -- global system log
+\item /var/log/auth.log -- authorization and authentication events
+\item /var/log/kern.log -- kernel messages
+\item /var/log/dmesg -- boot messages
+\stopitemize
+\stopitemize
+
+\section{Network}
+
+\startitemize
+\item ss~-- socket statistic
+\item sar -n DEV 1~-- report network statistics every second
+\item sar -n TCP,ETCP 1~-- statistics and errors of TCPv4 networking
+\item vnstatd, vnstat~-- collect and display statistics of interfaces
+\item netstat -s~-- statistic summary for each protocol
+\stopitemize
+
+\section{Security Enhanced Linux}
+
+\startitemize
+\item getenforce~-- get the current mode of SELinux
+\item setenforce
+\item chcon~-- change file security context
+\item ls -Z~--
+\item ps -Z~--
+\stopitemize
+
+\section{Other useful checks}
+
+\startitemize
+
+\section{Containerization}
+
+\startitemize
+\item docker stat
+\item docker ps
+\item docker logs
+\item {\tt docker container update -m {\sl N} --memory-swap {\sl N ID}}~-- allocate more memory
+\item {\tt docker container prune}~-- remove all stopped containers
+\item {\tt docker top}
+\stopitemize
+
+\stopcolumns
+
+\stoptext
+
