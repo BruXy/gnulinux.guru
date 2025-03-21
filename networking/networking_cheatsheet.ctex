@@ -1,5 +1,7 @@
 \input networking_style.ctex
 % http://www.tty1.net/blog/2010-04-21-ifconfig-ip-comparison_en.html
+% \showframe
+
 \starttext
 %\startcolumns[n=2]
 \title{Linux Network Administration}
@@ -184,7 +186,7 @@ Privilege port $<$ 1024 can be opened only by the root user!
 \section{Basic network setup}
 
 \startitemize
-\item Manage networking: 
+\item Manage networking:
 	\startitemize
 	\item SysV Init script: {\tt service network start/stop/restart}, {\tt /etc/init.d/network start/stop/restart}
 	\item Systemd: {\tt servicectl start/stop/restart NetworkManager.service}
@@ -202,12 +204,13 @@ Privilege port $<$ 1024 can be opened only by the root user!
 \item Loop-back route:  {\tt route add 127.0.0.1}
 \item List interfaces: {\tt cat /proc/net/dev}, {\tt netstat -ie}, {\tt tcpdump -D}
 \item Show configuration: {\tt  ifconfig}, {\tt ip addr show}, {\tt ip link show}, {\tt ip link list}
+\item Show just devices and IPs: \type{ip -j addr show | jq -r '.[]|[.ifname,.addr_info[].local]|@tsv'}
 \item Disable device: {\tt ifconfig eth0 down}; {\tt ip link set eth0 down}; {\tt nmcli connection down eth0}
 \item Rename device (when disabled): {\tt ip link set {\sl enp0s25} name {\sl eth0}}
 \item Enable device: {\tt ifconfig eth0 up}; {\tt ip link set eth0 up}; {\tt nmcli connection up eth0}
 \item Set bigger Maximum transmission unit (MTU) 9000 bytes for {\tt eth1}: {\tt ifconfig eth1 mtu 9000 up}, {\tt ip link set mtu 9000 eth1}
 \item Set IP address:
-\startitemize 
+\startitemize
 	\item {\tt ifconfig eth0 192.168.0.1}; {\tt ip addr add 192.168.0.1 dev eth0}
 	\item {\tt ifconfig eth0 192.168.0.1 netmask 255.255.255.0 broadcast 192.168.0.255}
 	\item {\tt ip addr add 192.168.0.1/24 broadcast 192.168.0.255 dev eth0}
@@ -215,6 +218,7 @@ Privilege port $<$ 1024 can be opened only by the root user!
 	\item {\tt dhclient -v eth0}
 \stopitemize
 \item Delete IP address: {\tt ip addr del 192.168.0.1/24 dev eth0}
+\item Check your public IP address and geolocation data: {\tt curl ifconfig.co/json}
 \item Add alias interface: {\tt ifconfig eth0:1 10.0.0.1/8}; {\tt ip addr add 10.0.0.1/8 dev eth0 label eth0:1}
 \item Set promiscuous mode: {\tt ifconfig eth0 promisc} ({\tt -promisc} to disable); {\tt ip link set eth0 promisc on/off}
 \item Change MAC address: {\tt ifconfig eth0 hw ether AA:BB:CC:DD:EE:FF};
@@ -233,6 +237,7 @@ Privilege port $<$ 1024 can be opened only by the root user!
     \item Remove device: {\tt echo 1 > /sys/devices/pci0000:00/0000:00:1c.0/0000:01:00.0/remove}
     \item Rescan bus: {\tt echo 1 > /sys/devices/pci0000:00/0000:00:1c.0/rescan}
     \stopitemize
+\item Manually change speed: {\tt ethtool -s {\sl eth0} autoneg on speed 1000 duplex full}
 \stopitemize
 
 \subsection{Wi-Fi Networking}
@@ -443,7 +448,7 @@ USERCTL=yes
 \item Set default zone: {\tt firewall-cmd --set-default-zone={\sl ZONE}}
 \item Without {\tt --permament} option any changes will not be available after restart.
 \item Open TCP port in zone: {\tt firewall-cmd --permanent --zone={\sl ZONE} --add-port=8080/tcp}
-\item Enable services: {\tt firewall-cmd --permanent --add-service={http,https}}
+\item Enable service: {\tt firewall-cmd --permanent --add-service={https}}
 \item Activate changes in configuration: {\tt firewall-cmd --reload}
 \item Disable: {\tt--remove-port={\sl port/protocol}}, {\tt --remove-service={\sl service}}, {\tt --remove-source={\sl X.X.X.X/Y}}
 \item Network Address Translation (NAT) / Masquarage: {\tt firewall-cmd --zone=external --add-masquerade}
@@ -534,7 +539,7 @@ USERCTL=yes
 
 \subsubsection{SSH key handling}
 
-\startitemize 
+\startitemize
 \item Generate 4096bit key with comment: {\tt ssh-keygen -t rsa -b 4096 -C "Top secret key"}
 \item Generate public key from private: {\tt ssh-keygen -y -f private.pem > public.pub}
 \item Permissions: {\tt chmod 700 \symtilda/.ssh}; {\tt chmod 600 \symtilda/.ssh/authorized_keys}
@@ -771,7 +776,7 @@ USERCTL=yes
 \item Verify DNSSEC of {\em root.cz} A record: \type{dig +sigchase +trusted-key=./root.keys www.root.cz A}
 \item Scan for DNS in local network: \type{nmap --script=dns-service-discovery -p 53,5353 172.31.224.0/24 -oG - | grep open}
 \item DNS over HTTPS (DoH): {\tt doh}, \type{dog A AAAA MX www.example.com @https://cloudflare-dns.com/dns-query --https}
-
+\item Check geolocation and reverse record for IP address: \type{curl -s ifconfig.co/json?ip=IP | jq -r '[.hostname,.country]|@csv'}
 \stopitemize
 
 \section{WHOIS service}

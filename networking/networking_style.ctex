@@ -42,7 +42,7 @@
 % Rozmery stranky
 \setuplayout[%
     width=200mm,%
-    height=287mm,%
+    height=289mm,%
     header=0mm, %
     footer=0mm, %
     topspace=3mm, %
