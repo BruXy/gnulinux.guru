@@ -744,13 +744,37 @@ USERCTL=yes
 \startitemize
 \item Local names definition: {\tt /etc/hosts}
 \item Sources of name resolution: {\tt /etc/nsswitch.conf}
-\item Resolver configuration file -- {\tt /etc/resolv.conf}:
-\starttyping
-	nameserver 8.8.8.8
-	nameserver 8.8.4.4
-	search .mydomain.com
-\stoptyping
-\item Resolver configuration for {\tt systemd}: {\tt /etc/systemd/resolved.conf}
+\item Resolver configuration:
+
+\bTABLE
+\bTABLEhead
+\bTR
+    \bTH {\tt /etc/resolv.conf} \eTH
+    \bTH {\tt /etc/systemd/resolved.conf} \eTH
+\eTR
+\eTABLEhead
+\bTABLEbody
+\bTR
+\bTD
+%\starttyping
+{\tt nameserver 8.8.8.8}\crlf
+{\tt nameserver 8.8.4.4}\crlf
+{\tt search .mydomain.com}
+%\stoptyping
+\eTD
+\bTD
+%\starttyping
+\type{[Resolve]}\crlf
+{\tt DNS=8.8.8.8 8.8.4.4}\crlf
+{\tt FallbackDNS=1.1.1.1}\crlf
+{\tt Domains=mydomain.com}
+%\stoptyping
+\eTD
+\eTR
+\eTABLEbody
+\eTABLE
+
+\item Restart/check configuration for {\tt systemd}: {\tt systemctl restart systemd-resolved}, {\tt resolvectl status}
 \item Look up the IP address: {\tt host {\sl name}}, {\tt nslookup {\sl name}}, {\tt dig +short {\sl name}}, {\tt resolvectl query {\sl name}}
 \item Get DNS record: {\tt dig {\sl name}}, {\tt host -a {\sl name}}
 \item Trace DNS servers from root: {\tt dig +trace {\sl name}}
